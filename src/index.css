@@ -1,13 +1,31 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --background-color: #fafafa;
+  --text-color: #000;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: "Montserrat", sans-serif;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.w-44 {
+  width: 48%;
+}
+
+.text-xx {
+  font-size: 10px;
+}
+.homebg {
+  background-image: url(images/background.svg);
+  background-position: center;
+  background-color: orange;
+}
+.flexclass {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.border-r-w1 {
+  border-right-width: 1px;
 }

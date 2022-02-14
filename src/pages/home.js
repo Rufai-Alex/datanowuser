@@ -1,0 +1,357 @@
+import bell from "../icons/Bell.svg";
+import Logo from "../icons/Logo.svg";
+import add from "../icons/add.svg";
+import arrow from "../icons/arrow-2.svg";
+import refresh from "../icons/refresh-2.svg";
+import wifi from "../icons/wifi.svg";
+import phone from "../icons/call-calling.svg";
+import devices from "../icons/devices.svg";
+import flash from "../icons/flash.svg";
+import mobile from "../icons/mobile.svg";
+import headphone from "../icons/headphone.svg";
+import close from "../icons/Close.svg";
+import info from "../icons/info-circle.svg";
+import Nav from "../components/nav";
+import Modal from "../components/modal";
+import { useState, useEffect, useContext, useHistory } from "react";
+import Next from "../components/next";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../providers/auth";
+import { AppDataContext } from "../providers/appData";
+
+function Home() {
+  const { user } = useContext(AuthContext);
+  const { appData, dispatch } = useContext(AppDataContext);
+  const [showModal, setShowModal] = useState(false);
+  console.log(user);
+  console.log(appData);
+
+  // var myHeaders = new Headers();
+  // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  // myHeaders.append("Accept", "application/json");
+  // console.log(token);
+  // myHeaders.append("Authorization", "Bearer " + user.token);
+  // console.log(token);
+  // var requestOptions = {
+  //   method: "GET",
+  //   headers: myHeaders,
+  // };
+
+  // fetch("https://api.datanow.ng/api/user/882285", requestOptions)
+  //   .then((response) => (response = response.text()))
+  //   .then((response) => {
+  //     const data = JSON.parse(response);
+  //     console.log(data);
+  //     if (data.status === "success") {
+  //       console.log(data);
+  //       // userDispatch({ type: "UPDATE_USER", action: data });
+  //     } else if (
+  //       data.message === "Token Expired" ||
+  //       data.message === "User Not Found"
+  //     ) {
+  //       // props.history.push("/signout");
+  //     }
+  //   });
+
+  // useEffect(() => {
+  //   console.log("effect runing");
+  // }, []);
+
+  return (
+    <div className="h-screen w-full max-w-sm mx-auto relative">
+      <div className="self-center flex flex-col items-center h-h90">
+        <div className="p-5">
+          <div className="flex justify-between w-full">
+            <p className="font-medium text-sm ">Hello {user.data.firstname}</p>
+
+            <img src={bell} alt="bell" className="h-5 pr-2" />
+          </div>
+          <div
+            className={
+              " w-full p-3 mt-7 rounded-lg bg-gradient-to-r from-primary-orange "
+            }
+          >
+            <div className="flex justify-between items-center">
+              <h3 className="font-medium text-sm">Wallet balance</h3>
+              <div>
+                <img
+                  src={appData.business.website + "/logo.png"}
+                  alt="logo"
+                  className="-mb-4"
+                  style={{ height: 40 }}
+                />
+              </div>
+            </div>
+            <div className="flex items-center mt-1">
+              <p className="text-xl font-bold">{`₦ ${user.data.wallet_balance}`}</p>
+              <span className="ml-3">
+                <img src={refresh} alt="refresh" className="" />
+              </span>
+            </div>
+            <div className="flex justify-between mt-6 gap-x-3">
+              <button className="bg-primary-black flex  rounded-lg   justify-between items-center w-full py-2 px-4">
+                <span className=" inline-flex  items-center p-0.5 border bg-white  border-white rounded-md">
+                  <img src={add} alt="add" className="h-5 w-5 bg-white" />
+                </span>
+
+                <h4 className="font-medium text-sm leading-3  text-white flex flex-col justify-start items-start mr-4">
+                  {/* //// */}
+                  <button onClick={() => setShowModal(true)}>
+                    <p>Fund</p>
+                    <p className="mt-1">Wallet</p>{" "}
+                  </button>
+
+                  {showModal ? (
+                    <>
+                      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                        <div className="absolute w-full  mx-auto max-w-sm bottom-0">
+                          {}
+                          {/*content*/}
+                          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                            {/*header*/}
+                            <div className="flex py-4 rounded-t-lg">
+                              <button
+                                className=" bg-transparent border-0 text-right  outline-none focus:outline-none ml-8 h-6 w-5"
+                                onClick={() => setShowModal(false)}
+                              >
+                                <img src={close} alt="close" />
+                              </button>
+                              <h3 className="text-lg font-extrabold text-black text-center mx-auto">
+                                Fund Wallet Via
+                              </h3>
+                            </div>
+                            {/*body*/}
+                            <div className="relative flex flex-col text-black  mb-5">
+                              <table className="table p-4 bg-white shadow rounded-lg ">
+                                <tbody className="bg-secondary-blue">
+                                  <tr className="text-secondary-black  border-b-8 border-white">
+                                    <td className=" font-medium text-sm">
+                                      <Link to="/outoAgent">Auto Agent</Link>
+                                    </td>
+                                    <td className=" p-4 ">
+                                      <div className=" font-medium text-xx text-primary-gray">
+                                        <Link to="/outoAgent">Delivery</Link>
+                                      </div>
+                                      <div className="mt-1">
+                                        <Link to="/outoAgent"> 1-30Mins</Link>
+                                      </div>
+                                    </td>
+                                    <td className=" p-4 ">
+                                      <Link to="/outoAgent">
+                                        <div className="text-xx text-primary-gray">
+                                          Status
+                                        </div>
+
+                                        {appData.master_settings
+                                          .fund_status_auto *
+                                          1 ===
+                                        0 ? (
+                                          <div className="mt-1 text-green-500 ">
+                                            Active
+                                          </div>
+                                        ) : (
+                                          <div className="mt-1 text-red-500 ">
+                                            Down
+                                          </div>
+                                        )}
+                                      </Link>
+                                    </td>
+                                  </tr>{" "}
+                                  <tr className="text-secondary-black border-b-8 border-white">
+                                    <td className=" font-medium text-sm">
+                                      <Link to="/monify"> Monnify</Link>
+                                    </td>
+                                    <td className="border-b-2 p-4 ">
+                                      <div className=" font-medium text-xx text-primary-gray">
+                                        <Link to="/monify"> Delivery</Link>
+                                      </div>
+                                      <div className="mt-1">
+                                        {" "}
+                                        <Link to="/monify"> 1-30Mins</Link>
+                                      </div>
+                                    </td>
+                                    <td className="border-b-2 p-4 ">
+                                      {" "}
+                                      <Link to="/monify">
+                                        <div className="text-xx text-primary-gray">
+                                          Status
+                                        </div>
+                                        {appData.master_settings
+                                          .fund_status_bank *
+                                          1 ===
+                                        0 ? (
+                                          <div className="mt-1 text-green-500">
+                                            Active
+                                          </div>
+                                        ) : (
+                                          <div className="mt-1 text-red-500">
+                                            Down
+                                          </div>
+                                        )}
+                                      </Link>
+                                    </td>
+                                  </tr>
+                                  <tr className="text-secondary-black ">
+                                    <td className=" font-medium text-sm">
+                                      <Link to="/atm">ATM</Link>
+                                    </td>
+                                    <td className="border-b-2 p-4 ">
+                                      <div className=" font-medium text-xx text-primary-gray">
+                                        <Link to="/atm"> Delivery</Link>
+                                      </div>
+                                      <div className="mt-1">
+                                        <Link to="/atm">1-30Mins</Link>
+                                      </div>
+                                    </td>
+                                    <td className="border-b-2 p-4 ">
+                                      <div className="text-xx text-primary-gray">
+                                        Status
+                                      </div>
+
+                                      <Link to="/atm">
+                                        {appData.master_settings
+                                          .fund_status_atm *
+                                          1 ===
+                                        0 ? (
+                                          <div className="mt-1 text-green-500">
+                                            Active{" "}
+                                          </div>
+                                        ) : (
+                                          <div className="mt-1 text-red-500">
+                                            Down
+                                          </div>
+                                        )}
+                                      </Link>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            {/*footer*/}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                    </>
+                  ) : null}
+                  {/* ///// */}
+                </h4>
+              </button>
+              <button className="bg-white flex  rounded-lg   justify-between items-center w-full py-2 px-4">
+                <span className="inline-flex  items-center p-0.5 border bg-primary-black  border-primary-black rounded-md ">
+                  <img
+                    src={arrow}
+                    alt="Arrow"
+                    className="h-5 w-5 bg-primary-black"
+                  />
+                </span>
+
+                <h4 className="font-medium text-sm leading-3 ml-3 text-black flex flex-col justify-start items-start ">
+                  <p> Transfer</p>
+                  <p className="mt-1"> to User</p>
+                </h4>
+              </button>
+            </div>
+          </div>
+          <div className="mt-5 ">
+            <h2 className="font-bold">Services</h2>
+            <div className="flexs grid grid-cols-2 gap-3  gap-y-3s gap-x-3.5s flex-wraps mt-4 i  ">
+              <Link to="data">
+                <button className="bg-primary-black w-full flex  rounded-lg   justify-start items-center  py-2 px-4  ">
+                  <span className="inline-flex  items-center p-1 border bg-primary-orange  border-primary-orange rounded-md ">
+                    <img src={wifi} alt="wifi" className=" bg-primary-orange" />
+                  </span>
+                  <h4 className="min-w-max font-medium text-sm leading-3 ml-3 text-white flex flex-col justify-start items-start">
+                    <p>Data </p>
+                    <p className="mt-1">Purchase</p>
+                  </h4>
+                </button>
+              </Link>
+              <Link to="airtime">
+                <button className="bg-primary-black flex w-full  rounded-lg   justify-start items-center  py-2 px-4 ">
+                  <span className="inline-flex  items-center p-1 border bg-primary-orange  border-primary-orange rounded-md">
+                    <img
+                      src={phone}
+                      alt="phone"
+                      className=" bg-primary-orange"
+                    />
+                  </span>
+
+                  <h4 className="font-medium text-sm leading-3 ml-3 text-white flex flex-col justify-start items-start">
+                    <p>Airtime</p>
+                    <p className="mt-1"> Purchase</p>
+                  </h4>
+                </button>
+              </Link>
+              <Link to="cable">
+                <button className="bg-primary-black flex  w-full rounded-lg   justify-start items-center  py-2 px-4  ">
+                  <span className="inline-flex  items-center p-1 border bg-primary-orange  border-primary-orange rounded-md">
+                    <img
+                      src={devices}
+                      alt="devices"
+                      className=" bg-primary-orange"
+                    />
+                  </span>
+
+                  <h4 className="font-medium text-sm leading-3 ml-3 text-white flex flex-col justify-start items-start">
+                    <p> Cable</p> <p className="mt-1"> Payment</p>
+                  </h4>
+                </button>
+              </Link>
+              <Link to="electricity">
+                <button className="bg-primary-black flex w-full rounded-lg   justify-start items-center  py-2 pl-4 pr-3.5   ">
+                  <span className="inline-flex  items-center p-1 border bg-primary-orange  border-primary-orange rounded-md ">
+                    <img
+                      src={flash}
+                      alt="flash"
+                      className=" bg-primary-orange"
+                    />
+                  </span>
+
+                  <h4 className="font-medium text-sm leading-3 ml-3 text-white flex flex-col justify-start items-start">
+                    <p> Electricity</p> <p className="mt-1"> Payment</p>
+                  </h4>
+                </button>
+              </Link>
+              <Link to="code">
+                <button className="bg-primary-black flex w-full  rounded-lg   justify-start items-center  py-2 pl-4 pr-6  ">
+                  <span className="inline-flex  items-center p-1 border bg-primary-orange  border-primary-orange rounded-md ">
+                    <img
+                      src={mobile}
+                      alt="Mobil"
+                      className=" bg-primary-orange"
+                    />
+                  </span>
+
+                  <h4 className="font-medium text-sm leading-3 ml-3 text-white flex flex-col justify-start items-start">
+                    <p>Balance</p>
+                    <p className="mt-1">Codes</p>
+                  </h4>
+                </button>
+              </Link>
+            </div>
+          </div>
+          <div className=" mx-auto bg-primary-black  text-white flex  px-4 py-3 rounded-full mt-20 justify-center align-middle w-56 ">
+            <Link to="faq">
+              <button className="flex justify-center items-center ">
+                <img src={info} alt="info" />
+                <p className="font-medium text-xs py-1 px-2 pr-5  border-r-w1 bordercolorfaq ">
+                  FAQS
+                </p>
+              </button>
+            </Link>
+            <Link to="contact">
+              <button className="flex justify-center items-center ml-4">
+                <img src={headphone} alt="headphone" />
+                <p className="font-medium text-xs px-1">Contact&nbsp;Us</p>
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+      <Nav />
+    </div>
+  );
+}
+
+export default Home;

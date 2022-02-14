@@ -1,0 +1,296 @@
+import React, { useContext, useEffect, useState } from "react";
+import bell from "../icons/Bell.svg";
+import LeftAngle from "../icons/LeftAngle.svg";
+import eisalat from "../icons/9mobile.svg";
+import glo from "../icons/glo.svg";
+import airtel from "../icons/airtel.svg";
+import mtn from "../icons/mtn.svg";
+import close from "../icons/Close.svg";
+import Nav from "../components/nav";
+import { useHistory, Link } from "react-router-dom";
+import { AuthContext } from "../providers/auth";
+import { FormContext } from "../providers/formValues";
+import { AppDataContext } from "../providers/appData";
+import PlansModels from "../components/plansModels";
+
+function DataPurchase() {
+  const { user, setShowModal, showModal } = useContext(AuthContext);
+  const { appData, dispatch } = useContext(AppDataContext);
+  const { formData, formDispatch } = useContext(FormContext);
+  // const [showModal, setShowModal] = useState(false);
+  console.log(formData.network);
+  const formOnChange = (e) => {
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: e.target.name, value: e.target.value },
+    });
+  };
+
+  const selectpaymentMethod = (paymentMethod) => {
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "paymentMethod", value: paymentMethod },
+    });
+  };
+
+  useEffect(() => {
+    if (!formData.ref) {
+      formDispatch({
+        type: "INPUTVALUES",
+        data: { name: "ref", value: Math.random().toString(36).slice(2) },
+      });
+    }
+  }, []);
+  const onPlanSelect = (network, atmPrice, walletPrice) => {
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "network", value: network },
+    });
+  };
+
+  const history = useHistory();
+  const back = () => {
+    history.push("/home");
+  };
+  document.title = "Purchase Data-" + appData.business.name;
+  console.log(formData);
+  return (
+    <div className="flex flex-col items-center  max-w-md ">
+      <div class="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
+        <div className="px-4 py-8">
+          <div className="flex justify-between items-center">
+            <div className="flex justify-between item-center">
+              <button onClick={back}>
+                <img src={LeftAngle} alt="leftAngle" />
+              </button>
+              <h2 className="ml-8 font-medium text-sm">Data Purchase</h2>
+            </div>
+            <img src={bell} alt="bell" />
+          </div>
+          <div className="">
+            <h2 className="font-medium text-xs mt-9">Select Network</h2>
+            <div className="flex gap-4 mt-6">
+              <button
+                className="flex  flex-col justify-center items-center "
+                onClick={() => {
+                  onPlanSelect(
+                    "MTN",
+                    appData.airtime_plans.MTN.atm_price,
+                    appData.airtime_plans.MTN.wallet_price,
+                  );
+                  console.log(formData.network);
+                }}
+              >
+                <div
+                  className={
+                    formData.network === "MTN"
+                      ? "ring-primary-black ring-4 rounded-lg"
+                      : ""
+                  }
+                >
+                  <img src={mtn} alt="mtn" />
+                </div>
+                <div className="text-primary-orange font-extrabold text-xs mt-2.5">
+                  MTN
+                </div>
+              </button>
+
+              <button
+                className="flex  flex-col justify-center items-center"
+                onClick={() => {
+                  onPlanSelect(
+                    "GLO",
+                    appData.airtime_plans.GLO.atm_price,
+                    appData.airtime_plans.GLO.wallet_price,
+                  );
+                  console.log(formData.network);
+                }}
+              >
+                <div
+                  className={
+                    formData.network === "GLO"
+                      ? "ring-primary-black ring-4 rounded-lg"
+                      : ""
+                  }
+                >
+                  <img src={glo} alt="glo" />
+                </div>
+                <div className=" font-extrabold text-xs mt-2.5">GLO</div>
+              </button>
+              <button
+                className="flex  flex-col justify-center items-center"
+                onClick={() => {
+                  onPlanSelect(
+                    "AIRTEL",
+                    appData.airtime_plans.AIRTEL.atm_price,
+                    appData.airtime_plans.AIRTEL.wallet_price,
+                  );
+                  console.log(formData.network);
+                }}
+              >
+                <div
+                  className={
+                    formData.network === "AIRTEL"
+                      ? "ring-primary-black ring-4 rounded-lg"
+                      : ""
+                  }
+                >
+                  <img src={airtel} alt="airtel" />
+                </div>
+                <div className=" font-extrabold text-xs mt-2.5">Airtel</div>
+              </button>
+              <button
+                className="flex  flex-col justify-center items-center"
+                onClick={() => {
+                  onPlanSelect(
+                    "ETISALAT",
+                    appData.airtime_plans.ETISALAT.atm_price,
+                    appData.airtime_plans.ETISALAT.wallet_price,
+                  );
+                  console.log(formData.network);
+                }}
+              >
+                <div
+                  className={
+                    formData.network === "ETISALAT"
+                      ? "ring-primary-black ring-4 rounded-lg"
+                      : ""
+                  }
+                >
+                  <img src={eisalat} alt="etisalat" />
+                </div>
+                <div className=" font-extrabold text-xs mt-2.5">9mobile</div>
+              </button>
+            </div>
+          </div>
+          <div className="">
+            <div className="mt-12">
+              <div className="w-full space-y-6">
+                <div className="w-full">
+                  <div className=" relative ">
+                    <label>
+                      <div className="flex justify-between">
+                        <span className="font-medium text-primary-black text-sm">
+                          Phone Number
+                        </span>
+                        <span className="font-medium text-primary-gray text-sm">
+                          Balance: {`₦ ${user.data.wallet_balance}`}
+                        </span>
+                      </div>
+
+                      <input
+                        type="phone"
+                        className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
+                        placeholder="08X XXX XXXX"
+                        name="phone_number"
+                        value={formData.phone_number}
+                        onChange={(e) => {
+                          formOnChange(e);
+                        }}
+                      />
+                    </label>
+                  </div>
+                </div>
+                <div className="w-full">
+                  <div className=" relative ">
+                    <label>
+                      <p className="mt-4 font-medium text-primary-black text-sm">
+                        Network Plans
+                      </p>
+                      <input
+                        type="text"
+                        autocomplete="off"
+                        className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent mt-3 "
+                        placeholder="Select plan"
+                        value={formData.plans_name}
+                        onFocus={() => {
+                          setShowModal(!showModal);
+
+                          console.log(showModal);
+
+                          console.log("I am here");
+                        }}
+                      ></input>
+                    </label>
+                    {/* ////////////////// */}
+                    {showModal ? <PlansModels /> : null}
+                    {console.log(showModal)}
+                    {/* ////////////////// */}
+                  </div>
+                </div>
+                <h3 className="mt-4 font-medium text-primary-black text-sm">
+                  Payment Method
+                </h3>
+                <div class="flex gap-4 item-center">
+                  <button
+                    type="button"
+                    class={
+                      "py-2 px-4 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-gray-300 text-center text-base font-medium shadow-md   rounded-lg " +
+                      (formData.paymentMethod === "walletPayment"
+                        ? "bg-primary-black text-white"
+                        : "bg-white text-primary-black")
+                    }
+                    onClick={() => selectpaymentMethod("walletPayment")}
+                  >
+                    Wallet
+                  </button>
+                  <button
+                    type="button"
+                    class={
+                      "py-2 px-4 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-gray-300 text-center text-base font-medium shadow-md   rounded-lg " +
+                      (formData.paymentMethod === "atm"
+                        ? "bg-primary-black text-white"
+                        : "bg-white text-primary-black")
+                    }
+                    onClick={() => selectpaymentMethod("atm")}
+                  >
+                    ATM
+                  </button>
+                </div>
+
+                <p className="mt-4 font-medium text-primary-black text-sm">
+                  Total Price: ₦
+                  {formData.paymentMethod === "atm"
+                    ? formData.atmPrice
+                    : formData.walletPrice}
+                </p>
+
+                <div className="w-full">
+                  <div className=" relative ">
+                    <label>
+                      <p className="mt-4 font-medium text-primary-black text-sm">
+                        Password
+                      </p>
+                      <input
+                        type="password"
+                        className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
+                        name="password"
+                        onChange={(e) => {
+                          formOnChange(e);
+                        }}
+                        value={formData.password}
+                      />
+                    </label>
+                  </div>
+                </div>
+                <div>
+                  <span class="block w-full rounded-md shadow-sm">
+                    <button
+                      type="button"
+                      class="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                    >
+                      Pay
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Nav />
+    </div>
+  );
+}
+
+export default DataPurchase;
