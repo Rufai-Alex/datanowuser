@@ -7,21 +7,25 @@ import wifi from "../icons/wifi.svg";
 import phone from "../icons/call-calling.svg";
 import devices from "../icons/devices.svg";
 import flash from "../icons/flash.svg";
+import eclipse1 from "../icons/eclipse1.svg";
+import eclipse2 from "../icons/eclipse2.svg";
 import mobile from "../icons/mobile.svg";
 import headphone from "../icons/headphone.svg";
 import close from "../icons/Close.svg";
 import info from "../icons/info-circle.svg";
 import Nav from "../components/nav";
 import Modal from "../components/modal";
-import { useState, useEffect, useContext, useHistory } from "react";
+import { useState, useEffect, useContext } from "react";
 import Next from "../components/next";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../providers/auth";
 import { AppDataContext } from "../providers/appData";
+import { UserContext } from "../providers/userData";
 
 function Home() {
-  const { user } = useContext(AuthContext);
   const { appData, dispatch } = useContext(AppDataContext);
+  const { user, userDispatch } = useContext(UserContext);
+  const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   console.log(user);
   console.log(appData);
@@ -68,9 +72,19 @@ function Home() {
           </div>
           <div
             className={
-              " w-full p-3 mt-7 rounded-lg bg-gradient-to-r from-primary-orange "
+              " w-full p-3 mt-7 rounded-lg bg-primary-orange relative "
             }
           >
+            <img
+              src={eclipse1}
+              alt=""
+              className="absolute top-0 right-0 z-10"
+            />
+            <img
+              src={eclipse2}
+              alt=""
+              className="absolute bottom-0 left-0 z-10"
+            />
             <div className="flex justify-between items-center">
               <h3 className="font-medium text-sm">Wallet balance</h3>
               <div>
@@ -89,14 +103,17 @@ function Home() {
               </span>
             </div>
             <div className="flex justify-between mt-6 gap-x-3">
-              <button className="bg-primary-black flex  rounded-lg   justify-between items-center w-full py-2 px-4">
+              <button
+                className="bg-primary-black flex  rounded-lg   justify-between items-center w-full py-2 px-4 z-50"
+                onClick={() => setShowModal(true)}
+              >
                 <span className=" inline-flex  items-center p-0.5 border bg-white  border-white rounded-md">
                   <img src={add} alt="add" className="h-5 w-5 bg-white" />
                 </span>
 
                 <h4 className="font-medium text-sm leading-3  text-white flex flex-col justify-start items-start mr-4">
                   {/* //// */}
-                  <button onClick={() => setShowModal(true)}>
+                  <button>
                     <p>Fund</p>
                     <p className="mt-1">Wallet</p>{" "}
                   </button>
@@ -237,7 +254,10 @@ function Home() {
                   {/* ///// */}
                 </h4>
               </button>
-              <button className="bg-white flex  rounded-lg   justify-between items-center w-full py-2 px-4">
+              <button
+                className="bg-white flex  rounded-lg   justify-between items-center w-full py-2 px-4 z-50"
+                onClick={() => history.push("transferToUser")}
+              >
                 <span className="inline-flex  items-center p-0.5 border bg-primary-black  border-primary-black rounded-md ">
                   <img
                     src={arrow}
@@ -245,11 +265,12 @@ function Home() {
                     className="h-5 w-5 bg-primary-black"
                   />
                 </span>
-
-                <h4 className="font-medium text-sm leading-3 ml-3 text-black flex flex-col justify-start items-start ">
-                  <p> Transfer</p>
-                  <p className="mt-1"> to User</p>
-                </h4>
+                <Link to="transferToUser">
+                  <h4 className="font-medium text-sm leading-3 ml-3 text-black flex flex-col justify-start items-start ">
+                    <p> Transfer</p>
+                    <p className="mt-1"> to User</p>
+                  </h4>
+                </Link>
               </button>
             </div>
           </div>

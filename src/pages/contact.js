@@ -9,7 +9,7 @@ import Nav from "../components/nav";
 function Contact() {
   return (
     <div className="flex flex-col items-center justify-center   max-w-md ">
-      <div class="flex  flex-col h-h90 w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
+      <div className="flex  flex-col h-h90 w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
             <div className="flex justify-between item-center">
@@ -54,13 +54,13 @@ function Contact() {
                 Quick Links
               </h3>
               <div className="flex mt-2">
-                <button class="flex items-center mx-auto justify-center h-11 w-11 rounded-md bg-primary-orange text-white">
+                <button className="flex items-center mx-auto justify-center h-11 w-11 rounded-md bg-primary-orange text-white">
                   <img src={whatsapp} alt="whatsapp" />
                 </button>
-                <button class="flex items-center mx-auto justify-center h-11 w-11 rounded-md bg-primary-orange text-white">
+                <button className="flex items-center mx-auto justify-center h-11 w-11 rounded-md bg-primary-orange text-white">
                   <img src={sms} alt="sms" />
                 </button>
-                <button class="flex items-center mx-auto justify-center h-11 w-11 rounded-md bg-primary-orange text-white">
+                <button className="flex items-center mx-auto justify-center h-11 w-11 rounded-md bg-primary-orange text-white">
                   <img src={location} alt="location " />
                 </button>
               </div>

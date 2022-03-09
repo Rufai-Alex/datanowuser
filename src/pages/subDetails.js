@@ -4,7 +4,7 @@ import LeftAngle from "../icons/LeftAngle.svg";
 
 function subDetails() {
   return (
-    <div class="relative h-screen flex flex-col max-w-md w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 ">
+    <div className="relative h-screen flex flex-col max-w-md w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 ">
       <div className=" h-h90 px-4 py-8">
         <div className="flex justify-between">
           <img src={LeftAngle} alt="leftAngle" />

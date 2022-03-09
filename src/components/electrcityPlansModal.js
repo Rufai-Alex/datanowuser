@@ -6,7 +6,7 @@ import { AuthContext } from "../providers/auth";
 import { AppDataContext } from "../providers/appData";
 import { useHistory, Link } from "react-router-dom";
 
-function CablePlansModal() {
+function ElecricityPlansModal() {
   const { formData, formDispatch } = useContext(FormContext);
   const { user, setShowModal, showModal } = useContext(AuthContext);
   const { appData, dispatch } = useContext(AppDataContext);
@@ -42,35 +42,20 @@ function CablePlansModal() {
       myNetwork = "please select a network";
   }
   console.log(myNetwork);
-  const inputPlansId = (
-    plans_id,
-    plans_name,
-    walletPrice,
-    atmPrice,
-    commission,
-  ) => {
+  const inputPlansId = (plans_id, plans_name, commission) => {
+    setShowModal(false);
     formDispatch({
       type: "INPUTVALUES",
-      data: { name: "plans_id", value: plans_id },
+      data: { name: "electricPlan_id", value: plans_id },
     });
     formDispatch({
       type: "INPUTVALUES",
       data: { name: "plans_name", value: plans_name },
     });
-
-    formDispatch({
-      type: "INPUTVALUES",
-      data: { name: "walletPrice", value: walletPrice },
-    });
-    formDispatch({
-      type: "INPUTVALUES",
-      data: { name: "atmPrice", value: atmPrice },
-    });
     formDispatch({
       type: "INPUTVALUES",
       data: { name: "commission", value: commission },
     });
-    setShowModal(false);
   };
   console.log(formData);
   return (
@@ -89,7 +74,7 @@ function CablePlansModal() {
                 <img src={close} alt="close" />
               </button>
               <h3 className="text-lg font-extrabold text-black text-center mx-auto">
-                CABLE PLAN
+                Meter Type
               </h3>
             </div>
             {/*body*/}
@@ -106,29 +91,12 @@ function CablePlansModal() {
                         inputPlansId(
                           network.id,
                           network.name,
-                          network.wallet_price,
-                          network.atm_price,
                           network.commission,
                         );
                       }}
                     >
                       <td className=" font-medium text-sm p-2">
-                        {network.name}
-                      </td>
-                      <td className=" p-4 ">
-                        <div className=" font-medium text-xx text-primary-gray">
-                          Wallet
-                        </div>
-                        <div className="mt-1">
-                          {" "}
-                          {`₦${network.wallet_price}`}
-                        </div>
-                      </td>{" "}
-                      <td className=" p-1 ">
-                        <div className=" font-medium text-xx text-primary-gray">
-                          ATM
-                        </div>
-                        <div className="mt-1"> {`₦${network.atm_price}`}</div>
+                        {`${network.name} (${network.commission} commission)`}
                       </td>
                     </tr>
                   ))}
@@ -144,4 +112,4 @@ function CablePlansModal() {
   );
 }
 
-export default CablePlansModal;
+export default ElecricityPlansModal;

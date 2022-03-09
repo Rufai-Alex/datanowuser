@@ -11,7 +11,7 @@ function Profile() {
 
   return (
     <div className="flex flex-col items-center  max-w-md ">
-      <div class="flex  flex-col h-h90 w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
+      <div className="flex  flex-col h-h90 w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
             <div className="flex justify-between item-center">
@@ -55,12 +55,12 @@ function Profile() {
               </p>
             </div>
           </div>
-          <div class="flex w-full mt-20">
+          <div className="flex w-full mt-20">
             <button className="py-2 px-4   focus:ring-primary-orange  w-full transition ease-in duration-200 text-center text-base font-bold border-2 focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
               Edit
             </button>
           </div>
-          <div class="flex w-full mt-6">
+          <div className="flex w-full mt-6">
             <button
               type="submit"
               className="py-2 px-4 bg-red-600 hover:bg-red-200 focus:ring-primary-orange focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "

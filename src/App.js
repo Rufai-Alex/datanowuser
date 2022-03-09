@@ -7,6 +7,8 @@ import AuthProvider, { AuthContext } from "./providers/auth";
 
 import axios from "axios";
 import { AppDataContext } from "./providers/appData";
+import { UserContext } from "./providers/userData";
+import TranserToUser from "./pages/transerToUser";
 
 const AirtimePurchase = React.lazy(() => import("./pages/airtimePurchase"));
 const Balance = React.lazy(() => import("./pages/balance"));
@@ -28,7 +30,8 @@ const ElectricityPayments = React.lazy(() =>
 );
 
 function App() {
-  const { user } = useContext(AuthContext);
+  const { user, userDispatch } = useContext(UserContext);
+
   const { dispatch, appData } = useContext(AppDataContext);
   console.log(appData);
 
@@ -71,7 +74,7 @@ function App() {
       : new Date().getTime() - appData.timestamp > 7200000 && fetchAppData();
   }, []);
 
-  console.log(user);
+  console.log(user.data);
 
   console.log(appData);
 
@@ -171,6 +174,9 @@ function App() {
             </Route>
             <Route path="/atm">
               <AtmFund />
+            </Route>
+            <Route path="/transferToUser">
+              <TranserToUser />
             </Route>
           </Switch>
         </Suspense>

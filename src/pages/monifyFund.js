@@ -8,9 +8,13 @@ import copy from "../icons/copy.svg";
 import Nav from "../components/nav";
 import { useHistory, Link } from "react-router-dom";
 import { AuthContext } from "../providers/auth";
+import { UserContext } from "../providers/userData";
+import { AppDataContext } from "../providers/appData";
 
 function MonifyFund() {
-  const { user, appData } = useContext(AuthContext);
+  // const { user, appData } = useContext(AuthContext);
+  const { user, userDispatch } = useContext(UserContext);
+  const { appData, dispatch } = useContext(AppDataContext);
 
   const history = useHistory();
   const back = () => {
@@ -18,7 +22,7 @@ function MonifyFund() {
   };
   return (
     <div className="flex flex-col items-center  max-w-md h-full">
-      <div class="flex bg-white  h-h90 flex-col w-full  rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
+      <div className="flex bg-white  h-h90 flex-col w-full  rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
             <div className="flex justify-between item-center">
@@ -26,7 +30,7 @@ function MonifyFund() {
                 <img src={LeftAngle} alt="leftAngle" />
               </button>
 
-              <h2 className="ml-8 font-medium text-sm">Fund via Auto Agent</h2>
+              <h2 className="ml-8 font-medium text-sm">Fund via Monnify</h2>
             </div>
             <img src={bell} alt="bell" />
           </div>

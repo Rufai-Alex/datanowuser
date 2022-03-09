@@ -7,14 +7,18 @@ import airtel from "../icons/airtel.svg";
 import mtn from "../icons/mtn.svg";
 import close from "../icons/Close.svg";
 import Nav from "../components/nav";
+import { getOS } from "../helper/getOs";
 import { useHistory, Link } from "react-router-dom";
 import { AuthContext } from "../providers/auth";
 import { FormContext } from "../providers/formValues";
 import { AppDataContext } from "../providers/appData";
 import PlansModels from "../components/plansModels";
+import { UserContext } from "../providers/userData";
+import PaymentType from "../components/paymentType";
 
 function DataPurchase() {
-  const { user, setShowModal, showModal } = useContext(AuthContext);
+  const { setShowModal, showModal } = useContext(AuthContext);
+  const { user, userDispatch } = useContext(UserContext);
   const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
   // const [showModal, setShowModal] = useState(false);
@@ -26,13 +30,32 @@ function DataPurchase() {
     });
   };
 
-  const selectpaymentMethod = (paymentMethod) => {
+  // const selectpaymentMethod = (paymentMethod) => {
+  //   formDispatch({
+  //     type: "INPUTVALUES",
+  //     data: { name: paymentMethod, value: paymentMethod },
+  //   });
+  // };
+  const paymentwallet = (toggle) => {
     formDispatch({
       type: "INPUTVALUES",
-      data: { name: "paymentMethod", value: paymentMethod },
+      data: { name: "atmPayment", value: false },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "walletPayment", value: toggle },
     });
   };
-
+  const paymentatm = (toggle) => {
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "atmPayment", value: toggle },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "walletPayment", value: false },
+    });
+  };
   useEffect(() => {
     if (!formData.ref) {
       formDispatch({
@@ -54,9 +77,99 @@ function DataPurchase() {
   };
   document.title = "Purchase Data-" + appData.business.name;
   console.log(formData);
+  const process = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("Accept", "application/json");
+    user.data && myHeaders.append("Authorization", "Bearer " + user.token);
+
+    var urlencoded = new URLSearchParams();
+    user.data &&
+      !formData.atmPayment &&
+      urlencoded.append("password", String(formData.password));
+    !user.data &&
+      formData.atmPayment &&
+      urlencoded.append("email", String(formData.email));
+    urlencoded.append("plan_id", String(formData.dataPlan.id));
+    urlencoded.append("phone_number", String(formData.phone_number));
+    urlencoded.append("source", getOS());
+    urlencoded.append("ref", formData.ref);
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      //redirect: "follow",
+    };
+
+    fetch(
+      formData.atmpayment
+        ? localStorage.getItem("apiURL") + "atm_data_purchase"
+        : localStorage.getItem("apiURL") + "wallet_data_purchase",
+      requestOptions,
+    )
+      .then((response) => (response = response.text()))
+      .then((response) => {
+        const data = JSON.parse(response);
+        if (data.status === "success" && formData.atmPayment) {
+          window.location = data.data.payment_url;
+          return;
+        }
+
+        console.log(data);
+        if (data.status === "success") {
+          formDispatch({
+            type: "SET_FORM_DATA",
+            data: {
+              name: "responseModal",
+              value: { isOpen: true, text: data.message },
+            },
+          });
+        } else if (
+          data.message === "Token Expired" ||
+          data.message === "User Not Found"
+        ) {
+          history.push("/");
+        } else if (data.errors) {
+          let errorString = "";
+          const objectValues = Object.values(data.errors);
+          objectValues.map((error) => {
+            errorString = errorString + error + ", ";
+          });
+          formDispatch({
+            type: "SET_ERROR",
+            data: errorString,
+          });
+          formDispatch({
+            type: "SET_FORM_DATA",
+            data: { name: "ref", value: Math.random().toString(36).slice(2) },
+          });
+        } else {
+          formDispatch({
+            type: "SET_ERROR",
+            data: data.message,
+          });
+          formDispatch({
+            type: "SET_FORM_DATA",
+            data: { name: "ref", value: Math.random().toString(36).slice(2) },
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+        formDispatch({
+          type: "SET_ERROR",
+          data: "unable to connect to server",
+        });
+      });
+  };
+  const url = formData.atmPayment
+    ? localStorage.getItem("apiURL") + "atm_data_purchase"
+    : localStorage.getItem("apiURL") + "wallet_data_purchase";
+  console.log(url);
   return (
-    <div className="flex flex-col items-center  max-w-md ">
-      <div class="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
+    <div className="flex flex-col items-center  max-w-md m-auto">
+      <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
             <div className="flex justify-between item-center">
@@ -218,66 +331,44 @@ function DataPurchase() {
                     {/* ////////////////// */}
                   </div>
                 </div>
-                <h3 className="mt-4 font-medium text-primary-black text-sm">
-                  Payment Method
-                </h3>
-                <div class="flex gap-4 item-center">
-                  <button
-                    type="button"
-                    class={
-                      "py-2 px-4 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-gray-300 text-center text-base font-medium shadow-md   rounded-lg " +
-                      (formData.paymentMethod === "walletPayment"
-                        ? "bg-primary-black text-white"
-                        : "bg-white text-primary-black")
-                    }
-                    onClick={() => selectpaymentMethod("walletPayment")}
-                  >
-                    Wallet
-                  </button>
-                  <button
-                    type="button"
-                    class={
-                      "py-2 px-4 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-gray-300 text-center text-base font-medium shadow-md   rounded-lg " +
-                      (formData.paymentMethod === "atm"
-                        ? "bg-primary-black text-white"
-                        : "bg-white text-primary-black")
-                    }
-                    onClick={() => selectpaymentMethod("atm")}
-                  >
-                    ATM
-                  </button>
-                </div>
+
+                <PaymentType />
 
                 <p className="mt-4 font-medium text-primary-black text-sm">
                   Total Price: ₦
-                  {formData.paymentMethod === "atm"
+                  {(formData.atmPayment
                     ? formData.atmPrice
-                    : formData.walletPrice}
+                    : formData.walletPrice) || " 00.00"}
                 </p>
 
                 <div className="w-full">
-                  <div className=" relative ">
-                    <label>
-                      <p className="mt-4 font-medium text-primary-black text-sm">
-                        Password
-                      </p>
-                      <input
-                        type="password"
-                        className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
-                        name="password"
-                        onChange={(e) => {
-                          formOnChange(e);
-                        }}
-                        value={formData.password}
-                      />
-                    </label>
-                  </div>
+                  {formData.atmPayment ? (
+                    ""
+                  ) : (
+                    <div className=" relative ">
+                      <label>
+                        <p className="mt-4 font-medium text-primary-black text-sm">
+                          Password
+                        </p>
+                        <input
+                          type="password"
+                          className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
+                          placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                          name="password"
+                          onChange={(e) => {
+                            formOnChange(e);
+                          }}
+                          value={formData.password}
+                        />
+                      </label>
+                    </div>
+                  )}
                 </div>
                 <div>
-                  <span class="block w-full rounded-md shadow-sm">
+                  <span className="block w-full rounded-md shadow-sm">
                     <button
                       type="button"
-                      class="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                      className="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
                     >
                       Pay
                     </button>

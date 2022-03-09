@@ -7,13 +7,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { AuthContext } from "../providers/auth";
 import LoggedInContext from "../App";
 import { signInformschema } from "../components/validation";
+import { UserContext } from "../providers/userData";
+import { FormContext } from "../providers/formValues";
 
 function LoginPage() {
   let history = useHistory();
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
 
-  const { user, handleLogin } = useContext(AuthContext);
+  const { handleLogin } = useContext(AuthContext);
+  const { user, userDispatch } = useContext(UserContext);
+  const { formData, formDispatch } = useContext(FormContext);
+
   // const { handleLogin, appSettings } = useContext(LoggedInContext);
   const {
     register,
@@ -40,14 +45,24 @@ function LoginPage() {
     fetch("https://api.datanow.ng/api/user/882285/signin", requestOptions)
       .then((response) => (response = response.text()))
       .then((response) => {
-        console.log(response);
         const data = JSON.parse(response);
-        console.log(data);
+
         if (data.status === "success") {
-          handleLogin(data);
+          userDispatch({ type: "STORE_USER_DATA", user: data });
           history.push("/home");
         } else {
+          formDispatch({
+            type: "SET_ERROR",
+            data: data.message,
+          });
         }
+      })
+      .catch((error) => {
+        console.log("error", error);
+        formDispatch({
+          type: "SET_ERROR",
+          data: "unable to connect to server",
+        });
       });
   };
 
@@ -77,7 +92,7 @@ function LoginPage() {
                 // value={user.email}
                 {...register("identifier")}
               />
-              <p class="text-xs text-red-500 ml-1 mt-1">
+              <p className="text-xs text-red-500 ml-1 mt-1">
                 {errors.identifier?.message}
               </p>
             </label>
@@ -92,7 +107,7 @@ function LoginPage() {
                 // onChange={handleChange}
                 // value={user.password}
               />
-              <p class="text-xs text-red-500 ml-1 mt-1">
+              <p className="text-xs text-red-500 ml-1 mt-1">
                 {errors.password?.message}
               </p>
             </label>

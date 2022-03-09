@@ -35,7 +35,7 @@ function CablePlansModal() {
   ) => {
     formDispatch({
       type: "INPUTVALUES",
-      data: { name: "plans_id", value: plans_id },
+      data: { name: "cablePlan_id", value: plans_id },
     });
     formDispatch({
       type: "INPUTVALUES",

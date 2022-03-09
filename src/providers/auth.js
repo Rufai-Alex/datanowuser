@@ -10,21 +10,20 @@ import {
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  // const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [showModal, setShowModal] = useState(false);
 
   const [isAuth, setIsAuth] = useState(true);
   // const [formData, formDispatch] = useReducer(formState, {});
 
-  const handleLogin = (user) => {
-    localStorage.setItem("user", JSON.stringify(user));
-    console.log(user.data.token);
-    setUser(user.data);
-  };
+  // const handleLogin = (user) => {
+  //   localStorage.setItem("user", JSON.stringify(user));
+  //   console.log(user.data.token);
+  //   setUser(user.data);
+  // };
 
   const memorizedValues = useMemo(
     () => ({
-      user,
       showModal,
 
       isAuth,
@@ -32,9 +31,9 @@ const AuthProvider = ({ children }) => {
       // formData,
       // formDispatch,
 
-      handleLogin,
+      // handleLogin,
     }),
-    [user, isAuth, showModal],
+    [isAuth, showModal],
   );
 
   return (

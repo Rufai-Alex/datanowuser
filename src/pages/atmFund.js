@@ -6,18 +6,94 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useHistory, Link } from "react-router-dom";
 import { AuthContext } from "../providers/auth";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../providers/userData";
+import { AppDataContext } from "../providers/appData";
+import { FormContext } from "../providers/formValues";
+import loadingSmall from "../icons/loadingSmall.svg";
 
 function AtmFund() {
-  const { user, appData } = useContext(AuthContext);
+  const { user, userDispatch } = useContext(UserContext);
+  const { appData, dispatch } = useContext(AppDataContext);
+  const { formData, formDispatch } = useContext(FormContext);
+  const [sending, setSending] = useState(false);
+  const formOnChange = (e) => {
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: e.target.name, value: e.target.value },
+    });
 
+    let charge = (e.target.value * 1.4) / 100;
+    let vat = (charge * 7) / 100;
+
+    let balance = e.target.value - charge - vat;
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "charge", value: charge + vat },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "balance", value: balance },
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.persist();
+    e.preventDefault();
+    setSending(true);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", "Bearer " + user.token);
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("amount", String(formData.amount));
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      //redirect: "follow",
+    };
+    fetch(localStorage.getItem("apiURL") + "fund_wallet", requestOptions)
+      .then((response) => (response = response.text()))
+      .then((response) => {
+        const data = JSON.parse(response);
+        if (data.status === "success") {
+          window.location = data.data.payment_url;
+          return;
+        }
+        setSending(false);
+        console.log(data);
+        if (data.status === "success") {
+          window.location = data.data.payment_url;
+        } else if (
+          data.message === "Token Expired" ||
+          data.message === "User Not Found"
+        ) {
+          history.push("/");
+        } else {
+          formDispatch({
+            type: "SET_ERROR",
+            data: data.message,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+        formDispatch({
+          type: "SET_ERROR",
+          data: "unable to connect to server",
+        });
+        setSending(false);
+      });
+  };
   const history = useHistory();
   const back = () => {
     history.push("/home");
   };
+  console.log(formData);
   return (
     <div className="flex flex-col items-center  max-w-md h-full">
-      <div class="flex bg-white  h-h90 flex-col w-full  rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
+      <div className="flex bg-white  h-h90 flex-col w-full  rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
             <div className="flex justify-between item-center">
@@ -25,7 +101,7 @@ function AtmFund() {
                 <img src={LeftAngle} alt="leftAngle" />
               </button>
 
-              <h2 className="ml-8 font-medium text-sm">Fund via Auto Agent</h2>
+              <h2 className="ml-8 font-medium text-sm">Fund via ATMt</h2>
             </div>
             <img src={bell} alt="bell" />
           </div>
@@ -78,23 +154,50 @@ function AtmFund() {
                       Amount to Recharge
                     </p>
                     <input
+                      name="amount"
                       type="number"
                       className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
                       placeholder={
                         "Enter amount-Min ₦ " +
                         appData.settings.minimum_atm_funding
                       }
+                      value={formData.amount}
+                      onChange={(e) => {
+                        formOnChange(e);
+                      }}
                     />
+                    <p className="font-medium text-xs text-primary-black mt-4">
+                      TRANSACTION FEE:{" "}
+                      {formData.balance && (
+                        <b className="text-red-500">₦{formData.charge}</b>
+                      )}
+                    </p>
+                    <p className="font-medium text-xs text-primary-black mt-4">
+                      {formData.balance && (
+                        <b>₦{formData.balance} WILL BE PAID INTO YOUR WALLET</b>
+                      )}
+                    </p>
                   </label>
                 </div>
               </div>
               <div>
-                <span class="block w-full rounded-md shadow-sm">
+                <span className="block w-full rounded-md shadow-sm">
                   <button
                     type="button"
-                    class="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                    className="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                    onClick={handleSubmit}
                   >
-                    Pay
+                    {sending ? (
+                      <div className="flex items-center justify-center">
+                        <img
+                          src={loadingSmall}
+                          alt="loading ..."
+                          className="w-7 h-7 "
+                        />
+                      </div>
+                    ) : (
+                      ` Pay`
+                    )}
                   </button>
                 </span>
               </div>

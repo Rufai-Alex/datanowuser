@@ -4,23 +4,25 @@ import etisalat from "../icons/9mobile.svg";
 import glo from "../icons/glo.svg";
 import airtel from "../icons/airtel.svg";
 import mtn from "../icons/mtn.svg";
+import loadingSmall from "../icons/loadingSmall.svg";
 import axios from "axios";
 import Nav from "../components/nav";
 import { useHistory } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../providers/auth";
 import { FormContext } from "../providers/formValues";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { airtimePurchaseSchema } from "../components/validation";
 import { getOS } from "../helper/getOs";
 import { AppDataContext } from "../providers/appData";
+import { UserContext } from "../providers/userData";
 
 function AirtimePurchase() {
   const history = useHistory();
-  const { user } = useContext(AuthContext);
+  const { user, userDispatch } = useContext(UserContext);
   const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
+  const [sending, setSending] = useState(false);
   const {
     register,
     handleSubmit,
@@ -74,112 +76,216 @@ function AirtimePurchase() {
   function next(where) {
     history.push(where);
   }
+
   const onsubmit = (e) => {
     e.preventDefault();
-    // const dataWallet = new URLSearchParams();
-    // dataWallet = {
-    //   source: getOS(),
-    //   phone_number: formData.phone_number,
-    //   email: user.data.email,
-    //   name: user.data.firstname,
-    //   amount: formData.amount,
-    //   network: formData.network,
-    //   password: formData.password,
-    //   ref: formData.ref,
-    // };
-    // const dataAtm = {
-    //   source: getOS(),
-    //   phone_number: formData.phone_number,
-    //   amount: formData.amount,
-    //   network: formData.network,
-    //   email: user.data.email,
-    //   name: user.data.firstname,
-    //   ref: formData.ref,
-    // };
-    const data = new URLSearchParams();
+    setSending(true);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("Accept", "application/json");
+    user.data && myHeaders.append("Authorization", "Bearer " + user.token);
 
-    formData.paymentMethod === "walletPayment" &&
-      data.append("password", String(formData.password));
-    data.append("email", String(user.data.email));
-    data.append("network", String(formData.network));
-    data.append("phone_number", String(formData.phone_number));
-    data.append("amount", String(formData.amount));
-    data.append("source", getOS());
-    data.append("ref", formData.ref);
+    var urlencoded = new URLSearchParams();
 
-    console.log(JSON.parse(localStorage.getItem("token")));
-    // const headers = {
-    //   "Content-Type": "application/x-www-form-urlencoded",
-    //   Accept: "application/json",
-    //   Authorization: "Bearer " + JSON.parse(localStorage.getItem("token")),
-    // };
+    // formData.paymentMethod == "walletpayment" &&
+    //   urlencoded.append("password", String(formData.password));
 
-    console.log();
-    const url =
-      formData.paymentMethod === "walletPayment"
-        ? localStorage.getItem("apiURL") + "wallet_airtime_purchase"
-        : localStorage.getItem("apiURL") + "atm_airtime_purchase";
-    axios
-      .post(url, data, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: "Bearer " + JSON.parse(localStorage.getItem("token")),
-        },
-      })
+    // formData.paymentMethod == "atmpayment" &&
+    //   urlencoded.append("email", String(user.data.email));
+
+    // eslint-disable-next-line no-lone-blocks
+    {
+      formData.paymentMethod === "atmpayment"
+        ? urlencoded.append("email", String(user.data.email))
+        : urlencoded.append("password", String(formData.password));
+    }
+    urlencoded.append("network", String(formData.network));
+    urlencoded.append("phone_number", String(formData.phone_number));
+    urlencoded.append("amount", String(formData.amount));
+    urlencoded.append("source", getOS());
+    urlencoded.append("ref", formData.ref);
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      //redirect: "follow",
+    };
+    console.log(requestOptions);
+    console.log(formData.paymentMethod);
+
+    fetch(
+      localStorage.getItem("apiURL") + "wallet_airtime_purchase",
+      requestOptions,
+    )
+      .then((response) => (response = response.text()))
       .then((response) => {
-        if (response.OK) {
+        console.log(response);
+        const data = JSON.parse(response);
+        console.log("====================================");
+        console.log(response);
+        console.log("====================================");
+
+        console.log(data);
+        if (data.status === "success") {
+          setSending(false);
+          if (formData.paymentMethod === "atmPayment")
+            window.location = data.data.payment_url;
+          else
+            formDispatch({
+              type: "SET_FORM_DATA",
+              data: {
+                name: "responseModal",
+                value: { isOpen: true, text: data.message },
+              },
+            });
+          alert(data.message);
+        } else if (data.errors) {
+          setSending(false);
+          let errorString = "";
+          const objectValues = Object.values(data.errors);
+          objectValues.map((error) => {
+            errorString = errorString + error + ", ";
+          });
+          alert(errorString);
+          formDispatch({
+            type: "SET_ERROR",
+            data: errorString,
+          });
+
+          formDispatch({
+            type: "SET_FORM_DATA",
+            data: { name: "ref", value: Math.random().toString(36).slice(2) },
+          });
+        } else if (data.message === "User Not Found") {
+          setSending(false);
+          history.push("/signout");
         } else {
-          return response.json().then((data) => {
-            console.log(data);
+          setSending(false);
+          formDispatch({
+            type: "SET_ERROR",
+            data: data.message,
+          });
+          alert(data.message);
+          formDispatch({
+            type: "SET_FORM_DATA",
+            data: { name: "ref", value: Math.random().toString(36).slice(2) },
           });
         }
       })
-      .catch((response) => {
-        console.log(response.message);
+      .catch((error) => {
+        console.log("error", error);
+        setSending(false);
+        formDispatch({
+          type: "SET_ERROR",
+          data: "unable to connect to server",
+        });
+        alert("error", error);
       });
   };
-  // const onsubmit = (e) => {
-  //   e.preventDefault();
-  //   debugger;
-  //   var myHeaders = new Headers();
-  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-  //   myHeaders.append("Accept", "application/json");
+  const onsubmitAtm = (e) => {
+    e.preventDefault();
+    setSending(true);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("Accept", "application/json");
+    user.data && myHeaders.append("Authorization", "Bearer " + user.token);
 
-  //   myHeaders.append(
-  //     "Authorization",
-  //     "Bearer " + JSON.parse(localStorage.getItem("token")),
-  //   );
+    var urlencoded = new URLSearchParams();
 
-  //   var urlencoded = new URLSearchParams();
+    // formData.paymentMethod == "walletpayment" &&
+    //   urlencoded.append("password", String(formData.password));
 
-  //   urlencoded.append("password", String(formData.password));
+    // formData.paymentMethod == "atmpayment" &&
+    //   urlencoded.append("email", String(user.data.email));
 
-  //   urlencoded.append("email", String(user.data.email));
-  //   urlencoded.append("network", String(formData.network));
-  //   urlencoded.append("phone_number", String(formData.phone_number));
-  //   urlencoded.append("amount", String(formData.amount));
-  //   urlencoded.append("source", getOS());
-  //   urlencoded.append("ref", formData.ref);
-  //   var requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: urlencoded,
-  //     //redirect: "follow",
-  //   };
-  //   fetch(
-  //     localStorage.getItem("apiURL") + "wallet_airtime_purchase",
-  //     requestOptions,
-  //   )
-  //     .then((response) => (response = response.text()))
-  //     .then((response) => {
-  //       const data = JSON.parse(response);
-  //       console.log(data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+    // eslint-disable-next-line no-lone-blocks
+
+    urlencoded.append("email", String(user.data.email));
+
+    urlencoded.append("network", String(formData.network));
+    urlencoded.append("phone_number", String(formData.phone_number));
+    urlencoded.append("amount", String(formData.amount));
+    urlencoded.append("source", getOS());
+    urlencoded.append("ref", formData.ref);
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      //redirect: "follow",
+    };
+    console.log(requestOptions);
+    console.log(formData.paymentMethod);
+
+    fetch(
+      localStorage.getItem("apiURL") + "atm_airtime_purchase",
+      requestOptions,
+    )
+      .then((response) => (response = response.text()))
+      .then((response) => {
+        console.log(response);
+        const data = JSON.parse(response);
+        console.log("====================================");
+        console.log(response);
+        console.log("====================================");
+        if (data.status === "success") {
+          window.location = data.data.payment_url;
+          setSending(false);
+          return;
+        }
+
+        console.log(data);
+        if (data.status === "success") {
+          if (formData.paymentMethod === "atmPayment")
+            window.location = data.data.payment_url;
+          else
+            formDispatch({
+              type: "SET_FORM_DATA",
+              data: {
+                name: "responseModal",
+                value: { isOpen: true, text: data.message },
+              },
+            });
+        } else if (data.errors) {
+          let errorString = "";
+          const objectValues = Object.values(data.errors);
+          objectValues.map((error) => {
+            errorString = errorString + error + ", ";
+          });
+          formDispatch({
+            type: "SET_ERROR",
+            data: errorString,
+          });
+          formDispatch({
+            type: "SET_FORM_DATA",
+            data: { name: "ref", value: Math.random().toString(36).slice(2) },
+          });
+        } else if (data.message === "User Not Found") {
+          history.push("/signout");
+        } else {
+          formDispatch({
+            type: "SET_ERROR",
+            data: data.message,
+          });
+          formDispatch({
+            type: "SET_FORM_DATA",
+            data: { name: "ref", value: Math.random().toString(36).slice(2) },
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+        formDispatch({
+          type: "SET_ERROR",
+          data: "unable to connect to server",
+        });
+      });
+  };
+
+  const alex = formData.paymentMethod === "atmPayment";
+  console.log(alex);
   return (
     <div className="flex flex-col items-center  max-w-md ">
-      <div class="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
+      <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
             <div className="flex justify-between item-center">
@@ -405,7 +511,7 @@ function AirtimePurchase() {
                   <h3 className="mt-4 font-medium text-primary-black text-sm">
                     Payment Method
                   </h3>
-                  <div class="flex gap-4 item-center">
+                  <div className="flex gap-4 item-center">
                     <button
                       type="button"
                       className={
@@ -443,32 +549,65 @@ function AirtimePurchase() {
                   </p>
 
                   <div className="w-full">
-                    <div className=" relative ">
-                      <label>
-                        <p className="mt-4 font-medium text-primary-black text-sm">
-                          Password
-                        </p>
-                        <input
-                          type="password"
-                          className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
-                          placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-                          name="password"
-                          onChange={(e) => {
-                            formOnChange(e);
-                          }}
-                          value={formData.password}
-                        />
-                      </label>
-                    </div>
+                    {alex ? (
+                      ""
+                    ) : (
+                      <div className=" relative ">
+                        <label>
+                          <p className="mt-4 font-medium text-primary-black text-sm">
+                            Password
+                          </p>
+                          <input
+                            type="password"
+                            className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
+                            placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                            name="password"
+                            onChange={(e) => {
+                              formOnChange(e);
+                            }}
+                            value={formData.password}
+                          />
+                        </label>
+                      </div>
+                    )}
                   </div>
                   <div>
-                    <span class="block w-full rounded-md shadow-sm">
-                      <button
-                        type="submit"
-                        class="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
-                      >
-                        Pay
-                      </button>
+                    <span className="block w-full rounded-md shadow-sm">
+                      {alex ? (
+                        <button
+                          onClick={onsubmitAtm}
+                          className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange  text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                        >
+                          {sending ? (
+                            <div className="flex items-center justify-center">
+                              <img
+                                src={loadingSmall}
+                                alt="biller icon"
+                                className="w-7 h-7 "
+                              />
+                            </div>
+                          ) : (
+                            `Pay`
+                          )}
+                        </button>
+                      ) : (
+                        <button
+                          onClick={onsubmit}
+                          className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange  text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                        >
+                          {sending ? (
+                            <div className="flex items-center justify-center">
+                              <img
+                                src={loadingSmall}
+                                alt="loading ..."
+                                className="w-7 h-7 "
+                              />
+                            </div>
+                          ) : (
+                            `Pay`
+                          )}
+                        </button>
+                      )}
                     </span>
                   </div>
                 </div>

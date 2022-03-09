@@ -7,16 +7,19 @@ import "./index.css";
 import App from "./App";
 import FormContextProvider from "./providers/formValues";
 import AppDataContextProvider from "./providers/appData";
+import UserContextProvider from "./providers/userData";
 
 ReactDOM.render(
   <BrowserRouter>
-    <AppDataContextProvider>
-      <FormContextProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </FormContextProvider>
-    </AppDataContextProvider>
+    <UserContextProvider>
+      <AppDataContextProvider>
+        <FormContextProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </FormContextProvider>
+      </AppDataContextProvider>
+    </UserContextProvider>
   </BrowserRouter>,
   document.getElementById("root"),
 );

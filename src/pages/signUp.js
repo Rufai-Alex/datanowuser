@@ -97,7 +97,7 @@ function SignUp() {
                 style={{ transition: "all .15s ease" }}
                 {...register("name")}
               />
-              <p class="text-xs text-red-500 ml-1 mt-1">
+              <p className="text-xs text-red-500 ml-1 mt-1">
                 {errors.name?.message}
               </p>
             </label>
@@ -110,7 +110,7 @@ function SignUp() {
                 style={{ transition: "all .15s ease" }}
                 {...register("phone_number")}
               />
-              <p class="text-xs text-red-500 ml-1 mt-1">
+              <p className="text-xs text-red-500 ml-1 mt-1">
                 {errors.phone_number?.message}
               </p>
             </label>
@@ -124,7 +124,7 @@ function SignUp() {
                 style={{ transition: "all .15s ease" }}
                 {...register("email")}
               />{" "}
-              <p class="text-xs text-red-500 ml-1 mt-1">
+              <p className="text-xs text-red-500 ml-1 mt-1">
                 {errors.email?.message}
               </p>
             </label>
@@ -147,7 +147,7 @@ function SignUp() {
                 style={{ transition: "all .15s ease" }}
                 {...register("password")}
               />{" "}
-              <p class="text-xs text-red-500 mt-1 ml-1">
+              <p className="text-xs text-red-500 mt-1 ml-1">
                 {errors.password?.message}
               </p>
             </label>
@@ -159,20 +159,20 @@ function SignUp() {
                 className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
                 style={{ transition: "all .15s ease" }}
               />{" "}
-              <p class="text-xs text-red-500 ml-1 mt-1">
+              <p className="text-xs text-red-500 ml-1 mt-1">
                 {errors.confirmPassword && " Both passwords should match!"}
               </p>
             </label>
           </div>
           <button
             type="submit"
-            class="py-2 px-4 bg-primary-orange hover:bg-yellow-300 focus:bg-yellow-100 focus:ring-primary-orange text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 mt-10 rounded-lg "
+            className="py-2 px-4 bg-primary-orange hover:bg-yellow-300 focus:bg-yellow-100 focus:ring-primary-orange text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 mt-10 rounded-lg "
           >
             Create your account
           </button>
         </form>
 
-        <div class="flex w-full "></div>
+        <div className="flex w-full "></div>
         <span className="justify-center text-sm text-center text-gray-500 flex-items-center dark:text-gray-400 mt-12">
           Have an account?
           <a

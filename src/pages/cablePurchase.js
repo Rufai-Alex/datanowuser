@@ -4,17 +4,23 @@ import dstv from "../icons/dstv.svg";
 import startimes from "../icons/startimes.svg";
 import gotv from "../icons/gotv.svg";
 import Nav from "../components/nav";
+import loadingSmall from "../icons/loadingSmall.svg";
+
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../providers/auth";
 import { FormContext } from "../providers/formValues";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppDataContext } from "../providers/appData";
 import CablePlansModal from "../components/cablePalnsModals";
+import { UserContext } from "../providers/userData";
+import PaymentType from "../components/paymentType";
 
 function CablePurchase() {
-  const { user, setShowModal, showModal } = useContext(AuthContext);
+  const { setShowModal, showModal } = useContext(AuthContext);
+  const { user, userDispatch } = useContext(UserContext);
   const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
+  const [sending, setSending] = useState(false);
 
   const formOnChange = (e) => {
     formDispatch({
@@ -54,10 +60,65 @@ function CablePurchase() {
       data: { name: "walletPrice", value: walletPrice },
     });
   };
+  const verifyReceiver = (e) => {
+    setSending(true);
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", "Bearer " + user.token);
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("smartcard_number", String(formData.smartcard_number));
+    urlencoded.append("plan_id", String(formData.cablePlan_id));
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+    };
+    fetch(localStorage.getItem("apiURL") + "verify_smartcard", requestOptions)
+      .then((response) => (response = response.text()))
+      .then((response) => {
+        const data = JSON.parse(response);
+
+        setSending(false);
+        console.log(data);
+        if (data.status === "success") {
+          formDispatch({
+            type: "INPUTVALUES",
+            data: { name: "receiverName", value: data.data.Customer_Name },
+          });
+          formDispatch({
+            type: "SET_ERROR",
+            data: "",
+          });
+        } else if (
+          data.message === "Token Expired" ||
+          data.message === "User Not Found"
+        ) {
+          history.push("/signout");
+        } else {
+          formDispatch({
+            type: "SET_ERROR",
+            data: data.message,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+        formDispatch({
+          type: "SET_ERROR",
+          data: "unable to connect to server",
+        });
+        setSending(false);
+      });
+  };
   document.title = "Purchase Cable TV-" + appData.business.name;
+  console.log("====================================");
+  console.log(formData);
+  console.log("====================================");
   return (
     <div className="flex flex-col items-center  max-w-sm mx-auto ">
-      <div class="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
+      <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
             <div className="flex justify-between item-center">
@@ -144,31 +205,6 @@ function CablePurchase() {
                 <div className="w-full">
                   <div className=" relative ">
                     <label>
-                      <div className="flex justify-between">
-                        <span className="font-medium text-primary-black text-sm">
-                          Smart Card Number
-                        </span>
-                        <span className="font-medium text-primary-gray text-sm">
-                          Balance: {`₦ ${user.data.wallet_balance}`}
-                        </span>
-                      </div>
-
-                      <div class="flex relative mt-2.5">
-                        <input
-                          type="text"
-                          class=" rounded-l-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent "
-                          placeholder="0000 0000 0000"
-                        />
-                        <span class="rounded-r-md inline-flex bg-primary-orange items-center px-3 border-t text-white border-r border-b  border-gray-300 shadow-sm text-sm">
-                          <button class="">Verify</button>
-                        </span>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-                <div className="w-full">
-                  <div className=" relative ">
-                    <label>
                       <p className="mt-4 font-medium text-primary-black text-sm">
                         Provider Plans
                       </p>
@@ -191,35 +227,60 @@ function CablePurchase() {
                     {console.log(showModal)}
                   </div>
                 </div>
-                <h3 className="mt-4 font-medium text-primary-black text-sm">
-                  Payment Method
-                </h3>
-                <div class="flex gap-4 item-center">
-                  <button
-                    type="button"
-                    className={
-                      "py-2 px-4 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-gray-300 text-center text-base font-medium shadow-md   rounded-lg " +
-                      (formData.paymentMethod === "walletPayment"
-                        ? "bg-primary-black text-white"
-                        : "bg-white text-primary-black")
-                    }
-                    onClick={() => selectpaymentMethod("walletPayment")}
-                  >
-                    Wallet
-                  </button>
-                  <button
-                    type="button"
-                    className={
-                      "py-2 px-4 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-gray-300 text-center text-base font-medium shadow-md   rounded-lg " +
-                      (formData.paymentMethod === "atmPayment"
-                        ? "bg-primary-black text-white"
-                        : "bg-white text-primary-black")
-                    }
-                    onClick={() => selectpaymentMethod("atmPayment")}
-                  >
-                    ATM
-                  </button>
-                </div>{" "}
+                <div className="w-full">
+                  <div className=" relative ">
+                    <label>
+                      <div className="w-full">
+                        <div className=" relative ">
+                          <label>
+                            <div className="flex justify-between">
+                              <span className="font-medium text-primary-black text-sm">
+                                Smart Card Number
+                              </span>
+                              <span className="font-medium text-primary-gray text-sm">
+                                Balance: {`₦ ${user.data.wallet_balance}`}
+                              </span>
+                            </div>
+                            <div className="flex relative mt-2.5">
+                              <input
+                                type="tel"
+                                name="smartcard_number"
+                                className=" rounded-l-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent "
+                                placeholder="0000 0000 0000"
+                                value={formData.smartcard_number}
+                                onChange={(e) => {
+                                  formOnChange(e);
+                                }}
+                              />
+                              <span className="rounded-r-md inline-flex bg-primary-orange items-center px-3 border-t text-white border-r border-b  border-gray-300 shadow-sm text-sm">
+                                <button className="" onClick={verifyReceiver}>
+                                  {sending ? (
+                                    <div className="flex items-center justify-center">
+                                      <img
+                                        src={loadingSmall}
+                                        alt="loading ..."
+                                        className="w-7 h-7 "
+                                      />
+                                    </div>
+                                  ) : formData.receiverName ? (
+                                    `Verified`
+                                  ) : (
+                                    `Verify`
+                                  )}
+                                </button>
+                              </span>
+                            </div>
+                            <p className="text-xs text-right">
+                              {formData.receiverName}
+                            </p>
+                          </label>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <PaymentType />
                 <p className="mt-4 font-medium text-primary-black text-sm">
                   Total Price: ₦
                   {formData.paymentMethod === "atm"
@@ -227,28 +288,33 @@ function CablePurchase() {
                     : formData.walletPrice}
                 </p>
                 <div className="w-full">
-                  <div className=" relative ">
-                    <label>
-                      <p className="mt-4 font-medium text-primary-black text-sm">
-                        Password
-                      </p>
-                      <input
-                        type="password"
-                        className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
-                        name="password"
-                        onChange={(e) => {
-                          formOnChange(e);
-                        }}
-                        value={formData.password}
-                      />
-                    </label>
-                  </div>
+                  {formData.atmPayment ? (
+                    ""
+                  ) : (
+                    <div className=" relative ">
+                      <label>
+                        <p className="mt-4 font-medium text-primary-black text-sm">
+                          Password
+                        </p>
+                        <input
+                          type="password"
+                          className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
+                          placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                          name="password"
+                          onChange={(e) => {
+                            formOnChange(e);
+                          }}
+                          value={formData.password}
+                        />
+                      </label>
+                    </div>
+                  )}
                 </div>
                 <div>
-                  <span class="block w-full rounded-md shadow-sm">
+                  <span className="block w-full rounded-md shadow-sm">
                     <button
                       type="button"
-                      class="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                      className="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
                     >
                       Pay
                     </button>

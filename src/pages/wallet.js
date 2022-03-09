@@ -99,7 +99,7 @@ function Wallet() {
               />
             </div>
           </div>
-          <div class="flex w-full my-4">
+          <div className="flex w-full my-4">
             <button
               type="submit"
               className="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
@@ -152,11 +152,11 @@ function Wallet() {
         </div>
       </div>
       <div className="flex items-center justify-between px-4 mb-6">
-        <div class="flex items-center  justify-center h-11 w-11  rounded-md bg-primary-black text-white">
+        <div className="flex items-center  justify-center h-11 w-11  rounded-md bg-primary-black text-white">
           <img src={leftsAngle} alt="whatsapp" />
         </div>
         <div className="font-medium text-xx "> 1 0f 10</div>
-        <button class="flex items-center justify-center h-11 w-11   rounded-md bg-primary-black text-white">
+        <button className="flex items-center justify-center h-11 w-11   rounded-md bg-primary-black text-white">
           <img src={rightAngle} alt="whatsapp" />
         </button>
       </div>
