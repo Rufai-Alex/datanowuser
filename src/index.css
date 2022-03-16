@@ -29,6 +29,3 @@ body {
 .border-r-w1 {
   border-right-width: 1px;
 }
-.minScreen {
-  min-height: calc(100vh - 3.2rem);
-}

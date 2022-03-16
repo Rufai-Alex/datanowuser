@@ -1,15 +1,9 @@
 import bell from "../icons/Bell.svg";
 import LeftAngle from "../icons/LeftAngle.svg";
 import Nav from "../components/nav";
-
 import { useHistory } from "react-router-dom";
-import { useContext } from "react";
-import { UserContext } from "../providers/userData";
-import { AppDataContext } from "../providers/appData";
 
 function Profile() {
-  const { user, userDispatch } = useContext(UserContext);
-  const { appData, dispatch } = useContext(AppDataContext);
   const history = useHistory();
   const back = () => {
     history.push("/home");
@@ -33,7 +27,7 @@ function Profile() {
                 Firstname:
               </p>
               <p className="font-semibold text-sm text-primary-black ">
-                {user.data.firstname}
+                Dhul-qorunain
               </p>
             </div>
             <div className="flex justify-between ">
@@ -41,9 +35,7 @@ function Profile() {
               <p className="font-medium text-sm text-primary-gray">
                 Lastname :
               </p>
-              <p className="font-semibold text-sm text-primary-black ">
-                {user.data.othername}
-              </p>
+              <p className="font-semibold text-sm text-primary-black ">Rufai</p>
             </div>
             <div className="flex justify-between ">
               {" "}
@@ -51,7 +43,7 @@ function Profile() {
                 Email address :
               </p>
               <p className="font-semibold text-sm text-primary-black ">
-                {user.data.email}
+                abc@gmail.com
               </p>
             </div>
             <div className="flex justify-between ">
@@ -59,7 +51,7 @@ function Profile() {
                 Phone Number
               </p>
               <p className="font-semibold text-sm text-primary-black ">
-                {user.data.phone_number}
+                08106653903
               </p>
             </div>
           </div>

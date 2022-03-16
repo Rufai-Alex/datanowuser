@@ -5,13 +5,8 @@ import sms from "../icons/sms.svg";
 import location from "../icons/location.svg";
 import map from "../icons/Basemap image.svg";
 import Nav from "../components/nav";
-import { useContext } from "react";
-import { UserContext } from "../providers/userData";
-import { AppDataContext } from "../providers/appData";
-import { getOS } from "../helper/getOs";
+
 function Contact() {
-  const { appData, dispatch } = useContext(AppDataContext);
-  const { user, userDispatch } = useContext(UserContext);
   return (
     <div className="flex flex-col items-center justify-center   max-w-md ">
       <div className="flex  flex-col h-h90 w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
@@ -33,7 +28,7 @@ function Contact() {
               Location
             </h2>
             <p className=" text-xs self-center font-semibold mt-2 text-primary-black">
-              {appData.business.address}
+              Ilorin, Kwara State, Nigeria
             </p>
           </div>
           <div className="flex flex-col mt-5">
@@ -41,9 +36,7 @@ function Contact() {
               Email address
             </h2>
             <p className="text-xs self-center font-semibold mt-2 text-primary-black">
-              <a href={"Mailto:" + appData.settings.contact_email_address}>
-                {appData.settings.contact_email_address}
-              </a>
+              support@systemstech.com.ng
             </p>
           </div>
           <div className="flex flex-col mt-5">
@@ -51,46 +44,21 @@ function Contact() {
               Phone number
             </h2>
             <div className="flex flex-col self-center font-semibold mt-2 gap-1 text-primary-black">
-              <p className="text-xs">
-                {" "}
-                <a href={"tel:" + appData.settings.contact_call_number2}>
-                  {" "}
-                  {appData.settings.contact_call_number2}
-                </a>
-              </p>
-              <p className="text-xs">
-                <a href={"tel:" + appData.settings.contact_call_number1}>
-                  {" "}
-                  {appData.settings.contact_call_number1}
-                </a>
-              </p>
+              <p className="text-xs">08168670476</p>
+              <p className="text-xs">08168670476</p>
+              <p className="text-xs">08168670476</p>
             </div>
             <div className=" mt-8">
               <h3 className="flex flex-col text-primary-gray text-center font-medium text-sm">
                 {" "}
                 Quick Links
               </h3>
-              <div className="flex mt-2 space-x-4">
+              <div className="flex mt-2">
                 <button className="flex items-center mx-auto justify-center h-11 w-11 rounded-md bg-primary-orange text-white">
-                  <a
-                    target="_"
-                    href={
-                      getOS() === "WEB"
-                        ? "https://web.whatsapp.com/send?phone=234" +
-                          appData.settings.contact_whatsapp_number +
-                          "&text=Hello!"
-                        : "https://api.whatsapp.com/send?phone=234" +
-                          appData.settings.contact_whatsapp_number +
-                          "&text=Hello!"
-                    }
-                  >
-                    <img src={whatsapp} alt="whatsapp" />
-                  </a>
+                  <img src={whatsapp} alt="whatsapp" />
                 </button>
                 <button className="flex items-center mx-auto justify-center h-11 w-11 rounded-md bg-primary-orange text-white">
-                  <a href={"Mailto:" + appData.settings.contact_email_address}>
-                    <img src={sms} alt="E-mail" />
-                  </a>
+                  <img src={sms} alt="sms" />
                 </button>
                 <button className="flex items-center mx-auto justify-center h-11 w-11 rounded-md bg-primary-orange text-white">
                   <img src={location} alt="location " />

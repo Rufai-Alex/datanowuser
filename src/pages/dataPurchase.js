@@ -15,11 +15,6 @@ import { AppDataContext } from "../providers/appData";
 import PlansModels from "../components/plansModels";
 import { UserContext } from "../providers/userData";
 import PaymentType from "../components/paymentType";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { DataPurchaseSchema } from "../components/validation";
-
-import { ErrorMessage } from "@hookform/error-message";
 
 function DataPurchase() {
   const { setShowModal, showModal } = useContext(AuthContext);
@@ -27,18 +22,6 @@ function DataPurchase() {
   const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
   // const [showModal, setShowModal] = useState(false);
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
-    criteriaMode: "all",
-  });
-  // const {
-  //   register,
-  //   formState: { errors },
-  //   handleSubmit,
-  // } = useForm();
   console.log(formData.network);
   const formOnChange = (e) => {
     formDispatch({
@@ -89,14 +72,12 @@ function DataPurchase() {
   };
 
   const history = useHistory();
-
   const back = () => {
     history.push("/home");
   };
   document.title = "Purchase Data-" + appData.business.name;
   console.log(formData);
-  const process = (data) => {
-    console.log(data);
+  const process = () => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     myHeaders.append("Accept", "application/json");
@@ -186,9 +167,6 @@ function DataPurchase() {
     ? localStorage.getItem("apiURL") + "atm_data_purchase"
     : localStorage.getItem("apiURL") + "wallet_data_purchase";
   console.log(url);
-  const getData = (data) => {
-    console.log(data);
-  };
   return (
     <div className="flex flex-col items-center  max-w-md m-auto">
       <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
@@ -298,7 +276,7 @@ function DataPurchase() {
               </button>
             </div>
           </div>
-          <form onSubmit={handleSubmit(getData)}>
+          <div className="">
             <div className="mt-12">
               <div className="w-full space-y-6">
                 <div className="w-full">
@@ -312,42 +290,17 @@ function DataPurchase() {
                           Balance: {`₦ ${user.data.wallet_balance}`}
                         </span>
                       </div>
+
                       <input
-                        type="text"
+                        type="phone"
                         className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
                         placeholder="08X XXX XXXX"
                         name="phone_number"
-                        inputmode="numeric"
-                        pattern="[0-9]*"
                         value={formData.phone_number}
                         onChange={(e) => {
                           formOnChange(e);
                         }}
-                        {...register("phone_number", {
-                          required: "Please enter receiver phone number.",
-                          maxLength: {
-                            value: 11,
-                            message: "Please enter a correct phone number.",
-                          },
-
-                          minLength: {
-                            value: 11,
-                            message: "Please enter a correct phone number.",
-                          },
-                        })}
                       />
-                      <p className="text-xs text-red-500 ml-1 mt-1">
-                        <ErrorMessage
-                          errors={errors}
-                          name="phone_number"
-                          render={({ messages }) =>
-                            messages &&
-                            Object.entries(messages).map(([type, message]) => (
-                              <p key={type}>{message}</p>
-                            ))
-                          }
-                        />
-                      </p>
                     </label>
                   </div>
                 </div>
@@ -360,33 +313,17 @@ function DataPurchase() {
                       <input
                         type="text"
                         autocomplete="off"
-                        name="select_plan"
                         className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent mt-3 "
                         placeholder="Select plan"
                         value={formData.plans_name}
-                        onClick={() => {
+                        onFocus={() => {
                           setShowModal(!showModal);
 
                           console.log(showModal);
 
                           console.log("I am here");
                         }}
-                        {...register("select_plan", {
-                          required: "Please enter receiver phone number.",
-                        })}
                       ></input>
-                      <p className="text-xs text-red-500 ml-1 mt-1">
-                        <ErrorMessage
-                          errors={errors}
-                          name="select_plan"
-                          render={({ messages }) =>
-                            messages &&
-                            Object.entries(messages).map(([type, message]) => (
-                              <p key={type}>{message}</p>
-                            ))
-                          }
-                        />
-                      </p>
                     </label>
                     {/* ////////////////// */}
                     {showModal ? <PlansModels /> : null}
@@ -422,24 +359,7 @@ function DataPurchase() {
                             formOnChange(e);
                           }}
                           value={formData.password}
-                          {...register("password", {
-                            required: "Please enter your password.",
-                          })}
                         />
-                        <p className="text-xs text-red-500 ml-1 mt-1">
-                          <ErrorMessage
-                            errors={errors}
-                            name="password"
-                            render={({ messages }) =>
-                              messages &&
-                              Object.entries(messages).map(
-                                ([type, message]) => (
-                                  <p key={type}>{message}</p>
-                                ),
-                              )
-                            }
-                          />
-                        </p>
                       </label>
                     </div>
                   )}
@@ -447,7 +367,7 @@ function DataPurchase() {
                 <div>
                   <span className="block w-full rounded-md shadow-sm">
                     <button
-                      type="submit"
+                      type="button"
                       className="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
                     >
                       Pay
@@ -456,7 +376,7 @@ function DataPurchase() {
                 </div>
               </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <Nav />
