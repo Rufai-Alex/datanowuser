@@ -479,7 +479,9 @@ function AirtimePurchase() {
                           Amount to Recharge
                         </p>
                         <input
-                          type="number"
+                          type="text"
+                          inputmode="numeric"
+                          pattern="[0-9]*"
                           className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:border-transparent mt-3"
                           placeholder="Min ₦50, Max ₦10,000"
                           name="amount"
