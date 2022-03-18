@@ -54,7 +54,15 @@ function App() {
       .then((response) => response.json())
       .then((response) => {
         console.log(response);
-        debugger;
+
+        document.documentElement.style.setProperty(
+          "--primary-color",
+          response.data.business.primary_color,
+        );
+        document.documentElement.style.setProperty(
+          "--secondary-color",
+          response.data.business.secondary_color,
+        );
         dispatch({
           type: "STORE_APP_DATA",
           appData: {
@@ -110,14 +118,7 @@ function App() {
   //   console.log(localStorage.getItem("token"));
   //   // eslint-disable-next-line
   // }, []);
-  document.documentElement.style.setProperty(
-    "--primary-color",
-    appData.business.primary_color,
-  );
-  document.documentElement.style.setProperty(
-    "--secondary-color",
-    appData.business.secondary_color,
-  );
+
   if (!appData.settings) return <div></div>;
   else {
     return (
