@@ -81,16 +81,6 @@ function App() {
       ? fetchAppData()
       : new Date().getTime() - appData.timestamp > 7200000 && fetchAppData();
   }, []);
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--primary-color",
-      appData.business.primary_color,
-    );
-    document.documentElement.style.setProperty(
-      "--secondary-color",
-      appData.business.secondary_color,
-    );
-  }, []);
 
   console.log(user.data);
 
