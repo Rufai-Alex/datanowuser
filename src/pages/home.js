@@ -352,7 +352,7 @@ function Home() {
               </Link>
             </div>
           </div>
-          <div className=" mx-auto bg-primary-black  text-white flex  px-4 py-3 rounded-full mt-20 justify-center align-middle w-56 ">
+          <div className=" mx-auto bg-primary-black  text-white flex  px-4 py-3 rounded-full mt-20 justify-center items-center w-56 ">
             <Link to="faq">
               <button className="flex justify-center items-center ">
                 <img src={info} alt="info" />
