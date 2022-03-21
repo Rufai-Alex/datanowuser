@@ -164,7 +164,7 @@ function TranserToUser() {
   console.log(formData);
   console.log("====================================");
   return (
-    <div className="flex flex-col items-center  max-w-md h-full">
+    <div className="flex flex-col items-center  max-w-md h-full m-auto">
       <div className="flex bg-white  h-h90 flex-col w-full  rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">

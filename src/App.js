@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, Suspense } from "react";
 import Loading from "../src/components/Loading/Loading";
 import "./App.css";
 import { useReducer } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import AuthProvider, { AuthContext } from "./providers/auth";
 
 import axios from "axios";
@@ -31,9 +31,10 @@ const ElectricityPayments = React.lazy(() =>
 
 function App() {
   const { user, userDispatch } = useContext(UserContext);
-
   const { dispatch, appData } = useContext(AppDataContext);
   console.log(appData);
+
+  const history = useHistory();
 
   localStorage.setItem("apiURL", "https://api.datanow.ng/api/user/882285/");
   console.log(localStorage.getItem("apiURL") + "data");
@@ -71,6 +72,7 @@ function App() {
             ...response.data,
           },
         });
+        console.log(appData);
       });
   };
 
@@ -82,28 +84,76 @@ function App() {
       : new Date().getTime() - appData.timestamp > 7200000 && fetchAppData();
   }, []);
 
+  // document.documentElement.style.setProperty(
+  //   "--primary-color",
+  //   appData.business.primary_color,
+  // );
+  // document.documentElement.style.setProperty(
+  //   "--secondary-color",
+  //   appData.business.secondary_color,
+  // );
+
   console.log(user.data);
 
   console.log(appData);
+  // const refreshUser = () => {
+  //   //  formDispatch({
+  //   //    type: "SET_FORM_DATA",
+  //   //    data: { name: "isUserRefreshed", value: false },
+  //   //  });
 
-  const checkUser = () => {
-    const usr = JSON.parse(localStorage.getItem("user"));
-    const tkn = localStorage.getItem("token");
-    if (usr && tkn) {
-      //   setTimeout(() => {
-      //     setUser(usr);
-      //     setToken(tkn);
-      console.log(usr);
-      console.log(tkn);
-      //     setIsLoggedIn(true);
-      //     setLoading(false);
-      //   }, 3000);
-      // } else {
-      //   setLoading(false);
-    } else {
-      console.log("nothing");
-    }
-  };
+  //   //  formDispatch({
+  //   //    type: "SET_FORM_DATA",
+  //   //    data: { name: "isUserRefreshing", value: true },
+  //   //  });
+
+  //   var myHeaders = new Headers();
+  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  //   myHeaders.append("Accept", "application/json");
+  //   myHeaders.append("Authorization", "Bearer " + user.token);
+  //   var requestOptions = {
+  //     method: "GET",
+  //     headers: myHeaders,
+  //   };
+  //   fetch(
+  //     localStorage
+  //       .getItem("apiURL")
+  //       .substr(0, localStorage.getItem("apiURL").length - 1),
+  //     requestOptions,
+  //   )
+  //     .then((response) => (response = response.text()))
+  //     .then((response) => {
+  //       const data = JSON.parse(response);
+  //       console.log(data);
+  //       if (data.status === "success") {
+  //         console.log(data);
+  //         userDispatch({ type: "UPDATE_USER", action: data });
+  //       } else if (
+  //         data.message === "Token Expired" ||
+  //         data.message === "User Not Found"
+  //       ) {
+  //         history.push("/");
+  //       }
+
+  //       // formDispatch({
+  //       //   type: "SET_FORM_DATA",
+  //       //   data: { name: "isUserRefreshed", value: true },
+  //       // });
+  //     });
+
+  //   //  getAppData();
+  //   // if (!appData.settings) getAppData();
+  //   // else if (!appData.timestamp) getAppData();
+  //   // else if (new Date().getTime() - appData.timestamp > 7200000) getAppData();
+  //   document.documentElement.style.setProperty(
+  //     "--primary-color",
+  //     appData.business.primary_color,
+  //   );
+  //   document.documentElement.style.setProperty(
+  //     "--secondary-color",
+  //     appData.business.secondary_color,
+  //   );
+  // };
 
   const handleLogout = () => {
     sessionStorage.clear();

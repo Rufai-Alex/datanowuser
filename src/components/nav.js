@@ -46,7 +46,7 @@ function nav() {
             className="flex justify-center items-center flex-col text-primary-gray font-medium text-xx"
           >
             <img src={wallet} alt="wallet" />
-            Wallet
+            Beneficiaries
           </NavLink>
         </li>
         <li>

@@ -29,7 +29,64 @@ function Home() {
   const [showModal, setShowModal] = useState(false);
   console.log(user);
   console.log(appData);
+  const refreshUser = () => {
+    //  formDispatch({
+    //    type: "SET_FORM_DATA",
+    //    data: { name: "isUserRefreshed", value: false },
+    //  });
 
+    //  formDispatch({
+    //    type: "SET_FORM_DATA",
+    //    data: { name: "isUserRefreshing", value: true },
+    //  });
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", "Bearer " + user.token);
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+    };
+    fetch(
+      localStorage
+        .getItem("apiURL")
+        .substr(0, localStorage.getItem("apiURL").length - 1),
+      requestOptions,
+    )
+      .then((response) => (response = response.text()))
+      .then((response) => {
+        const data = JSON.parse(response);
+        console.log(data);
+        if (data.status === "success") {
+          console.log(data);
+          userDispatch({ type: "UPDATE_USER", action: data });
+        } else if (
+          data.message === "Token Expired" ||
+          data.message === "User Not Found"
+        ) {
+          history.push("/");
+        }
+
+        // formDispatch({
+        //   type: "SET_FORM_DATA",
+        //   data: { name: "isUserRefreshed", value: true },
+        // });
+      });
+
+    //  getAppData();
+    // if (!appData.settings) getAppData();
+    // else if (!appData.timestamp) getAppData();
+    // else if (new Date().getTime() - appData.timestamp > 7200000) getAppData();
+    document.documentElement.style.setProperty(
+      "--primary-color",
+      appData.business.primary_color,
+    );
+    document.documentElement.style.setProperty(
+      "--secondary-color",
+      appData.business.secondary_color,
+    );
+  };
   // var myHeaders = new Headers();
   // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
   // myHeaders.append("Accept", "application/json");
@@ -57,9 +114,12 @@ function Home() {
   //     }
   //   });
 
-  // useEffect(() => {
-  //   console.log("effect runing");
-  // }, []);
+  useEffect(() => {
+    refreshUser();
+    console.log("====================================");
+    console.log(" me refreshUser");
+    console.log("====================================");
+  }, []);
 
   return (
     <div className="h-screen w-full max-w-sm mx-auto relative">
