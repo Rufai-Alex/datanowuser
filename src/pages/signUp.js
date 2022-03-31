@@ -92,8 +92,8 @@ function SignUp() {
               <input
                 type="text"
                 name="name"
-                className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
-              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
+                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
+              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
                 style={{ transition: "all .15s ease" }}
                 {...register("name")}
               />
@@ -106,7 +106,7 @@ function SignUp() {
               <input
                 type="tel"
                 name="phone"
-                className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
+                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
                 style={{ transition: "all .15s ease" }}
                 {...register("phone_number")}
               />
@@ -119,8 +119,8 @@ function SignUp() {
               <input
                 type="email"
                 name="email"
-                className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
-              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
+                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
+              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
                 style={{ transition: "all .15s ease" }}
                 {...register("email")}
               />{" "}
@@ -133,7 +133,7 @@ function SignUp() {
               <input
                 type="email"
                 m
-                className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
+                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
                 style={{ transition: "all .15s ease" }}
               />{" "}
             </label>
@@ -142,8 +142,8 @@ function SignUp() {
               <input
                 type="password"
                 name="password"
-                className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
-              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
+                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
+              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
                 style={{ transition: "all .15s ease" }}
                 {...register("password")}
               />{" "}
@@ -156,7 +156,7 @@ function SignUp() {
               Confirm Password
               <input
                 type="password"
-                className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
+                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
                 style={{ transition: "all .15s ease" }}
               />{" "}
               <p className="text-xs text-red-500 ml-1 mt-1">

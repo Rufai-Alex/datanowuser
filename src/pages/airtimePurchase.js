@@ -457,7 +457,7 @@ function AirtimePurchase() {
 
                         <input
                           type="phone"
-                          className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
+                          className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
                           placeholder="08X XXX XXXX"
                           name="phone_number"
                           value={formData.phone_number}
@@ -482,7 +482,7 @@ function AirtimePurchase() {
                           type="text"
                           inputmode="numeric"
                           pattern="[0-9]*"
-                          className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:border-transparent mt-3"
+                          className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:   mt-3"
                           placeholder="Min ₦50, Max ₦10,000"
                           name="amount"
                           onChange={(e) => {
@@ -561,7 +561,7 @@ function AirtimePurchase() {
                           </p>
                           <input
                             type="password"
-                            className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
+                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
                             placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                             name="password"
                             onChange={(e) => {
