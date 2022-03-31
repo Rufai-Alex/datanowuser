@@ -33,7 +33,7 @@ function PaymentType() {
         <button
           type="button"
           className={
-            "py-2 px-4 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-gray-300 text-center text-base font-medium shadow-md   rounded-lg " +
+            "py-2 px-4 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-slate-300 text-center text-base font-medium shadow-md   rounded-lg " +
             (formData.walletPayment
               ? "bg-primary-black text-white"
               : "bg-white text-primary-black")
@@ -45,7 +45,7 @@ function PaymentType() {
         <button
           type="button"
           className={
-            "py-2 px-4 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-gray-300 text-center text-base font-medium shadow-md   rounded-lg " +
+            "py-2 px-4 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-slate-300 text-center text-base font-medium shadow-md   rounded-lg " +
             (formData.atmPayment
               ? "bg-primary-black text-white"
               : "bg-white text-primary-black")

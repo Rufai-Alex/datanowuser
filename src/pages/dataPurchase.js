@@ -5,6 +5,7 @@ import eisalat from "../icons/9mobile.svg";
 import glo from "../icons/glo.svg";
 import airtel from "../icons/airtel.svg";
 import mtn from "../icons/mtn.svg";
+import loadingSmall from "../icons/loadingSmall.svg";
 import close from "../icons/Close.svg";
 import Nav from "../components/nav";
 import { getOS } from "../helper/getOs";
@@ -20,12 +21,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { DataPurchaseSchema } from "../components/validation";
 
 import { ErrorMessage } from "@hookform/error-message";
+import Alert from "../components/Alert";
+import ConfirmationModel from "../components/confirmationModel";
 
 function DataPurchase() {
   const { setShowModal, showModal } = useContext(AuthContext);
   const { user, userDispatch } = useContext(UserContext);
   const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
+  const [sending, setSending] = useState(false);
+
   // const [showModal, setShowModal] = useState(false);
   const {
     register,
@@ -87,6 +92,24 @@ function DataPurchase() {
       data: { name: "network", value: network },
     });
   };
+  var networkPrefix = {
+    MTN: [
+      "0803",
+      "0703",
+      "0903",
+      "0806",
+      "0706",
+      "0813",
+      "0810",
+      "0814",
+      "0816",
+      "0906",
+      "0704",
+    ],
+    GLO: ["0805", "0705", "0905", "0807", "0815", "0811", "0905", "0915"],
+    AIRTEL: ["0802", "0902", "0701", "0808", "0708", "0812", "0901", "0907"],
+    ETISALAT: ["0809", "0909", "0817", "0818", "0908"],
+  };
 
   const history = useHistory();
 
@@ -95,8 +118,135 @@ function DataPurchase() {
   };
   document.title = "Purchase Data-" + appData.business.name;
   console.log(formData);
-  const process = (data) => {
-    console.log(data);
+  // const process = (data) => {
+  //   console.log(data);
+  //   var myHeaders = new Headers();
+  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  //   myHeaders.append("Accept", "application/json");
+  //   user.data && myHeaders.append("Authorization", "Bearer " + user.token);
+
+  //   var urlencoded = new URLSearchParams();
+  //   user.data &&
+  //     !formData.atmPayment &&
+  //     urlencoded.append("password", String(formData.password));
+  //   !user.data &&
+  //     formData.atmPayment &&
+  //     urlencoded.append("email", String(formData.email));
+  //   urlencoded.append("plan_id", String(formData.plans_id));
+  //   urlencoded.append("phone_number", String(formData.phone_number));
+  //   urlencoded.append("source", getOS());
+  //   urlencoded.append("ref", formData.ref);
+
+  //   var requestOptions = {
+  //     method: "POST",
+  //     headers: myHeaders,
+  //     body: urlencoded,
+  //     //redirect: "follow",
+  //   };
+  //   debugger;
+  //   fetch(
+  //     formData.atmPayment
+  //       ? localStorage.getItem("apiURL") + "atm_data_purchase"
+  //       : localStorage.getItem("apiURL") + "wallet_data_purchase",
+  //     requestOptions,
+  //   )
+  //     .then((response) => (response = response.text()))
+  //     .then((response) => {
+  //       const data = JSON.parse(response);
+  //       if (data.status === "success" && formData.atmPayment) {
+  //         window.location = data.data.payment_url;
+  //         return;
+  //       }
+
+  //       console.log(data);
+
+  //       if (data.status === "success") {
+  //         formDispatch({
+  //           type: "INPUTVALUES",
+  //           data: {
+  //             name: "Alert",
+  //             value: { isOpen: true, message: data.message },
+  //           },
+  //         });
+  //       } else if (
+  //         data.message === "Token Expired" ||
+  //         data.message === "User Not Found"
+  //       ) {
+  //         history.push("/");
+  //       } else if (data.errors) {
+  //         let errorString = "";
+  //         const objectValues = Object.values(data.errors);
+  //         objectValues.map((error) => {
+  //           errorString = errorString + error + ", ";
+  //         });
+  //         console.log(errorString);
+  //         formDispatch({
+  //           type: "INPUTVALUES",
+  //           data: {
+  //             name: "Alert",
+  //             value: { isOpen: true, message: errorString },
+  //           },
+  //         });
+
+  //         formDispatch({
+  //           type: "INPUTVALUES",
+  //           data: { name: "ref", value: Math.random().toString(36).slice(2) },
+  //         });
+  //       } else {
+  //         // formDispatch({
+  //         //   type: "SET_ERROR",
+  //         //   data: data.message,
+  //         // });
+  //         formDispatch({
+  //           type: "INPUTVALUES",
+  //           data: {
+  //             name: "Alert",
+  //             value: { isOpen: true, message: data.message },
+  //           },
+  //         });
+
+  //         formDispatch({
+  //           type: "INPUTVALUES",
+  //           data: { name: "ref", value: Math.random().toString(36).slice(2) },
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("error", error);
+  //       formDispatch({
+  //         type: "INPUTVALUES",
+  //         data: {
+  //           name: "Alert",
+  //           value: { isOpen: true, message: "unable to connect to server" },
+  //         },
+  //       });
+  //     });
+  // };
+  const onValidSubmit = (e) => {
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "ConfirmationModal",
+        value: {
+          isOpen: true,
+          type: "Data Subscription",
+          description: formData.plans_name,
+          receiver: formData.phone_number,
+          amount: formData.atmPayment
+            ? formData.atmPrice
+            : formData.walletPrice,
+          network: formData.network,
+        },
+      },
+    });
+  };
+
+  const process = () => {
+    // loaderDispatch({
+    //   type: "SET_LOADER",
+    //   data: { text: "Processing your transaction...", isLoading: true },
+    // });
+    setSending(true);
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     myHeaders.append("Accept", "application/json");
@@ -109,7 +259,7 @@ function DataPurchase() {
     !user.data &&
       formData.atmPayment &&
       urlencoded.append("email", String(formData.email));
-    urlencoded.append("plan_id", String(formData.dataPlan.id));
+    urlencoded.append("plan_id", String(formData.plans_id));
     urlencoded.append("phone_number", String(formData.phone_number));
     urlencoded.append("source", getOS());
     urlencoded.append("ref", formData.ref);
@@ -122,7 +272,7 @@ function DataPurchase() {
     };
 
     fetch(
-      formData.atmpayment
+      formData.atmPayment
         ? localStorage.getItem("apiURL") + "atm_data_purchase"
         : localStorage.getItem("apiURL") + "wallet_data_purchase",
       requestOptions,
@@ -134,14 +284,24 @@ function DataPurchase() {
           window.location = data.data.payment_url;
           return;
         }
-
+        // loaderDispatch({
+        //   type: "SET_LOADER",
+        //   data: { text: "", isLoading: false },
+        // });
         console.log(data);
         if (data.status === "success") {
+          // formDispatch({
+          //   type: "SET_FORM_DATA",
+          //   data: {
+          //     name: "responseModal",
+          //     value: { isOpen: true, text: data.message },
+          //   },
+          // });
           formDispatch({
-            type: "SET_FORM_DATA",
+            type: "INPUTVALUES",
             data: {
-              name: "responseModal",
-              value: { isOpen: true, text: data.message },
+              name: "Alert",
+              value: { isOpen: true, message: data.message },
             },
           });
         } else if (
@@ -155,42 +315,73 @@ function DataPurchase() {
           objectValues.map((error) => {
             errorString = errorString + error + ", ";
           });
+          // formDispatch({
+          //   type: "SET_ERROR",
+          //   data: errorString,
+          // });
           formDispatch({
-            type: "SET_ERROR",
-            data: errorString,
+            type: "INPUTVALUES",
+            data: {
+              name: "Alert",
+              value: { isOpen: true, message: errorString, type: "error" },
+            },
           });
           formDispatch({
-            type: "SET_FORM_DATA",
+            type: "INPUTVALUES",
             data: { name: "ref", value: Math.random().toString(36).slice(2) },
           });
+          setSending(false);
         } else {
+          // formDispatch({
+          //   type: "SET_ERROR",
+          //   data: data.message,
+          // });
           formDispatch({
-            type: "SET_ERROR",
-            data: data.message,
+            type: "INPUTVALUES",
+            data: {
+              name: "Alert",
+              value: { isOpen: true, message: data.message, type: "error" },
+            },
           });
+          setSending(false);
           formDispatch({
-            type: "SET_FORM_DATA",
+            type: "INPUTVALUES",
             data: { name: "ref", value: Math.random().toString(36).slice(2) },
           });
         }
       })
       .catch((error) => {
         console.log("error", error);
+        // formDispatch({
+        //   type: "SET_ERROR",
+        //   data: "unable to connect to server",
+        // });
         formDispatch({
-          type: "SET_ERROR",
-          data: "unable to connect to server",
+          type: "INPUTVALUES",
+          data: {
+            name: "Alert",
+            value: {
+              isOpen: true,
+              message: "unable to connect to server",
+              type: "error",
+            },
+          },
         });
+        // loaderDispatch({
+        //   type: "SET_LOADER",
+        //   data: { text: "", isLoading: false },
+        // });
+        setSending(false);
       });
   };
-  const url = formData.atmPayment
-    ? localStorage.getItem("apiURL") + "atm_data_purchase"
-    : localStorage.getItem("apiURL") + "wallet_data_purchase";
-  console.log(url);
-  const getData = (data) => {
-    console.log(data);
-  };
   return (
-    <div className="flex flex-col items-center  max-w-md m-auto">
+    <div className="flex flex-col items-center  max-w-md m-auto relative">
+      {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
+      {formData.ConfirmationModal ? (
+        <ConfirmationModel onConfirmationClicked={process} />
+      ) : (
+        ""
+      )}
       <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
@@ -202,6 +393,7 @@ function DataPurchase() {
             </div>
             <img src={bell} alt="bell" />
           </div>
+
           <div className="">
             <h2 className="font-medium text-xs mt-9">Select Network</h2>
             <div className="flex gap-4 mt-6">
@@ -298,7 +490,7 @@ function DataPurchase() {
               </button>
             </div>
           </div>
-          <form onSubmit={handleSubmit(getData)}>
+          <form onSubmit={handleSubmit(onValidSubmit)}>
             <div className="mt-12">
               <div className="w-full space-y-6">
                 <div className="w-full">
@@ -314,27 +506,27 @@ function DataPurchase() {
                       </div>
                       <input
                         type="text"
-                        className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
+                        className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
                         placeholder="08X XXX XXXX"
-                        name="phone_number"
                         inputmode="numeric"
                         pattern="[0-9]*"
+                        name="phone_number"
                         value={formData.phone_number}
                         onChange={(e) => {
                           formOnChange(e);
                         }}
-                        {...register("phone_number", {
-                          required: "Please enter receiver phone number.",
-                          maxLength: {
-                            value: 11,
-                            message: "Please enter a correct phone number.",
-                          },
+                        // {...register("phone_number", {
+                        //   required: "Please enter receiver phone number.",
+                        //   maxLength: {
+                        //     value: 11,
+                        //     message: "Please enter a correct phone number.",
+                        //   },
 
-                          minLength: {
-                            value: 11,
-                            message: "Please enter a correct phone number.",
-                          },
-                        })}
+                        //   minLength: {
+                        //     value: 11,
+                        //     message: "Please enter a correct phone number.",
+                        //   },
+                        // })}
                       />
                       <p className="text-xs text-red-500 ml-1 mt-1">
                         <ErrorMessage
@@ -361,7 +553,7 @@ function DataPurchase() {
                         type="text"
                         autocomplete="off"
                         name="select_plan"
-                        className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent mt-3 "
+                        className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent mt-3 "
                         placeholder="Select plan"
                         value={formData.plans_name}
                         onClick={() => {
@@ -371,9 +563,9 @@ function DataPurchase() {
 
                           console.log("I am here");
                         }}
-                        {...register("select_plan", {
-                          required: "Please enter receiver phone number.",
-                        })}
+                        // {...register("select_plan", {
+                        //   required: "Please enter receiver phone number.",
+                        // })}
                       ></input>
                       <p className="text-xs text-red-500 ml-1 mt-1">
                         <ErrorMessage
@@ -415,16 +607,16 @@ function DataPurchase() {
                         </p>
                         <input
                           type="password"
-                          className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
+                          className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent mt-3.5"
                           placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                           name="password"
                           onChange={(e) => {
                             formOnChange(e);
                           }}
                           value={formData.password}
-                          {...register("password", {
-                            required: "Please enter your password.",
-                          })}
+                          // {...register("password", {
+                          //   required: "Please enter your password.",
+                          // })}
                         />
                         <p className="text-xs text-red-500 ml-1 mt-1">
                           <ErrorMessage
@@ -447,10 +639,22 @@ function DataPurchase() {
                 <div>
                   <span className="block w-full rounded-md shadow-sm">
                     <button
-                      type="submit"
-                      className="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                      className="py-2 px-4 bg-primary-orange hover:bg-primary-orange focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                      onClick={() => {
+                        onValidSubmit();
+                      }}
                     >
-                      Pay
+                      {sending ? (
+                        <div className="flex items-center justify-center">
+                          <img
+                            src={loadingSmall}
+                            alt="loading ..."
+                            className="w-7 h-7 "
+                          />
+                        </div>
+                      ) : (
+                        `Pay`
+                      )}
                     </button>
                   </span>
                 </div>

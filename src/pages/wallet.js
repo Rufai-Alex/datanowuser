@@ -10,7 +10,7 @@ import { useState } from "react";
 function Wallet() {
   const [showModal, setShowModal] = useState(false);
   return (
-    <div className="flex flex-col max-w-md ">
+    <div className="flex flex-col max-w-md h-screen m-auto">
       <div className=" h-h90 px-4 py-8 bg-white rounded-lg sm:px-6 md:px-8 lg:px-10 relative">
         <div className="flex justify-between items-center">
           <h2 className="font-medium text-lg">Wallet</h2>
@@ -21,10 +21,10 @@ function Wallet() {
           <div className="flex flex-col mb-2 mt-3">
             <div className="flex relative ">
               <input
-                className=" rounded-l-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
+                className=" rounded-l-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
                 placeholder="Search Subscriptions"
               />
-              <span className="rounded-r-md inline-flex  items-center px-3 border-t bg-white border-r border-b  border-gray-300 text-gray-500 shadow-sm text-sm">
+              <span className="rounded-r-md inline-flex  items-center px-3 border-t bg-white border-r border-b  border-slate-300 text-gray-500 shadow-sm text-sm">
                 <img src={sort} alt="sort" />
               </span>
             </div>
@@ -33,7 +33,7 @@ function Wallet() {
             <div className=" relative ">
               <input
                 type="option"
-                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
+                className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
                 placeholder="Select"
                 onClick={() => setShowModal(true)}
               />
@@ -80,7 +80,7 @@ function Wallet() {
             {/* ///// */}
             <div className=" relative ">
               <input
-                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
+                className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
                 placeholder="Pages"
               />
             </div>
@@ -88,13 +88,13 @@ function Wallet() {
           <div className="flex gap-4 mb-2">
             <div className=" relative ">
               <input
-                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
+                className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
                 placeholder="From"
               />
             </div>
             <div className=" relative ">
               <input
-                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
+                className=" rounded-lg border-transparent flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:border-transparent"
                 placeholder="To"
               />
             </div>

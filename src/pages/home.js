@@ -29,6 +29,21 @@ function Home() {
   const [showModal, setShowModal] = useState(false);
   console.log(user);
   console.log(appData);
+  const getAppData = () => {
+    fetch(localStorage.getItem("apiURL") + "data")
+      .then((response) => response.json())
+      .then((response) => {
+        //  dispatch({ type: 'STORE_APP_DATA', appData:{...response.data,is_mobile:appData.is_mobile}})})
+        dispatch({
+          type: "STORE_APP_DATA",
+          appData: {
+            is_mobile: appData.is_mobile,
+            timestamp: new Date().getTime(),
+            ...response.data,
+          },
+        });
+      });
+  };
   const refreshUser = () => {
     //  formDispatch({
     //    type: "SET_FORM_DATA",
@@ -74,10 +89,10 @@ function Home() {
         // });
       });
 
-    //  getAppData();
-    // if (!appData.settings) getAppData();
-    // else if (!appData.timestamp) getAppData();
-    // else if (new Date().getTime() - appData.timestamp > 7200000) getAppData();
+    getAppData();
+    if (!appData.settings) getAppData();
+    else if (!appData.timestamp) getAppData();
+    else if (new Date().getTime() - appData.timestamp > 7200000) getAppData();
     document.documentElement.style.setProperty(
       "--primary-color",
       appData.business.primary_color,

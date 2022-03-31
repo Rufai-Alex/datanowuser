@@ -1,8 +1,6 @@
-import React, { useHistory } from "react";
+import React from "react";
 
 function Next({ where }) {
-  const History = useHistory();
-
   return <div>{History.push(where)}</div>;
 }
 

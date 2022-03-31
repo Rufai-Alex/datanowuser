@@ -32,3 +32,6 @@ body {
 .minScreen {
   min-height: calc(100vh - 3.2rem);
 }
+gbtransparent {
+  background-color: red;
+}
