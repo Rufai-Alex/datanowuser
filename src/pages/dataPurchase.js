@@ -277,6 +277,46 @@ function DataPurchase() {
         setSending(false);
       });
   };
+  useEffect(() => {
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "network",
+        value: "",
+      },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "password",
+        value: "",
+      },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "phone_number",
+        value: "",
+      },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "plans_id", value: "" },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "plans_name", value: "" },
+    });
+
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "walletPrice", value: "" },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "atmPrice", value: "" },
+    });
+  }, []);
   return (
     <div className="flex flex-col items-center  max-w-md m-auto relative">
       {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
@@ -449,9 +489,6 @@ function DataPurchase() {
 
                           console.log("I am here");
                         }}
-                        // {...register("select_plan", {
-                        //   required: "Please enter receiver phone number.",
-                        // })}
                       ></input>
 
                       <span>Please pick a plan you want </span>
@@ -492,9 +529,6 @@ function DataPurchase() {
                             formOnChange(e);
                           }}
                           value={formData.password}
-                          // {...register("password", {
-                          //   required: "Please enter your password.",
-                          // })}
                         />
                         <span>Please enter your password </span>
                       </label>

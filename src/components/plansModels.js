@@ -50,6 +50,25 @@ function PlansModels() {
     });
     setShowModal(false);
   };
+  useEffect(() => {
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "plans_id", value: "" },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "plans_name", value: "" },
+    });
+
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "walletPrice", value: "" },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "atmPrice", value: "" },
+    });
+  }, []);
   console.log(formData);
   return (
     <div>
