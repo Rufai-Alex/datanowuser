@@ -30,7 +30,12 @@ function DataPurchase() {
   const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
   const [sending, setSending] = useState(false);
-
+  const [focused, setFocused] = useState(false);
+  const handleFocus = (e) => {
+    setFocused(true);
+    console.log("forcused");
+  };
+  console.log(focused);
   // const [showModal, setShowModal] = useState(false);
   const {
     register,
@@ -118,111 +123,9 @@ function DataPurchase() {
   };
   document.title = "Purchase Data-" + appData.business.name;
   console.log(formData);
-  // const process = (data) => {
-  //   console.log(data);
-  //   var myHeaders = new Headers();
-  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-  //   myHeaders.append("Accept", "application/json");
-  //   user.data && myHeaders.append("Authorization", "Bearer " + user.token);
 
-  //   var urlencoded = new URLSearchParams();
-  //   user.data &&
-  //     !formData.atmPayment &&
-  //     urlencoded.append("password", String(formData.password));
-  //   !user.data &&
-  //     formData.atmPayment &&
-  //     urlencoded.append("email", String(formData.email));
-  //   urlencoded.append("plan_id", String(formData.plans_id));
-  //   urlencoded.append("phone_number", String(formData.phone_number));
-  //   urlencoded.append("source", getOS());
-  //   urlencoded.append("ref", formData.ref);
-
-  //   var requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: urlencoded,
-  //     //redirect: "follow",
-  //   };
-  //   debugger;
-  //   fetch(
-  //     formData.atmPayment
-  //       ? localStorage.getItem("apiURL") + "atm_data_purchase"
-  //       : localStorage.getItem("apiURL") + "wallet_data_purchase",
-  //     requestOptions,
-  //   )
-  //     .then((response) => (response = response.text()))
-  //     .then((response) => {
-  //       const data = JSON.parse(response);
-  //       if (data.status === "success" && formData.atmPayment) {
-  //         window.location = data.data.payment_url;
-  //         return;
-  //       }
-
-  //       console.log(data);
-
-  //       if (data.status === "success") {
-  //         formDispatch({
-  //           type: "INPUTVALUES",
-  //           data: {
-  //             name: "Alert",
-  //             value: { isOpen: true, message: data.message },
-  //           },
-  //         });
-  //       } else if (
-  //         data.message === "Token Expired" ||
-  //         data.message === "User Not Found"
-  //       ) {
-  //         history.push("/");
-  //       } else if (data.errors) {
-  //         let errorString = "";
-  //         const objectValues = Object.values(data.errors);
-  //         objectValues.map((error) => {
-  //           errorString = errorString + error + ", ";
-  //         });
-  //         console.log(errorString);
-  //         formDispatch({
-  //           type: "INPUTVALUES",
-  //           data: {
-  //             name: "Alert",
-  //             value: { isOpen: true, message: errorString },
-  //           },
-  //         });
-
-  //         formDispatch({
-  //           type: "INPUTVALUES",
-  //           data: { name: "ref", value: Math.random().toString(36).slice(2) },
-  //         });
-  //       } else {
-  //         // formDispatch({
-  //         //   type: "SET_ERROR",
-  //         //   data: data.message,
-  //         // });
-  //         formDispatch({
-  //           type: "INPUTVALUES",
-  //           data: {
-  //             name: "Alert",
-  //             value: { isOpen: true, message: data.message },
-  //           },
-  //         });
-
-  //         formDispatch({
-  //           type: "INPUTVALUES",
-  //           data: { name: "ref", value: Math.random().toString(36).slice(2) },
-  //         });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log("error", error);
-  //       formDispatch({
-  //         type: "INPUTVALUES",
-  //         data: {
-  //           name: "Alert",
-  //           value: { isOpen: true, message: "unable to connect to server" },
-  //         },
-  //       });
-  //     });
-  // };
   const onValidSubmit = (e) => {
+    e.preventDefault();
     formDispatch({
       type: "INPUTVALUES",
       data: {
@@ -490,7 +393,7 @@ function DataPurchase() {
               </button>
             </div>
           </div>
-          <form onSubmit={handleSubmit(onValidSubmit)}>
+          <form onSubmit={onValidSubmit}>
             <div className="mt-12">
               <div className="w-full space-y-6">
                 <div className="w-full">
@@ -509,40 +412,18 @@ function DataPurchase() {
                         className=" rounded-lg  flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
                         placeholder="08X XXX XXXX"
                         inputmode="numeric"
-                        pattern="[0-9]*"
+                        focused={focused.toString()}
+                        pattern="^[0-9]{11,11}$"
                         required
-                        errorMessage="Username should be 3-16 characters and shouldn't include any special character!"
                         name="phone_number"
+                        onBlur={handleFocus}
                         value={formData.phone_number}
                         onChange={(e) => {
                           formOnChange(e);
                         }}
-                        // {...register("phone_number", {
-                        //   required: "Please enter receiver phone number.",
-                        //   maxLength: {
-                        //     value: 11,
-                        //     message: "Please enter a correct phone number.",
-                        //   },
-
-                        //   minLength: {
-                        //     value: 11,
-                        //     message: "Please enter a correct phone number.",
-                        //   },
-                        // })}
                       />
-                      {/* <p className="text-xs text-red-500 ml-1 mt-1">
-                        <ErrorMessage
-                          errors={errors}
-                          name="phone_number"
-                          render={({ messages }) =>
-                            messages &&
-                            Object.entries(messages).map(([type, message]) => (
-                              <p key={type}>{message}</p>
-                            ))
-                          }
-                        />
-                      </p> */}
-                      {/* <span>{errorMessage}</span> */}
+
+                      <span>Please enter a valid receiver phone number</span>
                     </label>
                   </div>
                 </div>
@@ -556,6 +437,7 @@ function DataPurchase() {
                         type="text"
                         autocomplete="off"
                         name="select_plan"
+                        focused={focused.toString()}
                         required
                         className=" rounded-lg  flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:   mt-3 "
                         placeholder="Select plan"
@@ -571,18 +453,8 @@ function DataPurchase() {
                         //   required: "Please enter receiver phone number.",
                         // })}
                       ></input>
-                      <p className="text-xs text-red-500 ml-1 mt-1">
-                        <ErrorMessage
-                          errors={errors}
-                          name="select_plan"
-                          render={({ messages }) =>
-                            messages &&
-                            Object.entries(messages).map(([type, message]) => (
-                              <p key={type}>{message}</p>
-                            ))
-                          }
-                        />
-                      </p>
+
+                      <span>Please pick a plan you want </span>
                     </label>
                     {/* ////////////////// */}
                     {showModal ? <PlansModels /> : null}
@@ -613,6 +485,8 @@ function DataPurchase() {
                           type="password"
                           className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
                           placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                          focused={focused.toString()}
+                          required
                           name="password"
                           onChange={(e) => {
                             formOnChange(e);
@@ -622,20 +496,7 @@ function DataPurchase() {
                           //   required: "Please enter your password.",
                           // })}
                         />
-                        <p className="text-xs text-red-500 ml-1 mt-1">
-                          <ErrorMessage
-                            errors={errors}
-                            name="password"
-                            render={({ messages }) =>
-                              messages &&
-                              Object.entries(messages).map(
-                                ([type, message]) => (
-                                  <p key={type}>{message}</p>
-                                ),
-                              )
-                            }
-                          />
-                        </p>
+                        <span>Please enter your password </span>
                       </label>
                     </div>
                   )}
@@ -644,9 +505,7 @@ function DataPurchase() {
                   <span className="block w-full rounded-md shadow-sm">
                     <button
                       className="py-2 px-4 bg-primary-orange hover:bg-primary-orange focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
-                      onClick={() => {
-                        onValidSubmit();
-                      }}
+                      type="submit"
                     >
                       {sending ? (
                         <div className="flex items-center justify-center">
