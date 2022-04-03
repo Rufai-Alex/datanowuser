@@ -9,7 +9,7 @@ import loadingSmall from "../icons/loadingSmall.svg";
 import close from "../icons/Close.svg";
 import Nav from "../components/nav";
 import { getOS } from "../helper/getOs";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { AuthContext } from "../providers/auth";
 import { FormContext } from "../providers/formValues";
 import { AppDataContext } from "../providers/appData";
@@ -505,11 +505,13 @@ function DataPurchase() {
                         </span>
                       </div>
                       <input
-                        type="text"
+                        type="tel"
                         className=" rounded-lg  flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
                         placeholder="08X XXX XXXX"
                         inputmode="numeric"
                         pattern="[0-9]*"
+                        required
+                        errorMessage="Username should be 3-16 characters and shouldn't include any special character!"
                         name="phone_number"
                         value={formData.phone_number}
                         onChange={(e) => {
@@ -528,7 +530,7 @@ function DataPurchase() {
                         //   },
                         // })}
                       />
-                      <p className="text-xs text-red-500 ml-1 mt-1">
+                      {/* <p className="text-xs text-red-500 ml-1 mt-1">
                         <ErrorMessage
                           errors={errors}
                           name="phone_number"
@@ -539,7 +541,8 @@ function DataPurchase() {
                             ))
                           }
                         />
-                      </p>
+                      </p> */}
+                      {/* <span>{errorMessage}</span> */}
                     </label>
                   </div>
                 </div>
@@ -553,7 +556,8 @@ function DataPurchase() {
                         type="text"
                         autocomplete="off"
                         name="select_plan"
-                        className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:   mt-3 "
+                        required
+                        className=" rounded-lg  flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:   mt-3 "
                         placeholder="Select plan"
                         value={formData.plans_name}
                         onClick={() => {
