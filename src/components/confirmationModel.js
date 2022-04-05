@@ -41,8 +41,12 @@ export default function ConfirmationModel(props) {
     <>
       {formData.ConfirmationModal.isOpen && (
         <div>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none w-full  ">
-            <div className="relative w-full my-6 mx-auto max-w-sm  px-4">
+          <div
+            className={
+              "justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none w-full  "
+            }
+          >
+            <div className={"relative w-full my-6 mx-auto max-w-sm  px-4"}>
               {/*content*/}
               <div className="bg-white max-w-2xl shadow overflow-hidden rounded-2xl border-t-8  border-primary-orange ">
                 <h3 className="text-primary-orange text-center p-3">REVIEW</h3>

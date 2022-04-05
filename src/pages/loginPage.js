@@ -83,7 +83,7 @@ function LoginPage() {
             <label className="block  text-gray-700 text-sm font-medium mb-2">
               Email address / Phone number
               <input
-                type="email"
+                type="text"
                 name="email"
                 className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
               shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "

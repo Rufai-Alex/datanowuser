@@ -316,12 +316,52 @@ function DataPurchase() {
       type: "INPUTVALUES",
       data: { name: "atmPrice", value: "" },
     });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "ConfirmationModal",
+        value: {
+          isOpen: false,
+          type: "Data Subscription",
+          description: "",
+          receiver: "",
+          amount: "",
+          network: "",
+        },
+      },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "Alert",
+        value: { isOpen: false, message: "" },
+      },
+    });
+    document.documentElement.style.setProperty(
+      "--primary-color",
+      appData.business.primary_color,
+    );
+    document.documentElement.style.setProperty(
+      "--secondary-color",
+      appData.business.secondary_color,
+    );
   }, []);
   return (
     <div className="flex flex-col items-center  max-w-md m-auto relative">
       {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
       {formData.ConfirmationModal ? (
-        <ConfirmationModel onConfirmationClicked={process} />
+        <div
+        // className={`
+        //   transform transition-all duration-500 ease-in-out
+        //      ${
+        //        formData.ConfirmationModal
+        //          ? "  -translate-x-[1000px]"
+        //          : "translate-x-0 "
+        //      }`}
+        >
+          {" "}
+          <ConfirmationModel onConfirmationClicked={process} />
+        </div>
       ) : (
         ""
       )}
