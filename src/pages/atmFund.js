@@ -6,11 +6,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useHistory, Link } from "react-router-dom";
 import { AuthContext } from "../providers/auth";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../providers/userData";
 import { AppDataContext } from "../providers/appData";
 import { FormContext } from "../providers/formValues";
 import loadingSmall from "../icons/loadingSmall.svg";
+import CurrencyFormat from "../helper/CurrencyFormat";
+
+import Alert from "../components/Alert";
 
 function AtmFund() {
   const { user, userDispatch } = useContext(UserContext);
@@ -37,6 +40,38 @@ function AtmFund() {
     });
   };
 
+  useEffect(() => {
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "balance",
+        value: "",
+      },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "charge",
+        value: "",
+      },
+    });
+
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "Alert",
+        value: { isOpen: false, message: "" },
+      },
+    });
+    document.documentElement.style.setProperty(
+      "--primary-color",
+      appData.business.primary_color,
+    );
+    document.documentElement.style.setProperty(
+      "--secondary-color",
+      appData.business.secondary_color,
+    );
+  }, []);
   const handleSubmit = (e) => {
     e.persist();
     e.preventDefault();
@@ -93,6 +128,7 @@ function AtmFund() {
   console.log(formData);
   return (
     <div className="flex flex-col items-center  max-w-md h-full">
+      {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
       <div className="flex bg-white  h-h90 flex-col w-full  rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
@@ -146,7 +182,7 @@ function AtmFund() {
             </div>
           </div>
           <div className="flex flex-col mt-7">
-            <form action="">
+            <form onSubmit={handleSubmit}>
               <div className="w-full">
                 <div className=" relative ">
                   <label>
@@ -155,7 +191,11 @@ function AtmFund() {
                     </p>
                     <input
                       name="amount"
-                      type="number"
+                      type="text"
+                      required
+                      inputMode="numeric"
+                      pattern="[5-9]\d{2,}"
+                      autoComplete="off"
                       className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
                       placeholder={
                         "Enter amount-Min ₦ " +
@@ -169,12 +209,17 @@ function AtmFund() {
                     <p className="font-medium text-xs text-primary-black mt-4">
                       TRANSACTION FEE:{" "}
                       {formData.balance && (
-                        <b className="text-red-500">₦{formData.charge}</b>
+                        <b className="text-red-500">
+                          ₦{CurrencyFormat(formData.charge)}
+                        </b>
                       )}
                     </p>
                     <p className="font-medium text-xs text-primary-black mt-4">
                       {formData.balance && (
-                        <b>₦{formData.balance} WILL BE PAID INTO YOUR WALLET</b>
+                        <b>
+                          ₦{CurrencyFormat(formData.balance)} WILL BE PAID INTO
+                          YOUR WALLET
+                        </b>
                       )}
                     </p>
                   </label>
@@ -183,9 +228,8 @@ function AtmFund() {
               <div>
                 <span className="block w-full rounded-md shadow-sm">
                   <button
-                    type="button"
-                    className="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
-                    onClick={handleSubmit}
+                    type="submit"
+                    className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange  text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
                   >
                     {sending ? (
                       <div className="flex items-center justify-center">

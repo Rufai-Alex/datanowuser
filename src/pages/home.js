@@ -208,6 +208,8 @@ function Home() {
                               >
                                 <img src={close} alt="close" />
                               </button>
+
+                              {/* ///////// */}
                               <h3 className="text-lg font-extrabold text-black text-center mx-auto">
                                 Fund Wallet Via
                               </h3>
@@ -259,7 +261,7 @@ function Home() {
                                       </div>
                                       <div className="mt-1">
                                         {" "}
-                                        <Link to="/monify"> 1-30Mins</Link>
+                                        <Link to="/monify"> 1-10Mins</Link>
                                       </div>
                                     </td>
                                     <td className="border-b-2 p-4 ">
@@ -292,7 +294,7 @@ function Home() {
                                         <Link to="/atm"> Delivery</Link>
                                       </div>
                                       <div className="mt-1">
-                                        <Link to="/atm">1-30Mins</Link>
+                                        <Link to="/atm">1-3Mins</Link>
                                       </div>
                                     </td>
                                     <td className="border-b-2 p-4 ">

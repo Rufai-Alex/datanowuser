@@ -278,10 +278,6 @@ function AirtimePurchase() {
           },
         });
         setSending(false);
-        // loaderDispatch({
-        //   type: "SET_LOADER",
-        //   data: { text: "", isLoading: false },
-        // });
       });
   };
 

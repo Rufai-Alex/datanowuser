@@ -1,29 +1,60 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import bell from "../icons/Bell.svg";
 import LeftAngle from "../icons/LeftAngle.svg";
 import Nav from "../components/nav";
+import loadingSmall from "../icons/loadingSmall.svg";
 import { useHistory, Link } from "react-router-dom";
 import { AuthContext } from "../providers/auth";
 import { UserContext } from "../providers/userData";
 import { AppDataContext } from "../providers/appData";
 import { FormContext } from "../providers/formValues";
 import { getOS } from "../helper/getOs";
+import CurrencyFormat from "../helper/CurrencyFormat";
+import Alert from "../components/Alert";
+
 function AutoAgentFund() {
   const { user, userDispatch } = useContext(UserContext);
   const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
+  const [sending, setSending] = useState(false);
+
+  useEffect(() => {
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "account_name",
+        value: "",
+      },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "amount",
+        value: "",
+      },
+    });
+
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "Alert",
+        value: { isOpen: false, message: "" },
+      },
+    });
+    document.documentElement.style.setProperty(
+      "--primary-color",
+      appData.business.primary_color,
+    );
+    document.documentElement.style.setProperty(
+      "--secondary-color",
+      appData.business.secondary_color,
+    );
+  }, []);
 
   const onValidSubmit = (e) => {
     e.persist();
     e.preventDefault();
-    // loaderDispatch({
-    //   type: "SET_LOADER",
-    //   data: { text: "Reserving your transaction...", isLoading: true },
-    // });
-    // formDispatch({
-    //   type: "INPUTVALUES",
-    //   data: { name: "confirmationModal", value: { isOpen: false, text: "" } },
-    // });
+    setSending(true);
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -40,7 +71,6 @@ function AutoAgentFund() {
       method: "POST",
       headers: myHeaders,
       body: urlencoded,
-      //redirect: "follow",
     };
     fetch(localStorage.getItem("apiURL") + "autoagent", requestOptions)
       .then((response) => (response = response.text()))
@@ -50,17 +80,15 @@ function AutoAgentFund() {
           window.location = data.data.payment_url;
           return;
         }
-        // loaderDispatch({
-        //   type: "SET_LOADER",
-        //   data: { text: "", isLoading: false },
-        // });
+
+        setSending(false);
         console.log(data);
         if (data.status === "success") {
           formDispatch({
             type: "INPUTVALUES",
             data: {
-              name: "responseModal",
-              value: { isOpen: true, text: data.message },
+              name: "Alert",
+              value: { isOpen: true, message: data.message },
             },
           });
         } else if (
@@ -75,18 +103,26 @@ function AutoAgentFund() {
             errorString = errorString + error + ", ";
           });
           formDispatch({
-            type: "SET_ERROR",
-            data: errorString,
+            type: "INPUTVALUES",
+            data: {
+              name: "Alert",
+              value: { isOpen: true, message: errorString, type: "error" },
+            },
           });
+          setSending(false);
           formDispatch({
             type: "INPUTVALUES",
             data: { name: "ref", value: Math.random().toString(36).slice(2) },
           });
         } else {
           formDispatch({
-            type: "SET_ERROR",
-            data: data.message,
+            type: "INPUTVALUES",
+            data: {
+              name: "Alert",
+              value: { isOpen: true, message: data.message, type: "error" },
+            },
           });
+          setSending(false);
           formDispatch({
             type: "INPUTVALUES",
             data: { name: "ref", value: Math.random().toString(36).slice(2) },
@@ -95,14 +131,19 @@ function AutoAgentFund() {
       })
       .catch((error) => {
         console.log("error", error);
+
         formDispatch({
-          type: "SET_ERROR",
-          data: "unable to connect to server",
+          type: "INPUTVALUES",
+          data: {
+            name: "Alert",
+            value: {
+              isOpen: true,
+              message: "unable to connect to server",
+              type: "error",
+            },
+          },
         });
-        // loaderDispatch({
-        //   type: "SET_LOADER",
-        //   data: { text: "", isLoading: false },
-        // });
+        setSending(false);
       });
   };
 
@@ -121,6 +162,7 @@ function AutoAgentFund() {
   };
   return (
     <div className="flex flex-col items-center  max-w-md m-auto">
+      {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
       <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
@@ -208,7 +250,7 @@ function AutoAgentFund() {
           </>
 
           {ussd ? (
-            <form className="flex flex-col ">
+            <form className="flex flex-col " onSubmit={onValidSubmit}>
               <div className=" font-medium text-sm text-primary-gray ">
                 <div>
                   <ol className="mt-4 flex flex-col space-y-2 list-outside list-decimal mx-4">
@@ -275,8 +317,8 @@ function AutoAgentFund() {
                     }}
                     placeholder="Full account name"
                     type="text"
-                    errorMessage="Enter valid name"
                     required
+                    autoComplete="off"
                     key="account_name"
                   />
                   <p className="mt-4 font-medium text-primary-black text-sm">
@@ -291,14 +333,30 @@ function AutoAgentFund() {
                     }}
                     placeholder="Amount to be transferred e.g 20000"
                     type="text"
+                    required
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    autoComplete="off"
                   />
 
                   <button
                     type="submit"
-                    className="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                    className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange  text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
                   >
-                    Initiate Transfer
-                    {formData.amount && "of ₦" + formData.amount}
+                    {sending ? (
+                      <div className="flex items-center justify-center">
+                        <img
+                          src={loadingSmall}
+                          alt="loading ..."
+                          className="w-7 h-7 "
+                        />
+                      </div>
+                    ) : (
+                      "Initiate Transfer"
+
+                      // {formData.amount &&
+                      //    "of ₦" + CurrencyFormat(formData.amount)}
+                    )}
                   </button>
                 </div>
               </div>
