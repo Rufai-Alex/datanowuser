@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import bell from "../icons/Bell.svg";
 import LeftAngle from "../icons/LeftAngle.svg";
 import Nav from "../components/nav";
@@ -7,13 +7,14 @@ import { AppDataContext } from "../providers/appData";
 import { UserContext } from "../providers/userData";
 import { FormContext } from "../providers/formValues";
 import loadingSmall from "../icons/loadingSmall.svg";
+import Alert from "../components/Alert";
 
 function TranserToUser() {
   const { user, userDispatch } = useContext(UserContext);
   const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
   const [sending, setSending] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [processing, setProcessing] = useState(false);
   const history = useHistory();
   const formOnChange = (e) => {
     formDispatch({
@@ -32,11 +33,11 @@ function TranserToUser() {
   };
   const verifyReceiver = (e) => {
     e.preventDefault();
-    // loaderDispatch({
-    //   type: "SET_LOADER",
-    //   data: { text: "verifying receiver...", isLoading: true },
-    // });
     setSending(true);
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: "receiverName", value: "" },
+    });
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     myHeaders.append("Accept", "application/json");
@@ -67,8 +68,11 @@ function TranserToUser() {
           history.push("/signout");
         } else {
           formDispatch({
-            type: "SET_ERROR",
-            data: data.message,
+            type: "INPUTVALUES",
+            data: {
+              name: "Alert",
+              value: { isOpen: true, message: data.message, type: "error" },
+            },
           });
         }
       })
@@ -78,18 +82,16 @@ function TranserToUser() {
           type: "SET_ERROR",
           data: "unable to connect to server",
         });
-        // loaderDispatch({
-        //   type: "SET_LOADER",
-        //   data: { text: "", isLoading: false },
-        // });
         setSending(false);
       });
   };
-  const Transfer = (e) => {
+
+  const handleSubmit = (e) => {
     e.persist();
     e.preventDefault();
 
-    setLoading(true);
+    setProcessing(true);
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     myHeaders.append("Accept", "application/json");
@@ -111,16 +113,16 @@ function TranserToUser() {
       .then((response) => (response = response.text()))
       .then((response) => {
         const data = JSON.parse(response);
-        setLoading(false);
+        setProcessing(false);
         console.log(data);
         if (data.status === "success") {
-          // formDispatch({
-          //   type: "INPUTVALUES",
-          //   data: {
-          //     name: "responseModal",
-          //     value: { isOpen: true, text: data.message },
-          //   },
-          // });
+          formDispatch({
+            type: "INPUTVALUES",
+            data: {
+              name: "Alert",
+              value: { isOpen: true, message: data.message },
+            },
+          });
         } else if (
           data.message === "Token Expired" ||
           data.message === "User Not Found"
@@ -132,19 +134,28 @@ function TranserToUser() {
           objectValues.map((error) => {
             errorString = errorString + error + ", ";
           });
+
           formDispatch({
-            type: "SET_ERROR",
-            data: errorString,
+            type: "INPUTVALUES",
+            data: {
+              name: "Alert",
+              value: { isOpen: true, message: errorString, type: "error" },
+            },
           });
+          setProcessing(false);
           formDispatch({
             type: "INPUTVALUES",
             data: { name: "ref", value: Math.random().toString(36).slice(2) },
           });
         } else {
           formDispatch({
-            type: "SET_ERROR",
-            data: data.message,
+            type: "INPUTVALUES",
+            data: {
+              name: "Alert",
+              value: { isOpen: true, message: data.message, type: "error" },
+            },
           });
+          setProcessing(false);
           formDispatch({
             type: "INPUTVALUES",
             data: { name: "ref", value: Math.random().toString(36).slice(2) },
@@ -153,18 +164,74 @@ function TranserToUser() {
       })
       .catch((error) => {
         console.log("error", error);
+
         formDispatch({
-          type: "SET_ERROR",
-          data: "unable to connect to server",
+          type: "INPUTVALUES",
+          data: {
+            name: "Alert",
+            value: {
+              isOpen: true,
+              message: "unable to connect to server",
+              type: "error",
+            },
+          },
         });
-        setLoading(false);
+        setProcessing(false);
       });
   };
+  useEffect(() => {
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "receiver",
+        value: "",
+      },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "password",
+        value: "",
+      },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "description",
+        value: "",
+      },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "amount",
+        value: "",
+      },
+    });
+
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "Alert",
+        value: { isOpen: false, message: "" },
+      },
+    });
+    document.documentElement.style.setProperty(
+      "--primary-color",
+      appData.business.primary_color,
+    );
+    document.documentElement.style.setProperty(
+      "--secondary-color",
+      appData.business.secondary_color,
+    );
+  }, []);
   console.log("====================================");
   console.log(formData);
   console.log("====================================");
   return (
     <div className="flex flex-col items-center  max-w-md h-full m-auto">
+      {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
+
       <div className="flex bg-white  h-h90 flex-col w-full  rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
@@ -179,18 +246,19 @@ function TranserToUser() {
           </div>
 
           <div className="flex flex-col mt-7">
-            <form action="">
+            <form onSubmit={verifyReceiver}>
               <div className="w-full">
                 <div className=" relative ">
                   <label>
                     <div className="flex justify-between items-center">
-                      <span className="font-normal text-primary-black text-sm">
+                      <div className="mt-4 font-medium text-primary-black text-sm">
                         Recivers Phone Number
-                      </span>
-                      <span className="font-normal text-primary-gray text-xs">
+                      </div>
+                      <div className="mt-4 font-medium text-primary-gray text-xs">
                         Balance:{`₦ ${user.data.wallet_balance}`}
-                      </span>
+                      </div>
                     </div>
+
                     <div className="flex relative mt-2.5">
                       <input
                         type="text"
@@ -198,12 +266,15 @@ function TranserToUser() {
                         className=" rounded-l-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   "
                         placeholder="0000 0000 0000"
                         value={formData.receiver}
+                        inputMode="numeric"
+                        pattern="^[0-9]{11,11}$"
+                        required
                         onChange={(e) => {
                           formOnChange(e);
                         }}
                       />
                       <span className="rounded-r-md inline-flex bg-primary-orange items-center px-3 border-t text-white border-r border-b  border-slate-300 shadow-sm text-sm">
-                        <button className="" onClick={verifyReceiver}>
+                        <button className="">
                           {sending ? (
                             <div className="flex items-center justify-center">
                               <img
@@ -226,6 +297,8 @@ function TranserToUser() {
                   </label>
                 </div>
               </div>
+            </form>
+            <form onSubmit={handleSubmit}>
               <div className="w-full">
                 <div className=" relative ">
                   <label>
@@ -233,10 +306,13 @@ function TranserToUser() {
                       Amount to Transfer
                     </p>
                     <input
-                      type="number"
+                      type="text"
                       className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
-                      placeholder="Amount"
+                      placeholder="Amount min ₦50"
                       name="amount"
+                      inputMode="numeric"
+                      pattern="[5-9]\d{1,}"
+                      required
                       value={formData.amount}
                       onChange={(e) => {
                         formOnChange(e);
@@ -276,6 +352,7 @@ function TranserToUser() {
                       placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                       name="password"
                       value={formData.password}
+                      required
                       onChange={(e) => {
                         formOnChange(e);
                       }}
@@ -286,11 +363,10 @@ function TranserToUser() {
               <div>
                 <span className="block w-full rounded-md shadow-sm">
                   <button
-                    type="button"
-                    className="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
-                    onClick={Transfer}
+                    type="submit"
+                    className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
                   >
-                    {loading ? (
+                    {processing ? (
                       <div className="flex items-center justify-center">
                         <img
                           src={loadingSmall}
