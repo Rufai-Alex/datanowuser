@@ -499,6 +499,7 @@ function AirtimePurchase() {
                           className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:   mt-3"
                           placeholder="Min ₦50, Max ₦10,000"
                           name="amount"
+                          onBlur={handleFocus}
                           onChange={(e) => {
                             formOnChange(e);
                           }}
