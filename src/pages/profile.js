@@ -2,7 +2,7 @@ import bell from "../icons/Bell.svg";
 import LeftAngle from "../icons/LeftAngle.svg";
 import Nav from "../components/nav";
 
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../providers/userData";
 import { AppDataContext } from "../providers/appData";
@@ -73,7 +73,7 @@ function Profile() {
               type="submit"
               className="py-2 px-4 bg-red-600 hover:bg-red-200 focus:ring-primary-orange focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
             >
-              Sign Out
+              <Link to="signout">Sign Out</Link>
             </button>
           </div>
         </div>

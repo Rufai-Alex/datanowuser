@@ -9,6 +9,7 @@ import axios from "axios";
 import { AppDataContext } from "./providers/appData";
 import { UserContext } from "./providers/userData";
 import TranserToUser from "./pages/transerToUser";
+import SignOut from "./pages/signOut";
 
 const AirtimePurchase = React.lazy(() => import("./pages/airtimePurchase"));
 const Balance = React.lazy(() => import("./pages/balance"));
@@ -50,7 +51,7 @@ function App() {
 
   const fetchAppData = () => {
     var dataURL = localStorage.getItem("apiURL") + "data";
-    debugger;
+
     fetch(dataURL)
       .then((response) => response.json())
       .then((response) => {
@@ -84,90 +85,9 @@ function App() {
       : new Date().getTime() - appData.timestamp > 7200000 && fetchAppData();
   }, []);
 
-  // document.documentElement.style.setProperty(
-  //   "--primary-color",
-  //   appData.business.primary_color,
-  // );
-  // document.documentElement.style.setProperty(
-  //   "--secondary-color",
-  //   appData.business.secondary_color,
-  // );
-
   console.log(user.data);
 
   console.log(appData);
-  // const refreshUser = () => {
-  //   //  formDispatch({
-  //   //    type: "SET_FORM_DATA",
-  //   //    data: { name: "isUserRefreshed", value: false },
-  //   //  });
-
-  //   //  formDispatch({
-  //   //    type: "SET_FORM_DATA",
-  //   //    data: { name: "isUserRefreshing", value: true },
-  //   //  });
-
-  //   var myHeaders = new Headers();
-  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-  //   myHeaders.append("Accept", "application/json");
-  //   myHeaders.append("Authorization", "Bearer " + user.token);
-  //   var requestOptions = {
-  //     method: "GET",
-  //     headers: myHeaders,
-  //   };
-  //   fetch(
-  //     localStorage
-  //       .getItem("apiURL")
-  //       .substr(0, localStorage.getItem("apiURL").length - 1),
-  //     requestOptions,
-  //   )
-  //     .then((response) => (response = response.text()))
-  //     .then((response) => {
-  //       const data = JSON.parse(response);
-  //       console.log(data);
-  //       if (data.status === "success") {
-  //         console.log(data);
-  //         userDispatch({ type: "UPDATE_USER", action: data });
-  //       } else if (
-  //         data.message === "Token Expired" ||
-  //         data.message === "User Not Found"
-  //       ) {
-  //         history.push("/");
-  //       }
-
-  //       // formDispatch({
-  //       //   type: "SET_FORM_DATA",
-  //       //   data: { name: "isUserRefreshed", value: true },
-  //       // });
-  //     });
-
-  //   //  getAppData();
-  //   // if (!appData.settings) getAppData();
-  //   // else if (!appData.timestamp) getAppData();
-  //   // else if (new Date().getTime() - appData.timestamp > 7200000) getAppData();
-  //   document.documentElement.style.setProperty(
-  //     "--primary-color",
-  //     appData.business.primary_color,
-  //   );
-  //   document.documentElement.style.setProperty(
-  //     "--secondary-color",
-  //     appData.business.secondary_color,
-  //   );
-  // };
-
-  const handleLogout = () => {
-    sessionStorage.clear();
-    // setUser({});
-    // setToken("");
-
-    // setIsLoggedIn(false);
-  };
-
-  // useEffect(() => {
-  //   checkUser();
-  //   console.log(localStorage.getItem("token"));
-  //   // eslint-disable-next-line
-  // }, []);
 
   if (!appData.settings) return <div></div>;
   else {
@@ -216,6 +136,9 @@ function App() {
             </Route>
             <Route path="/contact">
               <Contact />
+            </Route>
+            <Route path="/signout">
+              <SignOut />
             </Route>
             <Route path="/outoAgent">
               <AutoAgentFund />

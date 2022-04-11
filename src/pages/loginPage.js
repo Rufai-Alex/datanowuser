@@ -1,23 +1,17 @@
 import { useState, useEffect, useContext } from "react";
 import LeftAngle from "../icons/LeftAngle.svg";
 import loadingSmall from "../icons/loadingSmall.svg";
-
-import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { AuthContext } from "../providers/auth";
-import LoggedInContext from "../App";
-import { signInformschema } from "../components/validation";
 import { UserContext } from "../providers/userData";
 import { FormContext } from "../providers/formValues";
 import { AppDataContext } from "../providers/appData";
+import Alert from "../components/Alert";
 
 function LoginPage() {
   let history = useHistory();
 
   const { user, userDispatch } = useContext(UserContext);
-  const { appData, dispatch } = useContext(AppDataContext);
+  const { appData } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
   const [focused, setFocused] = useState(false);
   const [sending, setSending] = useState(false);
@@ -59,17 +53,28 @@ function LoginPage() {
           history.push("/home");
         } else {
           formDispatch({
-            type: "SET_ERROR",
-            data: data.message,
+            type: "INPUTVALUES",
+            data: {
+              name: "Alert",
+              value: { isOpen: true, message: data.message, type: "error" },
+            },
           });
         }
         setSending(false);
       })
       .catch((error) => {
         console.log("error", error);
+
         formDispatch({
-          type: "SET_ERROR",
-          data: "unable to connect to server",
+          type: "INPUTVALUES",
+          data: {
+            name: "Alert",
+            value: {
+              isOpen: true,
+              message: "unable to connect to server",
+              type: "error",
+            },
+          },
         });
         setSending(false);
       });
@@ -83,11 +88,22 @@ function LoginPage() {
       "--secondary-color",
       appData.business.secondary_color,
     );
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "Alert",
+        value: {
+          isOpen: false,
+          message: "",
+        },
+      },
+    });
   }, []);
   return (
     <>
       {appData && (
         <div className="h-screen w-full flex flex-col items-center">
+          {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
           <div className="flex flex-col max-w-sm px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
             <div>
               <img src={LeftAngle} alt="backicon" />
