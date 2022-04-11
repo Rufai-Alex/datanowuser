@@ -9,34 +9,36 @@ import LoggedInContext from "../App";
 import { signInformschema } from "../components/validation";
 import { UserContext } from "../providers/userData";
 import { FormContext } from "../providers/formValues";
+import { AppDataContext } from "../providers/appData";
 
 function LoginPage() {
   let history = useHistory();
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
 
-  const { handleLogin } = useContext(AuthContext);
   const { user, userDispatch } = useContext(UserContext);
+  const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
+  const [focused, setFocused] = useState(false);
+  document.title = "Sign In-" + appData.business.name;
+  user.data && history.push("/home");
+  const handleFocus = (e) => {
+    setFocused(true);
+    console.log("forcused");
+  };
 
-  // const { handleLogin, appSettings } = useContext(LoggedInContext);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(signInformschema),
-  });
-
-  const submitForm = (data) => {
-    console.log(data);
+  const formOnChange = (e) => {
+    formDispatch({
+      type: "INPUTVALUES",
+      data: { name: e.target.name, value: e.target.value },
+    });
+  };
+  const submitForm = (e) => {
+    e.preventDefault();
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     myHeaders.append("Accept", "application/json");
     var urlencoded = new URLSearchParams();
-    urlencoded.append("identifier", String(data.identifier));
-    urlencoded.append("password", String(data.password));
+    urlencoded.append("identifier", String(formData.identifier));
+    urlencoded.append("password", String(formData.password));
     var requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -78,38 +80,39 @@ function LoginPage() {
         <p className="text-xs text-primary-gray font-medium mt-3.5">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ac
         </p>
-        <form onSubmit={handleSubmit(submitForm)}>
+        <form onSubmit={submitForm}>
           <div className="relative w-full mt-12">
             <label className="block  text-gray-700 text-sm font-medium mb-2">
               Email address / Phone number
               <input
                 type="text"
-                name="email"
-                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
-              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                style={{ transition: "all .15s ease" }}
-                // onChange={handleChange}
-                // value={user.email}
-                {...register("identifier")}
+                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                placeholder="Email or Phone Number"
+                focused={focused.toString()}
+                required
+                name="identifier"
+                onChange={(e) => {
+                  formOnChange(e);
+                }}
+                value={formData.identifier}
               />
-              <p className="text-xs text-red-500 ml-1 mt-1">
-                {errors.identifier?.message}
-              </p>
+              <span>Please enter correct Email or Phone Number </span>
             </label>
             <label className="block  text-gray-700 text-sm font-medium mt-4">
               Password
               <input
                 type="password"
+                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                focused={focused.toString()}
+                required
                 name="password"
-                {...register("password")}
-                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                style={{ transition: "all .15s ease" }}
-                // onChange={handleChange}
-                // value={user.password}
+                onChange={(e) => {
+                  formOnChange(e);
+                }}
+                value={formData.password}
               />
-              <p className="text-xs text-red-500 ml-1 mt-1">
-                {errors.password?.message}
-              </p>
+              <span>Please enter your password </span>
             </label>
           </div>
 
