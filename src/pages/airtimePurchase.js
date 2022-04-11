@@ -169,10 +169,7 @@ function AirtimePurchase() {
       type: "INPUTVALUES",
       data: { name: "confirmationModal", value: { isOpen: false, text: "" } },
     });
-    // loaderDispatch({
-    //   type: "SET_LOADER",
-    //   data: { text: "Processing your transaction...", isLoading: true },
-    // });
+
     setSending(true);
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -210,10 +207,7 @@ function AirtimePurchase() {
           window.location = data.data.payment_url;
           return;
         }
-        // loaderDispatch({
-        //   type: "SET_LOADER",
-        //   data: { text: "", isLoading: false },
-        // });
+
         console.log(data);
         if (data.status === "success") {
           if (formData.atmPayment) window.location = data.data.payment_url;
@@ -500,6 +494,7 @@ function AirtimePurchase() {
                           inputmode="numeric"
                           focused={focused.toString()}
                           required
+                          autoComplete="off"
                           pattern="^[0-9]{2,6}$"
                           className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:   mt-3"
                           placeholder="Min ₦50, Max ₦10,000"

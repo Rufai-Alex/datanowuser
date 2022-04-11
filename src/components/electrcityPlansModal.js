@@ -43,7 +43,6 @@ function ElecricityPlansModal() {
   }
   console.log(myNetwork);
   const inputPlansId = (plans_id, plans_name, commission) => {
-    setShowModal(false);
     formDispatch({
       type: "INPUTVALUES",
       data: { name: "electricPlan_id", value: plans_id },
@@ -56,6 +55,7 @@ function ElecricityPlansModal() {
       type: "INPUTVALUES",
       data: { name: "commission", value: commission },
     });
+    setShowModal(!showModal);
   };
   console.log(formData);
   return (
