@@ -23,9 +23,13 @@ function PaymentType() {
       data: { name: "walletPayment", value: false },
     });
   };
+
+  useEffect(() => {
+    paymentwallet(true);
+  }, []);
+
   return (
     <>
-      {" "}
       <h3 className="mt-4 font-medium text-primary-black text-sm">
         Payment Method
       </h3>
