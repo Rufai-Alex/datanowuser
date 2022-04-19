@@ -10,11 +10,13 @@ import loadingSmall from "../icons/loadingSmall.svg";
 import Alert from "../components/Alert";
 
 function TranserToUser() {
-  const { user, userDispatch } = useContext(UserContext);
-  const { appData, dispatch } = useContext(AppDataContext);
+  const { user } = useContext(UserContext);
+  const { appData } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
   const [sending, setSending] = useState(false);
   const [processing, setProcessing] = useState(false);
+  document.title = "Transfer Funds-" + appData.business.name;
+
   const history = useHistory();
   const formOnChange = (e) => {
     formDispatch({
@@ -22,12 +24,7 @@ function TranserToUser() {
       data: { name: e.target.name, value: e.target.value },
     });
   };
-  const onPlanSelect = (network) => {
-    formDispatch({
-      type: "INPUTVALUES",
-      data: { name: "network", value: network },
-    });
-  };
+
   const back = () => {
     history.push("/home");
   };
@@ -225,9 +222,7 @@ function TranserToUser() {
       appData.business.secondary_color,
     );
   }, []);
-  console.log("====================================");
-  console.log(formData);
-  console.log("====================================");
+
   return (
     <div className="flex flex-col items-center  max-w-md h-full m-auto">
       {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}

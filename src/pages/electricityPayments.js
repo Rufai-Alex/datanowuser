@@ -31,6 +31,8 @@ function ElectricityPayments() {
   const [focused, setFocused] = useState(false);
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(false);
+  document.title = "Purchase Electric-" + appData.business.name;
+
   const handleFocus = (e) => {
     setFocused(true);
     console.log("forcused");
@@ -572,6 +574,8 @@ function ElectricityPayments() {
                           className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
                           placeholder="Select meter type"
                           value={formData.plans_name}
+                          readOnly
+                          disabled={!formData.network}
                           onFocus={() => {
                             setShowModal(!showModal);
 
@@ -730,6 +734,7 @@ function ElectricityPayments() {
                       <button
                         type="submit"
                         className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                        disabled={loading}
                       >
                         {loading ? (
                           <div className="flex items-center justify-center">

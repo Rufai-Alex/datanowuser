@@ -20,6 +20,8 @@ function AtmFund() {
   const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
   const [sending, setSending] = useState(false);
+  document.title = "Fund Wallet with ATM-" + appData.business.name;
+
   const formOnChange = (e) => {
     formDispatch({
       type: "INPUTVALUES",

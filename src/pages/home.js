@@ -27,6 +27,7 @@ function Home() {
   const { user, userDispatch } = useContext(UserContext);
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
+  document.title = appData.business.name;
   console.log(user);
   console.log(appData);
   const getAppData = () => {
@@ -45,16 +46,6 @@ function Home() {
       });
   };
   const refreshUser = () => {
-    //  formDispatch({
-    //    type: "SET_FORM_DATA",
-    //    data: { name: "isUserRefreshed", value: false },
-    //  });
-
-    //  formDispatch({
-    //    type: "SET_FORM_DATA",
-    //    data: { name: "isUserRefreshing", value: true },
-    //  });
-
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
     myHeaders.append("Accept", "application/json");
@@ -102,32 +93,6 @@ function Home() {
       appData.business.secondary_color,
     );
   };
-  // var myHeaders = new Headers();
-  // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-  // myHeaders.append("Accept", "application/json");
-  // console.log(token);
-  // myHeaders.append("Authorization", "Bearer " + user.token);
-  // console.log(token);
-  // var requestOptions = {
-  //   method: "GET",
-  //   headers: myHeaders,
-  // };
-
-  // fetch("https://api.datanow.ng/api/user/882285", requestOptions)
-  //   .then((response) => (response = response.text()))
-  //   .then((response) => {
-  //     const data = JSON.parse(response);
-  //     console.log(data);
-  //     if (data.status === "success") {
-  //       console.log(data);
-  //       // userDispatch({ type: "UPDATE_USER", action: data });
-  //     } else if (
-  //       data.message === "Token Expired" ||
-  //       data.message === "User Not Found"
-  //     ) {
-  //       // props.history.push("/signout");
-  //     }
-  //   });
 
   useEffect(() => {
     refreshUser();

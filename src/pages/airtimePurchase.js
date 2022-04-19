@@ -12,9 +12,7 @@ import PaymentType from "../components/paymentType";
 import { useHistory } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { FormContext } from "../providers/formValues";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { airtimePurchaseSchema } from "../components/validation";
+
 import { getOS } from "../helper/getOs";
 import { AppDataContext } from "../providers/appData";
 import { UserContext } from "../providers/userData";
@@ -33,7 +31,7 @@ function AirtimePurchase() {
     setFocused(true);
     console.log("forcused");
   };
-
+  document.title = "Purchase Airtime-" + appData.business.name;
   const formOnChange = (e) => {
     formDispatch({
       type: "INPUTVALUES",
@@ -54,18 +52,7 @@ function AirtimePurchase() {
       data: { name: "walletPrice", value: walletPrice },
     });
   };
-  const selectAmount = (amount) => {
-    formDispatch({
-      type: "INPUTVALUES",
-      data: { name: "amount", value: amount },
-    });
-  };
-  const selectpaymentMethod = (paymentMethod) => {
-    formDispatch({
-      type: "INPUTVALUES",
-      data: { name: "paymentMethod", value: paymentMethod },
-    });
-  };
+
   useEffect(() => {
     if (!formData.ref) {
       formDispatch({
@@ -454,13 +441,13 @@ function AirtimePurchase() {
                     <div className=" relative ">
                       <label>
                         <div className="flex justify-between">
-                          <span className="font-medium text-primary-black text-sm">
+                          <div className="font-medium text-primary-black text-sm">
                             {" "}
                             Phone Number
-                          </span>
-                          <span className="font-medium text-primary-gray text-sm">
+                          </div>
+                          <div className="font-medium text-primary-gray text-sm">
                             Balance: {`₦ ${user.data.wallet_balance}`}
-                          </span>
+                          </div>
                         </div>
 
                         <input
@@ -468,6 +455,7 @@ function AirtimePurchase() {
                           className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
                           placeholder="08X XXX XXXX"
                           name="phone_number"
+                          autoComplete="off"
                           value={formData.phone_number}
                           inputmode="numeric"
                           focused={focused.toString()}
@@ -568,6 +556,7 @@ function AirtimePurchase() {
                       <button
                         className="py-2 px-4 bg-primary-orange hover:bg-primary-orange focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
                         type="submit"
+                        disabled={sending}
                       >
                         {sending ? (
                           <div className="flex items-center justify-center">

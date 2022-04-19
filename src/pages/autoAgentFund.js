@@ -17,6 +17,7 @@ function AutoAgentFund() {
   const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
   const [sending, setSending] = useState(false);
+  document.title = "Fund Wallet with Autoagent-" + appData.business.name;
 
   useEffect(() => {
     formDispatch({

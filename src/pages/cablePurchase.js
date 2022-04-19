@@ -26,6 +26,8 @@ function CablePurchase() {
   const [sending, setSending] = useState(false);
   const [focused, setFocused] = useState(false);
   const [loading, setloading] = useState(false);
+  document.title = "Purchase Cable TV-" + appData.business.name;
+
   const handleFocus = (e) => {
     setFocused(true);
     console.log("forcused");
@@ -331,7 +333,6 @@ function CablePurchase() {
       appData.business.secondary_color,
     );
   }, []);
-  document.title = "Purchase Cable TV-" + appData.business.name;
   console.log("====================================");
   console.log(formData);
   console.log("====================================");
@@ -451,6 +452,7 @@ function CablePurchase() {
                           placeholder="Select plan"
                           required
                           readOnly
+                          disabled={!formData.network}
                           value={formData.plans_name}
                           onFocus={() => {
                             setShowModal(!showModal);
@@ -465,7 +467,7 @@ function CablePurchase() {
                       {console.log(showModal)}
                     </div>
                   </div>
-                  <div className="w-full">
+                  <div className="w-full mt-4">
                     <div className=" relative ">
                       <label>
                         <div className="w-full">
@@ -562,6 +564,7 @@ function CablePurchase() {
                         type="button"
                         className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
                         onClick={onValidSubmit}
+                        disabled={loading}
                       >
                         {loading ? (
                           <div className="flex items-center justify-center">

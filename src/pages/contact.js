@@ -12,6 +12,8 @@ import { getOS } from "../helper/getOs";
 function Contact() {
   const { appData, dispatch } = useContext(AppDataContext);
   const { user, userDispatch } = useContext(UserContext);
+  document.title = "Contact Us" + appData.business.name;
+
   return (
     <div className="flex flex-col items-center justify-center   max-w-md ">
       <div className="flex  flex-col h-h90 w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">

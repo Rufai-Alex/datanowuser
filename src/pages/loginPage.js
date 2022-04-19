@@ -98,6 +98,20 @@ function LoginPage() {
         },
       },
     });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "identifier",
+        value: "",
+      },
+    });
+    formDispatch({
+      type: "INPUTVALUES",
+      data: {
+        name: "password",
+        value: "",
+      },
+    });
   }, []);
   return (
     <>

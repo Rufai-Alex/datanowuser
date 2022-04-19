@@ -15,6 +15,7 @@ function MonifyFund() {
   // const { user, appData } = useContext(AuthContext);
   const { user, userDispatch } = useContext(UserContext);
   const { appData, dispatch } = useContext(AppDataContext);
+  document.title = "Fund Wallet with Bank-" + appData.business.name;
 
   const history = useHistory();
   const back = () => {

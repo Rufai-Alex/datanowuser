@@ -11,6 +11,8 @@ function Faq() {
   const { user, userDispatch } = useContext(UserContext);
   const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
+  document.title = "FAQs- " + appData.business.name;
+
   const history = useHistory();
   const back = () => {
     history.push("/home");
@@ -100,7 +102,7 @@ function Faq() {
               <div className="container px-5 mx-auto">
                 <div className="text-center mb-20">
                   <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                    Frequently Asked Question
+                    Frequently Asked Questions
                   </h1>
                 </div>
                 <div className="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
@@ -113,7 +115,7 @@ function Faq() {
                               {faq.question}
                             </summary>
 
-                            <span>{faq.answer}</span>
+                            <div>{faq.answer}</div>
                           </details>
                         ))}
                       </>

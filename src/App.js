@@ -83,6 +83,12 @@ function App() {
       : !appData.timestamp
       ? fetchAppData()
       : new Date().getTime() - appData.timestamp > 7200000 && fetchAppData();
+    var headTitle = document.querySelector("head");
+    var setFavicon = document.createElement("link");
+    setFavicon.setAttribute("rel", "shortcut icon");
+    appData.business &&
+      setFavicon.setAttribute("href", appData.business.website + "/logo.png");
+    headTitle.appendChild(setFavicon);
   }, []);
 
   console.log(user.data);

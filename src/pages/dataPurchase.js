@@ -31,6 +31,8 @@ function DataPurchase() {
   const { formData, formDispatch } = useContext(FormContext);
   const [sending, setSending] = useState(false);
   const [focused, setFocused] = useState(false);
+  document.title = "Purchase Data-" + appData.business.name;
+
   const handleFocus = (e) => {
     setFocused(true);
     console.log("forcused");
@@ -121,7 +123,6 @@ function DataPurchase() {
   const back = () => {
     history.push("/home");
   };
-  document.title = "Purchase Data-" + appData.business.name;
   console.log(formData);
 
   const onValidSubmit = (e) => {
@@ -480,12 +481,12 @@ function DataPurchase() {
                   <div className=" relative ">
                     <label>
                       <div className="flex justify-between">
-                        <span className="font-medium text-primary-black text-sm">
+                        <div className="font-medium text-primary-black text-sm">
                           Phone Number
-                        </span>
-                        <span className="font-medium text-primary-gray text-sm">
+                        </div>
+                        <div className="font-medium text-primary-gray text-sm">
                           Balance: {`₦ ${user.data.wallet_balance}`}
-                        </span>
+                        </div>
                       </div>
                       <input
                         type="tel"
@@ -518,6 +519,8 @@ function DataPurchase() {
                         autocomplete="off"
                         name="select_plan"
                         focused={focused.toString()}
+                        readOnly
+                        disabled={!formData.network}
                         required
                         className=" rounded-lg  flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:   mt-3 "
                         placeholder="Select plan"
