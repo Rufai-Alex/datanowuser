@@ -106,7 +106,11 @@ function Home() {
       <div className="self-center flex flex-col items-center h-h90">
         <div className="p-5">
           <div className="flex justify-between w-full">
-            <p className="font-medium text-sm ">Hello {user.data.firstname}</p>
+            <p className="font-medium text-sm ">
+              Hello{" "}
+              {user.data &&
+                `${user.data.firstname} ${user.data.othername} ${user.data.lastname}`}
+            </p>
 
             <img src={bell} alt="bell" className="h-5 pr-2" />
           </div>

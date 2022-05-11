@@ -161,7 +161,7 @@ function ElectricityPayments() {
         formData.phone_number ? formData.phone_number : user.data.phone_number,
       ),
     );
-
+    urlencoded.append("payment_method", formData.atmPayment ? "ATM" : "WALLET");
     urlencoded.append("source", getOS());
     urlencoded.append("ref", formData.ref);
 
@@ -171,12 +171,7 @@ function ElectricityPayments() {
       body: urlencoded,
       //redirect: "follow",
     };
-    fetch(
-      formData.atmPayment
-        ? localStorage.getItem("apiURL") + "atm_electric_purchase"
-        : localStorage.getItem("apiURL") + "wallet_electric_purchase",
-      requestOptions,
-    )
+    fetch(localStorage.getItem("apiURL") + "electric_purchase", requestOptions)
       .then((response) => (response = response.text()))
       .then((response) => {
         console.log(response);

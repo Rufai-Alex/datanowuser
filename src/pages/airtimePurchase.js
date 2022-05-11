@@ -173,6 +173,7 @@ function AirtimePurchase() {
     urlencoded.append("network", String(formData.network));
     urlencoded.append("phone_number", String(formData.phone_number));
     urlencoded.append("amount", String(formData.amount));
+    urlencoded.append("payment_method", formData.atmPayment ? "ATM" : "WALLET");
     urlencoded.append("source", getOS());
     urlencoded.append("ref", formData.ref);
     var requestOptions = {
@@ -181,12 +182,7 @@ function AirtimePurchase() {
       body: urlencoded,
       //redirect: "follow",
     };
-    fetch(
-      formData.atmPayment
-        ? localStorage.getItem("apiURL") + "atm_airtime_purchase"
-        : localStorage.getItem("apiURL") + "wallet_airtime_purchase",
-      requestOptions,
-    )
+    fetch(localStorage.getItem("apiURL") + "airtime_purchase", requestOptions)
       .then((response) => (response = response.text()))
       .then((response) => {
         const data = JSON.parse(response);

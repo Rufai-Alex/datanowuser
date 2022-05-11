@@ -106,7 +106,7 @@ function Faq() {
                   </h1>
                 </div>
                 <div className="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
-                  <div className="w-full lg:w-1/2 px-4 py-2">
+                  <div className="w-full  px-4 py-2">
                     {formData.faqs && (
                       <>
                         {formData.faqs.map((faq) => (

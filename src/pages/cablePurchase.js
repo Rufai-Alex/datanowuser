@@ -166,6 +166,7 @@ function CablePurchase() {
       urlencoded.append("email", String(formData.email));
     urlencoded.append("plan_id", String(formData.cablePlan_id));
     urlencoded.append("smartcard_number", String(formData.smartcard_number));
+    urlencoded.append("payment_method", formData.atmPayment ? "ATM" : "WALLET");
     urlencoded.append("source", getOS());
     urlencoded.append("ref", formData.ref);
 
@@ -175,12 +176,7 @@ function CablePurchase() {
       body: urlencoded,
       //redirect: "follow",
     };
-    fetch(
-      formData.atmPayment
-        ? localStorage.getItem("apiURL") + "atm_cable_purchase"
-        : localStorage.getItem("apiURL") + "wallet_cable_purchase",
-      requestOptions,
-    )
+    fetch(localStorage.getItem("apiURL") + "cable_purchase", requestOptions)
       .then((response) => (response = response.text()))
       .then((response) => {
         const data = JSON.parse(response);

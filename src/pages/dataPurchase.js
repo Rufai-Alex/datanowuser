@@ -124,7 +124,24 @@ function DataPurchase() {
     history.push("/home");
   };
   console.log(formData);
-
+  var networkPrefix = {
+    MTN: [
+      "0803",
+      "0703",
+      "0903",
+      "0806",
+      "0706",
+      "0813",
+      "0810",
+      "0814",
+      "0816",
+      "0906",
+      "0704",
+    ],
+    GLO: ["0805", "0705", "0905", "0807", "0815", "0811", "0905", "0915"],
+    AIRTEL: ["0802", "0902", "0701", "0808", "0708", "0812", "0901", "0907"],
+    ETISALAT: ["0809", "0909", "0817", "0818", "0908"],
+  };
   const onValidSubmit = (e) => {
     e.preventDefault();
     formDispatch({
@@ -165,6 +182,7 @@ function DataPurchase() {
       urlencoded.append("email", String(formData.email));
     urlencoded.append("plan_id", String(formData.plans_id));
     urlencoded.append("phone_number", String(formData.phone_number));
+    urlencoded.append("payment_method", formData.atmPayment ? "ATM" : "WALLET");
     urlencoded.append("source", getOS());
     urlencoded.append("ref", formData.ref);
 
@@ -175,12 +193,7 @@ function DataPurchase() {
       //redirect: "follow",
     };
 
-    fetch(
-      formData.atmPayment
-        ? localStorage.getItem("apiURL") + "atm_data_purchase"
-        : localStorage.getItem("apiURL") + "wallet_data_purchase",
-      requestOptions,
-    )
+    fetch(localStorage.getItem("apiURL") + "data_purchase", requestOptions)
       .then((response) => (response = response.text()))
       .then((response) => {
         const data = JSON.parse(response);
