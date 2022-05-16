@@ -102,7 +102,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="h-screen w-full max-w-sm mx-auto relative">
+    <div className=" w-full max-w-sm mx-auto relative">
       <div className="self-center flex flex-col items-center h-h90">
         <div className="p-5">
           <div className="flex justify-between w-full">

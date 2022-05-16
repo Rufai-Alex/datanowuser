@@ -53,92 +53,92 @@ function Subcription(props) {
     fetchTransactions(1);
   };
 
-  const fetchTransaction = (transaction) => {
-    setLoading(true);
+  // const fetchTransaction = (transaction) => {
+  //   setLoading(true);
 
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-    myHeaders.append("Accept", "application/json");
-    myHeaders.append("Authorization", "Bearer " + user.token);
+  //   var myHeaders = new Headers();
+  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  //   myHeaders.append("Accept", "application/json");
+  //   myHeaders.append("Authorization", "Bearer " + user.token);
 
-    var requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      //redirect: "follow",
-    };
-    var url = "";
+  //   var requestOptions = {
+  //     method: "GET",
+  //     headers: myHeaders,
+  //     //redirect: "follow",
+  //   };
+  //   var url = "";
 
-    switch (transaction.transaction_type * 1) {
-      case 5:
-        url = "data_subscriptions";
-        break;
-      case 6:
-        url = "airtime_subscriptions";
-        break;
-      case 8:
-        url = "cable_subscriptions";
-        break;
-      case 9:
-        url = "electric_subscriptions";
-        break;
-    }
+  //   switch (transaction.transaction_type * 1) {
+  //     case 5:
+  //       url = "data_subscriptions";
+  //       break;
+  //     case 6:
+  //       url = "airtime_subscriptions";
+  //       break;
+  //     case 8:
+  //       url = "cable_subscriptions";
+  //       break;
+  //     case 9:
+  //       url = "electric_subscriptions";
+  //       break;
+  //   }
 
-    fetch(
-      localStorage.getItem("apiURL") + url + "/" + transaction.transaction_id,
-      requestOptions,
-    )
-      .then((response) => (response = response.text()))
-      .then((response) => {
-        const data = JSON.parse(response);
-        setLoading(false);
-        if (data.status === "success") {
-          console.log("success");
-          formDispatch({
-            type: "INPUTVALUES",
-            data: {
-              name: "transaction",
-              value: {
-                ...data.data,
-                transaction_type: transaction.transaction_type,
-              },
-            },
-          });
+  //   fetch(
+  //     localStorage.getItem("apiURL") + url + "/" + transaction.transaction_id,
+  //     requestOptions,
+  //   )
+  //     .then((response) => (response = response.text()))
+  //     .then((response) => {
+  //       const data = JSON.parse(response);
+  //       setLoading(false);
+  //       if (data.status === "success") {
+  //         console.log("success");
+  //         formDispatch({
+  //           type: "INPUTVALUES",
+  //           data: {
+  //             name: "transaction",
+  //             value: {
+  //               ...data.data,
+  //               transaction_type: transaction.transaction_type,
+  //             },
+  //           },
+  //         });
 
-          formDispatch({
-            type: "INPUTVALUES",
-            data: { name: "modalOpen", value: true },
-          });
-        } else if (
-          data.message === "Token Expired" ||
-          data.message === "User Not Found"
-        ) {
-          history.push("/signout");
-        } else if (data.errors) {
-          let errorString = "";
-          const objectValues = Object.values(data.errors);
-          objectValues.map((error) => {
-            errorString = errorString + error + ", ";
-          });
-          formDispatch({
-            type: "SET_ERROR",
-            data: errorString,
-          });
-        } else {
-          formDispatch({
-            type: "SET_ERROR",
-            data: data.message,
-          });
-        }
-      })
-      .catch((error) => {
-        console.log("error", error);
-        formDispatch({
-          type: "SET_ERROR",
-          data: "unable to connect to server",
-        });
-        setLoading(false);
-      });
-  };
+  //         formDispatch({
+  //           type: "INPUTVALUES",
+  //           data: { name: "modalOpen", value: true },
+  //         });
+  //       } else if (
+  //         data.message === "Token Expired" ||
+  //         data.message === "User Not Found"
+  //       ) {
+  //         history.push("/signout");
+  //       } else if (data.errors) {
+  //         let errorString = "";
+  //         const objectValues = Object.values(data.errors);
+  //         objectValues.map((error) => {
+  //           errorString = errorString + error + ", ";
+  //         });
+  //         formDispatch({
+  //           type: "SET_ERROR",
+  //           data: errorString,
+  //         });
+  //       } else {
+  //         formDispatch({
+  //           type: "SET_ERROR",
+  //           data: data.message,
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("error", error);
+  //       formDispatch({
+  //         type: "SET_ERROR",
+  //         data: "unable to connect to server",
+  //       });
+  //       setLoading(false);
+  //     });
+  // };
   const fetchTransactions = (page) => {
     setLoading(true);
 
@@ -388,102 +388,73 @@ function Subcription(props) {
   const Transaction = (props) => {
     return (
       <React.Fragment>
-        <hr className="mt-0" />
-        <div
-          className="flex w-full mt-2.5"
-          style={{ cursor: "pointer" }}
-          onClick={() => {
-            props.transaction.transaction_type * 1 === 5 ||
-            props.transaction.transaction_type * 1 === 6 ||
-            props.transaction.transaction_type * 1 === 8 ||
-            props.transaction.transaction_type * 1 === 9
-              ? fetchTransaction(props.transaction)
-              : transactionSelect(props.transaction);
-          }}
-        >
-          <ul
-            xs="3"
-            className="text-center justify-content-center mb-2 align-self-center"
+        <div className="flex w-full mt-2.5  ">
+          <hr className="mt-0" />
+          <div
+            className="flex w-full mt-2.5 "
+            style={{ fontSize: "12px", cursor: "pointer" }}
+            onClick={() => {
+              transactionSelect(props.transaction);
+            }}
           >
-            <li className="flex justify-between ">
-              {props.transaction.transaction_type * 1 === 5 ||
-              props.transaction.transaction_type * 1 === 6 ||
-              props.transaction.transaction_type * 1 === 8 ||
-              props.transaction.transaction_type * 1 === 9 ? (
-                <React.Fragment>
-                  {props.transaction.table_status * 1 === 0 && (
-                    <img src={right} alt="right" />
-                  )}
+            <ul className="flex w-full mt-2.5">
+              <div className="flex justify-between ">
+                {props.transaction.status * 1 === 0 && (
+                  <img src={right} alt="right" />
+                )}
 
-                  {(props.transaction.table_status * 1 === 1 ||
-                    props.transaction.table_status * 1 === 2 ||
-                    props.transaction.table_status * 1 === 3 ||
-                    props.transaction.table_status * 1 === 4) && (
-                    <i className="mdi mdi-autorenew mdi-24px  active mdi-spin text-warning"></i>
-                  )}
-                  {props.transaction.table_status * 1 === 5 && (
-                    <i className="mdi mdi-wallet   mdi-24px text-primary"></i>
-                  )}
-                  {(props.transaction.table_status * 1 === 6 ||
-                    props.transaction.table_status * 1 === 7) && (
-                    <i className="mdi mdi-alert-circle-outline  mdi-24px text-danger"></i>
-                  )}
-                  <p className="mb-0 mt-0   ml-0 pl-0 ">
-                    {transactionStatus[props.transaction.table_status]}
-                  </p>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  {props.transaction.status * 1 === 1 && (
-                    <React.Fragment>
-                      <i className="mdi mdi-autorenew mdi-24px  active mdi-spin text-warning"></i>
-                    </React.Fragment>
-                  )}
-                  {props.transaction.status * 1 === 0 && (
-                    <i className="mdi mdi-check mdi-24px text-success"></i>
-                  )}
-                  <p className="mb-0 mt-0   ml-0 pl-0 ">
-                    {transactionStatus[props.transaction.status]}
-                  </p>
-                </React.Fragment>
-              )}
-            </li>
-            <li className="flex justify-between" xs="5">
-              <p className="mt-0 mb-0 text-truncate">
-                {transactionTypes[props.transaction.transaction_type]}
-              </p>
-              <p className="mb-0 mt-2 text-truncate">
-                {props.transaction.description}
-              </p>
-              <p className="mb-0 mt-2 text-truncate">
-                {props.transaction.additional_description ? (
-                  props.transaction.additional_description
-                ) : (
-                  <b className="text-white">.</b>
-                )}{" "}
-              </p>
-            </li>
-            <li className="flex justify-between" xs="5">
-              <p
-                className={
-                  props.transaction.transaction_type > 3
-                    ? props.transaction.transaction_type < 10
-                      ? "text-danger mt-0 mb-0"
+                {(props.transaction.status * 1 === 1 ||
+                  props.transaction.status * 1 === 2 ||
+                  props.transaction.status * 1 === 3 ||
+                  props.transaction.status * 1 === 4) && (
+                  <i className="mdi mdi-autorenew mdi-24px  active mdi-spin text-warning"></i>
+                )}
+                {props.transaction.status * 1 === 5 && (
+                  <i className="mdi mdi-wallet   mdi-24px text-primary"></i>
+                )}
+                {(props.transaction.status * 1 === 6 ||
+                  props.transaction.status * 1 === 7) && (
+                  <i className="mdi mdi-alert-circle-outline  mdi-24px text-danger"></i>
+                )}
+                <p className="mb-0 mt-0   ml-0 pl-0 ">
+                  {transactionStatus[props.transaction.status]}
+                </p>
+              </div>
+              <div className="flex w-full flex-col ml-1">
+                <h4 className="font-medium text-sm">
+                  {transactionTypes[props.transaction.transaction_type]}
+                </h4>
+                <p className="mb-0 mt-2 ">{props.transaction.description}</p>
+                <p className="mb-0 mt-2 ">
+                  {props.transaction.additional_description
+                    ? props.transaction.additional_description
+                    : props.transaction.device_number}
+                </p>
+              </div>
+              <div className="flex w-full flex-col ml-1">
+                <p
+                  className={
+                    props.transaction.transaction_type > 3
+                      ? props.transaction.transaction_type < 10
+                        ? "text-danger mt-0 mb-0"
+                        : "text-success mt-0 mb-0"
                       : "text-success mt-0 mb-0"
-                    : "text-success mt-0 mb-0"
-                }
-              >
-                ₦{CurrencyFormat(props.transaction.amount)} /{" "}
-                {props.transaction.payment_method * 1 === 0 ? "WALLET" : "ATM"}
-              </p>
-              <p className="mb-0 mt-2">
-                ₦{CurrencyFormat(props.transaction.amount_before)}/₦
-                {CurrencyFormat(props.transaction.amount_after)}
-              </p>
-              <p className="mb-0 mt-2">{props.transaction.created_at}</p>
-            </li>{" "}
-          </ul>
-        </div>
+                  }
+                >
+                  ₦{CurrencyFormat(props.transaction.amount)} /
+                  {props.transaction.payment_method * 1 === 0
+                    ? "WALLET"
+                    : "ATM"}
+                </p>
+                <p className="mb-0 mt-2">
+                  ₦{CurrencyFormat(props.transaction.amount_before)}/₦
+                  {CurrencyFormat(props.transaction.amount_after)}
+                </p>
+                <p className="mb-0 mt-2">{props.transaction.created_at}</p>
+              </div>
+            </ul>
+          </div>
+        </div>{" "}
       </React.Fragment>
     );
   };
