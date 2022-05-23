@@ -30,7 +30,7 @@ function PaymentType() {
 
   return (
     <>
-      <h3 className="mt-4 font-medium text-primary-black text-sm">
+      <h3 className="mt-4 font-medium text-primary-black text-sm mb-3">
         Payment Method
       </h3>
       <div className="flex gap-4 item-center">

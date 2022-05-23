@@ -9,18 +9,25 @@ import { useContext } from "react";
 import { UserContext } from "../providers/userData";
 import { AppDataContext } from "../providers/appData";
 import { getOS } from "../helper/getOs";
+import { useHistory } from "react-router-dom";
+
 function Contact() {
   const { appData, dispatch } = useContext(AppDataContext);
   const { user, userDispatch } = useContext(UserContext);
   document.title = "Contact Us" + appData.business.name;
-
+  const history = useHistory();
+  const back = () => {
+    history.push("/home");
+  };
   return (
     <div className="flex flex-col items-center justify-center   max-w-md ">
       <div className="flex  flex-col h-h90 w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
             <div className="flex justify-between item-center">
-              <img src={LeftAngle} alt="leftAngle" />
+              <button onClick={back}>
+                <img src={LeftAngle} alt="leftAngle" />
+              </button>
               <h2 className="ml-8 font-medium text-sm">Contact Us</h2>
             </div>
             <img src={bell} alt="bell" />

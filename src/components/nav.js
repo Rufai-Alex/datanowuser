@@ -11,7 +11,7 @@ function Nav() {
   const { appData, dispatch } = useContext(AppDataContext);
 
   return (
-    <nav className=" bg-primary-black w-full ">
+    <nav className=" bg-primary-black w-full fixed inset-x-0 bottom-0">
       <ul className="flex justify-between gap-4 p-2">
         <li>
           <NavLink

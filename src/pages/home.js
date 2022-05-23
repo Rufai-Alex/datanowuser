@@ -103,7 +103,7 @@ function Home() {
 
   return (
     <div className=" w-full max-w-sm mx-auto relative">
-      <div className="self-center flex flex-col items-center h-h90">
+      <div className="self-center flex flex-col items-center h-screen">
         <div className="p-5">
           <div className="flex justify-between w-full">
             <p className="font-medium text-sm ">

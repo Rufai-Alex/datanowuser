@@ -7,6 +7,8 @@ import rightAngle from "../icons/rightAngle.svg";
 import renew from "../icons/renew.svg";
 import Nav from "../components/nav";
 import loadingSmall from "../icons/loadingSmall.svg";
+import paying from "../icons/paying.svg";
+import wallet from "../icons/wallet.png";
 import close from "../icons/Close.svg";
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { UserContext } from "../providers/userData";
@@ -387,18 +389,18 @@ function Subcription(props) {
 
   const Transaction = (props) => {
     return (
-      <React.Fragment>
-        <div className="flex w-full mt-2.5  ">
-          <hr className="mt-0" />
-          <div
-            className="flex w-full mt-2.5 "
-            style={{ fontSize: "12px", cursor: "pointer" }}
-            onClick={() => {
-              transactionSelect(props.transaction);
-            }}
-          >
-            <ul className="flex w-full mt-2.5">
-              <div className="flex justify-between ">
+      <div>
+        <hr className="mt-0" />
+        <div
+          className="flex w-full mt-1.5 "
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            transactionSelect(props.transaction);
+          }}
+        >
+          <div className="w-full">
+            <div className="flex w-full">
+              <div className=" flex flex-col ">
                 {props.transaction.status * 1 === 0 && (
                   <img src={right} alt="right" />
                 )}
@@ -407,66 +409,84 @@ function Subcription(props) {
                   props.transaction.status * 1 === 2 ||
                   props.transaction.status * 1 === 3 ||
                   props.transaction.status * 1 === 4) && (
-                  <i className="mdi mdi-autorenew mdi-24px  active mdi-spin text-warning"></i>
+                  <img src={paying} alt="paying" />
                 )}
                 {props.transaction.status * 1 === 5 && (
-                  <i className="mdi mdi-wallet   mdi-24px text-primary"></i>
+                  <img src={wallet} alt="wallet" />
                 )}
                 {(props.transaction.status * 1 === 6 ||
                   props.transaction.status * 1 === 7) && (
-                  <i className="mdi mdi-alert-circle-outline  mdi-24px text-danger"></i>
+                  <img src={wrong} alt="wrong" />
                 )}
-                <p className="mb-0 mt-0   ml-0 pl-0 ">
+                <p className="font-medium text-xx">
                   {transactionStatus[props.transaction.status]}
                 </p>
               </div>
-              <div className="flex w-full flex-col ml-1">
-                <h4 className="font-medium text-sm">
-                  {transactionTypes[props.transaction.transaction_type]}
-                </h4>
-                <p className="mb-0 mt-2 ">{props.transaction.description}</p>
-                <p className="mb-0 mt-2 ">
-                  {props.transaction.additional_description
-                    ? props.transaction.additional_description
-                    : props.transaction.device_number}
-                </p>
+              <div className="flex w-full flex-col ml-2">
+                <div className="flex justify-between w-full">
+                  <h4 className="font-medium text-sm">
+                    {transactionTypes[props.transaction.transaction_type]}
+                  </h4>
+                  <p
+                    className={
+                      props.transaction.transaction_type > 3
+                        ? props.transaction.transaction_type < 10
+                          ? "text-red-500 font-bold text-sm"
+                          : "text-green-500 font-bold text-sm"
+                        : "text-green-500 font-bold text-sm"
+                    }
+                  >
+                    ₦{CurrencyFormat(props.transaction.amount)}
+                  </p>
+                </div>
+                <div className="flex justify-between w-full">
+                  <p className="font-medium text-xx">
+                    {props.transaction.additional_description
+                      ? props.transaction.additional_description
+                      : props.transaction.device_number}
+                  </p>
+                  <p className="font-medium text-xx">
+                    From{" "}
+                    {props.transaction.payment_method * 1 === 0
+                      ? "WALLET"
+                      : "ATM"}
+                  </p>
+                </div>
+                <div className="flex justify-between w-full">
+                  <p className="font-medium text-xx">
+                    {props.transaction.description}
+                  </p>
+
+                  <p className="font-medium text-xx">
+                    {" "}
+                    <p className="font-medium text-xx">
+                      {props.transaction.created_at}
+                    </p>
+                  </p>
+                </div>
+                <div className="flex justify-between w-full">
+                  <p className=""></p>
+                  <p className="font-medium text-xx">
+                    ₦{CurrencyFormat(props.transaction.amount_before)}/₦
+                    {CurrencyFormat(props.transaction.amount_after)}
+                  </p>
+                </div>
               </div>
-              <div className="flex w-full flex-col ml-1">
-                <p
-                  className={
-                    props.transaction.transaction_type > 3
-                      ? props.transaction.transaction_type < 10
-                        ? "text-danger mt-0 mb-0"
-                        : "text-success mt-0 mb-0"
-                      : "text-success mt-0 mb-0"
-                  }
-                >
-                  ₦{CurrencyFormat(props.transaction.amount)} /
-                  {props.transaction.payment_method * 1 === 0
-                    ? "WALLET"
-                    : "ATM"}
-                </p>
-                <p className="mb-0 mt-2">
-                  ₦{CurrencyFormat(props.transaction.amount_before)}/₦
-                  {CurrencyFormat(props.transaction.amount_after)}
-                </p>
-                <p className="mb-0 mt-2">{props.transaction.created_at}</p>
-              </div>
-            </ul>
+            </div>
           </div>
-        </div>{" "}
-      </React.Fragment>
+        </div>
+      </div>
     );
   };
   return (
-    <div className="flex flex-col max-w-md ">
-      <div className=" h-h90 px-4 py-8 bg-white rounded-lg sm:px-6 md:px-8 lg:px-10 relative">
+    <div className="flex flex-col max-w-sm h-full  relative">
+      <div className=" px-4  bg-white rounded-lg ">
         <div className="flex justify-between items-center">
           <h2 className="font-medium text-lg">Subscriptions</h2>
           <img src={bell} alt="bell" className="h-5 pr-2" />
         </div>
-        <form onSubmit={handleSubmit}>
-          <h3 className="font-medium text-sm mt-9">Search </h3>
+        <form onSubmit={handleSubmit} className="w-full max-w-sm">
+          <h3 className="font-medium text-sm mt-4">Search </h3>
           <div className="flex flex-col mb-2 mt-3">
             <div className="flex relative ">
               <input
@@ -512,31 +532,27 @@ function Subcription(props) {
               </select>
             </div>
           </div>
-          <div className="flex gap-4 mb-2">
-            <div className=" relative ">
-              <input
-                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                type="date"
-                name="dateFrom"
-                value={formData.dateFrom}
-                onChange={formOnChange}
-              />
-            </div>
+          <div className="flex gap-4 mb-2 max-w-sm">
+            <input
+              className=" rounded-lg  flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+              type="date"
+              name="dateFrom"
+              value={formData.dateFrom}
+              onChange={formOnChange}
+            />
 
-            <div className=" relative ">
-              <input
-                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                type="date"
-                name="dateTo"
-                value={formData.dateTo}
-                onChange={formOnChange}
-              />
-            </div>
+            <input
+              className=" rounded-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+              type="date"
+              name="dateTo"
+              value={formData.dateTo}
+              onChange={formOnChange}
+            />
           </div>
-          <div className="flex w-full my-4">
+          <div className="flex w-full my-2">
             <button
               type="submit"
-              className="py-2 px-4 bg-primary-orange hover:bg-yellow-200 focus:ring-primary-orange focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+              className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange  text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
             >
               {Loading ? (
                 <div className="flex items-center justify-center">
@@ -554,7 +570,7 @@ function Subcription(props) {
         </form>
         {formData.transactions && (
           <div className="">
-            <p className="">
+            <p className="font-medium text-sm">
               Showing (
               {formData.per_page * formData.current_page -
                 formData.per_page +
@@ -565,123 +581,23 @@ function Subcription(props) {
                 formData.transactions.length}{" "}
               ) of {formData.total} Transactions
             </p>
-            <div className="overflow-y-scroll h-auto">
+            <div className="h-64 overflow-y-scroll">
               {formData.transactions.map((transaction) => {
                 return (
                   <Transaction key={transaction.id} transaction={transaction} />
-                  // <div className="flex w-full mt-2.5  ">
-                  //   <ul className="w-full">
-                  //     <li className="flex justify-between ">
-                  //       <div className="">
-                  //         <img src={right} alt="right" />
-                  //       </div>
-                  //       <div className="flex w-full flex-col ml-1">
-                  //         <div className="flex justify-between w-full">
-                  //           <h4 className="font-medium text-sm">
-                  //             sdfggrhfg2gbgh
-                  //           </h4>
-                  //           <p className="font-bold text-sm text-red-500">
-                  //             N 200
-                  //           </p>
-                  //         </div>
-                  //         <div className="flex justify-between w-full">
-                  //           <p className="font-medium text-xx"> 08106653903</p>
-                  //           <p className="font-medium text-xx">From Wallet</p>
-                  //         </div>
-                  //         <div className="flex justify-between w-full">
-                  //           <p className="font-medium text-xx">Data Purchase</p>
-                  //           <p className="font-medium text-xx">
-                  //             22-08-21 5:05pm
-                  //           </p>
-                  //         </div>
-                  //       </div>
-                  //     </li>
-                  //     <li className="flex justify-between ">
-                  //       <div className="">
-                  //         <img src={right} alt="right" />
-                  //       </div>
-                  //       <div className="flex w-full flex-col ml-1">
-                  //         <div className="flex justify-between w-full">
-                  //           <h4 className="font-medium text-sm">
-                  //             sdfggrhfg2gbgh
-                  //           </h4>
-                  //           <p className="font-bold text-sm text-red-500">
-                  //             N 200
-                  //           </p>
-                  //         </div>
-                  //         <div className="flex justify-between w-full">
-                  //           <p className="font-medium text-xx"> 08106653903</p>
-                  //           <p className="font-medium text-xx">From Wallet</p>
-                  //         </div>
-                  //         <div className="flex justify-between w-full">
-                  //           <p className="font-medium text-xx">Data Purchase</p>
-                  //           <p className="font-medium text-xx">
-                  //             22-08-21 5:05pm
-                  //           </p>
-                  //         </div>
-                  //       </div>
-                  //     </li>
-                  //     <li className="flex justify-between ">
-                  //       <div className="">
-                  //         <img src={right} alt="right" />
-                  //       </div>
-                  //       <div className="flex w-full flex-col ml-1">
-                  //         <div className="flex justify-between w-full">
-                  //           <h4 className="font-medium text-sm">
-                  //             sdfggrhfg2gbgh
-                  //           </h4>
-                  //           <p className="font-bold text-sm text-red-500">
-                  //             N 200
-                  //           </p>
-                  //         </div>
-                  //         <div className="flex justify-between w-full">
-                  //           <p className="font-medium text-xx"> 08106653903</p>
-                  //           <p className="font-medium text-xx">From Wallet</p>
-                  //         </div>
-                  //         <div className="flex justify-between w-full">
-                  //           <p className="font-medium text-xx">Data Purchase</p>
-                  //           <p className="font-medium text-xx">
-                  //             22-08-21 5:05pm
-                  //           </p>
-                  //         </div>
-                  //       </div>
-                  //     </li>
-                  //     <li className="flex justify-between mt-2.5">
-                  //       <div className="">
-                  //         <img src={wrong} alt="right" />
-                  //       </div>
-                  //       <div className="flex w-full flex-col ml-1">
-                  //         <div className="flex justify-between w-full">
-                  //           <h4 className="font-medium text-sm">MTN 2GB SME</h4>
-                  //           <p className="font-bold text-sm text-red-500">
-                  //             N 200
-                  //           </p>
-                  //         </div>
-                  //         <div className="flex justify-between w-full">
-                  //           <p className="font-medium text-xx"> 08106653903</p>
-                  //           <p className="font-medium text-xx">From Wallet</p>
-                  //         </div>
-                  //         <div className="flex justify-between w-full">
-                  //           <p className="font-medium text-xx">Data Purchase</p>
-                  //           <p className="font-medium text-xx">
-                  //             22-08-21 5:05pm
-                  //           </p>
-                  //         </div>
-                  //       </div>
-                  //     </li>
-                  //   </ul>
-                  // </div>
                 );
               })}
             </div>
           </div>
         )}
       </div>
-      <div className="flex items-center justify-between px-4 mb-6">
+      <div className="flex items-center justify-between  mb-12 mx-4">
         <div className="flex items-center  justify-center h-11 w-11  rounded-md bg-primary-black text-white">
           <img src={leftsAngle} alt="arrow" />
         </div>
-        <div className="font-medium text-xx "> 1 0f 10</div>
+        <div className="font-medium text-xx ">
+          Page {formData.current_page} of {formData.last_page}
+        </div>
         <button className="flex items-center justify-center h-11 w-11   rounded-md bg-primary-black text-white">
           <img src={rightAngle} alt="whatsapp" />
         </button>
