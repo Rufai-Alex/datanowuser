@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect, Suspense } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import Loading from "../src/components/Loading/Loading";
 import "./App.css";
 import { useReducer } from "react";
@@ -160,6 +162,7 @@ function App() {
             </Route>
           </Switch>
         </Suspense>
+        <ToastContainer />
       </div>
     );
   }

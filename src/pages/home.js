@@ -102,11 +102,15 @@ function Home() {
   }, []);
 
   return (
-    <div className=" w-full max-w-sm mx-auto relative">
-      <div className="self-center flex flex-col items-center h-screen">
-        <div className="p-5">
-          <div className="flex justify-between w-full">
-            <p className="font-medium text-sm ">
+    <div className=" w-full relative md:max-w-none md:grid md:grid-cols-12 ">
+      <div className="md:grid-cols-2">
+        <Nav />
+      </div>
+      <div className=" md:grid-cols-10 cd flex flex-col  h-screen mb-12 md:mb-0  md:items-start md:w-full ">
+        {/* <div className=" md:grid-cols-10 self-center flex flex-col items-center h-screen mb-12 md:mb-0  md:items-start md:w-full "> */}
+        <div className="p-5 md:mt-8 ">
+          <div className="flex justify-between w-full md:hidden">
+            <p className="font-medium text-sm  ">
               Hello{" "}
               {user.data &&
                 `${user.data.firstname} ${user.data.othername} ${user.data.lastname}`}
@@ -114,11 +118,8 @@ function Home() {
 
             <img src={bell} alt="bell" className="h-5 pr-2" />
           </div>
-          <div
-            className={
-              " w-full p-3 mt-7 rounded-lg bg-primary-orange relative "
-            }
-          >
+          {/* Balance card */}
+          <div className="w-full p-3 mt-7 rounded-lg bg-primary-orange relative ">
             <img
               src={eclipse1}
               alt=""
@@ -398,7 +399,8 @@ function Home() {
               </Link>
             </div>
           </div>
-          <div className=" mx-auto bg-primary-black  text-white flex  px-4 py-3 rounded-full mt-20 justify-center items-center w-56 ">
+          {/* Faq bar for mobile view but hide on dekstop view for mobil devices view its in nav component */}
+          <div className=" mx-auto bg-primary-black  text-white flex  px-4 py-3 rounded-full mt-20 justify-center items-center w-56  md:hidden">
             <Link to="faq">
               <button className="flex justify-center items-center ">
                 <img src={info} alt="info" />
@@ -416,7 +418,6 @@ function Home() {
           </div>
         </div>
       </div>
-      <Nav />
     </div>
   );
 }

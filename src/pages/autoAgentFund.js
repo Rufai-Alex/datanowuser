@@ -9,16 +9,22 @@ import { UserContext } from "../providers/userData";
 import { AppDataContext } from "../providers/appData";
 import { FormContext } from "../providers/formValues";
 import { getOS } from "../helper/getOs";
+import { ToastContainer, toast } from "react-toastify";
+
 import CurrencyFormat from "../helper/CurrencyFormat";
 import Alert from "../components/Alert";
+import copy from "../icons/copy.svg";
 
 function AutoAgentFund() {
   const { user, userDispatch } = useContext(UserContext);
   const { appData, dispatch } = useContext(AppDataContext);
   const { formData, formDispatch } = useContext(FormContext);
   const [sending, setSending] = useState(false);
-  document.title = "Fund Wallet with Autoagent-" + appData.business.name;
 
+  document.title = "Fund Wallet with Autoagent-" + appData.business.name;
+  const Copy = (text) => {
+    navigator.clipboard.writeText(text).then(() => toast("Copied"));
+  };
   useEffect(() => {
     formDispatch({
       type: "INPUTVALUES",
@@ -164,7 +170,7 @@ function AutoAgentFund() {
   return (
     <div className="flex flex-col items-center  max-w-md m-auto">
       {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
-      <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
+      <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-14">
         <div className="px-4 py-8">
           <div className="flex justify-between items-center">
             <div className="flex justify-between item-center">
@@ -275,20 +281,23 @@ function AutoAgentFund() {
                       className="text-left mt-2  text-dark"
                       style={{ fontSize: 13 }}
                     >
-                      <b>
-                        <i className="mdi mdi-bank-transfer"></i> BANK: Access
-                        Bank
-                      </b>
+                      BANK: Access Bank
                     </p>
 
                     <p
-                      className="text-left mt-2  text-dark"
+                      className="text-left mt-2  text-dark flex gap-3"
                       style={{ fontSize: 13 }}
                     >
-                      <b>
-                        <i className="mdi mdi-wallet-outline"></i> ACCOUNT
-                        NUMBER: 1481853002
-                      </b>
+                      ACCOUNT NUMBER: 1481853002
+                      <div className="flex">
+                        copy
+                        <img
+                          src={copy}
+                          alt="copy"
+                          className=""
+                          onClick={() => Copy(1481853002)}
+                        />
+                      </div>
                     </p>
 
                     <p
@@ -363,51 +372,57 @@ function AutoAgentFund() {
               </div>
             </form>
           ) : (
-            <div className=" font-medium text-sm text-primary-gray ">
-              <h1 className="text-center mt-2  text-dark ">
-                X2X{user.data.reference_code}
-              </h1>
-              <p
-                className=" mt-2  text-dark text-center text-uppercase"
-                style={{ fontSize: 12 }}
-              >
-                <b>reference code</b>
-              </p>
+            <div className=" font-medium text-sm text-primary-gray  ">
+              <div className=" mt-2  text-center text-uppercase flex gap-2 font-extrabold">
+                Reference code :
+                <div className="text-center  flex gap-3 ">
+                  X2X{user.data.reference_code}
+                  <div className="flex">
+                    copy
+                    <img
+                      src={copy}
+                      alt="copy"
+                      className=""
+                      onClick={() => Copy(`X2X${user.data.reference_code}`)}
+                    />
+                  </div>
+                </div>
+              </div>
+
               <ol className="mt-4 flex flex-col space-y-2 list-outside list-decimal mx-4">
                 <li className="mb-1  mt-0 text-dark">
                   Make transfer into our bank Account using your Bank App.
                 </li>
-                <li className="mb-1  mt-0 text-dark">
+                <li className="mb-1  mt-0 ">
                   Enter your{" "}
                   <b>REFERENCE CODE (X2X{user.data.reference_code})</b> in the
                   Remark/Description/Narration part of the transfer form on your
                   Bank App.
                 </li>
-                <li className="mb-1  mt-0 text-dark">
+                <li className="mb-1  mt-0 ">
                   Complete and initiate the transfer into the account below
                 </li>
-                <p className="text-left mt-2  text-dark">
-                  <b>
-                    <i className="mdi mdi-bank-transfer"></i> BANK: Access Bank
-                  </b>
-                </p>
+                <p className="text-left mt-2 font-bold">BANK: Access Bank</p>
 
                 <p
-                  className="text-left mt-2  text-dark"
+                  className="text-left mt-2  text-dark flex gap-3"
                   style={{ fontSize: 13 }}
                 >
-                  <b>
-                    <i className="mdi mdi-wallet-outline"></i> ACCOUNT NUMBER:
-                    1481853002
-                  </b>
+                  ACCOUNT NUMBER: 1481853002
+                  <div className="flex">
+                    copy
+                    <img
+                      src={copy}
+                      alt="copy"
+                      className=""
+                      onClick={() => Copy(1481853002)}
+                    />
+                  </div>
+                </p>
+                <p className="text-left mt-2 font-bold ">
+                  ACCOUNT NAME: Systems Technologies Limited
                 </p>
               </ol>
-              <p className="text-left mt-2  text-dark" style={{ fontSize: 13 }}>
-                <b>
-                  <i className="mdi mdi-account-circle"></i> ACCOUNT NAME:
-                  Systems Technologies Limited
-                </b>
-              </p>
             </div>
           )}
         </div>

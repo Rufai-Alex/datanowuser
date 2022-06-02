@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+
 import bell from "../icons/Bell.svg";
 import LeftAngle from "../icons/LeftAngle.svg";
 import eisalat from "../icons/9mobile.svg";
@@ -9,15 +9,18 @@ import airtel from "../icons/airtel.svg";
 import mtn from "../icons/mtn.svg";
 import copyIcon from "../icons/copy.svg";
 import Nav from "../components/nav";
+import { ToastContainer, toast } from "react-toastify";
 
 function Balance() {
   const [value, setValue] = useState("");
   const [copy, setCopy] = useState("");
   const myContainer = useRef(null);
   const history = useHistory();
-  useEffect(() => {
-    console.log("myContainer..", myContainer.current.innerText);
-  });
+
+  const Copy = (text) => {
+    navigator.clipboard.writeText(text).then(() => toast("Copied"));
+  };
+
   const back = () => {
     history.push("/home");
   };
@@ -40,31 +43,45 @@ function Balance() {
             <img src={mtn} alt="mtn" />
             <div className="flex flex-col gap-4 ">
               <div className="flex gap-4 justify-end">
-                <p className="text-xs font-medium">
-                  Normal Data: <span ref={myContainer}>*131*4#</span>
-                </p>
-                <CopyToClipboard
-                  text={myContainer}
-                  className="flex gap-1 align-middle"
-                >
-                  <div>
-                    <p className="text-xx  text-primary-gray">copy</p>
-                    <img src={copyIcon} alt="copy" className="" />
-                  </div>
-                </CopyToClipboard>
+                <p className="text-xs font-medium">Normal Data: *131*4#</p>
+                <div className="flex gap-1 align-middle">
+                  <p className="text-xx  text-primary-gray">copy</p>
+                  <img
+                    src={copyIcon}
+                    alt="copy"
+                    className=""
+                    onClick={() => {
+                      Copy("*131*4#");
+                    }}
+                  />
+                </div>
               </div>
               <div className="flex gap-4  justify-end">
                 <p className="text-xs font-medium">SME Data: *461*4# </p>
                 <div className="flex gap-1 align-middle">
                   <p className="text-xx  text-primary-gray">copy</p>
-                  <img src={copyIcon} alt="copy" className="" />
+                  <img
+                    src={copyIcon}
+                    alt="copy"
+                    className=""
+                    onClick={() => {
+                      Copy("*461*4#");
+                    }}
+                  />
                 </div>
               </div>
               <div className="flex  gap-4  justify-end">
                 <p className="text-xs font-medium">Airtime: *556# </p>
                 <div className="flex gap-1  align-middle">
                   <p className="text-xx  text-primary-gray">copy</p>
-                  <img src={copyIcon} alt="copy" className="" />
+                  <img
+                    src={copyIcon}
+                    alt="copy"
+                    className=""
+                    onClick={() => {
+                      Copy("*556#");
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -76,14 +93,28 @@ function Balance() {
                 <p className="text-xs font-medium">Normal Data: *127*0# </p>
                 <div className="flex gap-1 align-middle">
                   <p className="text-xx  text-primary-gray">copy</p>
-                  <img src={copyIcon} alt="copy" className="" />
+                  <img
+                    src={copyIcon}
+                    alt="copy"
+                    className=""
+                    onClick={() => {
+                      Copy("*127*0#");
+                    }}
+                  />
                 </div>
               </div>
               <div className="flex  gap-4  justify-end">
                 <p className="text-xs font-medium">Airtime: *124# </p>
                 <div className="flex gap-1 align-middle">
                   <p className="text-xx  text-primary-gray">copy</p>
-                  <img src={copyIcon} alt="copy" className="" />
+                  <img
+                    src={copyIcon}
+                    alt="copy"
+                    className=""
+                    onClick={() => {
+                      Copy("*142#");
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -95,14 +126,28 @@ function Balance() {
                 <p className="text-xs font-medium">Normal Data: *140# </p>
                 <div className="flex gap-1 align-middle">
                   <p className="text-xx  text-primary-gray">copy</p>
-                  <img src={copyIcon} alt="copy" className="" />
+                  <img
+                    src={copyIcon}
+                    alt="copy"
+                    className=""
+                    onClick={() => {
+                      Copy("*140#");
+                    }}
+                  />
                 </div>
               </div>
               <div className="flex  gap-4  justify-end">
                 <p className="text-xs font-medium">Airtime: *123# </p>
                 <div className="flex gap-1 align-middle">
                   <p className="text-xx  text-primary-gray">copy</p>
-                  <img src={copyIcon} alt="copy" className="" />
+                  <img
+                    src={copyIcon}
+                    alt="copy"
+                    className=""
+                    onClick={() => {
+                      Copy("*123#");
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -114,14 +159,28 @@ function Balance() {
                 <p className="text-xs font-medium">Normal Data: *228# </p>
                 <div className="flex gap-1 align-middle">
                   <p className="text-xx  text-primary-gray">copy</p>
-                  <img src={copyIcon} alt="copy" className="" />
+                  <img
+                    src={copyIcon}
+                    alt="copy"
+                    className=""
+                    onClick={() => {
+                      Copy("*228#");
+                    }}
+                  />
                 </div>
               </div>
               <div className="flex  gap-4  justify-end">
                 <p className="text-xs font-medium">Airtime: *232# </p>
                 <div className="flex gap-1 align-middle">
                   <p className="text-xx  text-primary-gray">copy</p>
-                  <img src={copyIcon} alt="copy" className="" />
+                  <img
+                    src={copyIcon}
+                    alt="copy"
+                    className=""
+                    onClick={() => {
+                      Copy("*232#");
+                    }}
+                  />
                 </div>
               </div>
             </div>

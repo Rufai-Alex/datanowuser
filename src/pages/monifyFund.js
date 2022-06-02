@@ -10,7 +10,7 @@ import { useHistory, Link } from "react-router-dom";
 import { AuthContext } from "../providers/auth";
 import { UserContext } from "../providers/userData";
 import { AppDataContext } from "../providers/appData";
-
+import { ToastContainer, toast } from "react-toastify";
 function MonifyFund() {
   // const { user, appData } = useContext(AuthContext);
   const { user, userDispatch } = useContext(UserContext);
@@ -18,6 +18,9 @@ function MonifyFund() {
   document.title = "Fund Wallet with Bank-" + appData.business.name;
 
   const history = useHistory();
+  const Copy = (text) => {
+    navigator.clipboard.writeText(text).then(() => toast("Copied"));
+  };
   const back = () => {
     history.push("/home");
   };
@@ -87,17 +90,22 @@ function MonifyFund() {
             <div className="flex items-center justify-start space-x-2 mt-3">
               <img src={Wallet} alt="wallet" />
               <p className="font-medium text-sm">
-                Account Number:{user.data.monnify_account_number}
+                Account Number : {user.data.monnify_account_number}
               </p>
               <div className="flex gap-1 align-middle">
                 <p className="text-xx  text-primary-gray">copy</p>
-                <img src={copy} alt="copy" className="" />
+                <img
+                  src={copy}
+                  alt="copy"
+                  className=""
+                  onClick={() => Copy(user.data.monnify_account_number)}
+                />
               </div>
             </div>
             <div className="flex items-center justify-start space-x-2 mt-3">
               <img src={Profile} alt="profile" />
               <p className="font-medium text-sm">
-                Account Name:{" "}
+                Account Name :{" "}
                 {`${user.data.firstname} ${user.data.othername} ${user.data.lastname}`}
               </p>
             </div>
