@@ -102,13 +102,13 @@ function Home() {
   }, []);
 
   return (
-    <div className=" w-full relative md:max-w-none md:grid md:grid-cols-12 ">
-      <div className="md:grid-cols-2">
+    <div className=" flex  ">
+      <div>
         <Nav />
       </div>
-      <div className=" md:grid-cols-10 cd flex flex-col  h-screen mb-12 md:mb-0  md:items-start md:w-full ">
+      <div className=" flex-1 flex flex-col  h-screen mb-12 md:mb-0  md:items-start md:w-full ">
         {/* <div className=" md:grid-cols-10 self-center flex flex-col items-center h-screen mb-12 md:mb-0  md:items-start md:w-full "> */}
-        <div className="p-5 md:mt-8 ">
+        <div className="p-5 md:mt-8  w-full">
           <div className="flex justify-between w-full md:hidden">
             <p className="font-medium text-sm  ">
               Hello{" "}
@@ -119,7 +119,7 @@ function Home() {
             <img src={bell} alt="bell" className="h-5 pr-2" />
           </div>
           {/* Balance card */}
-          <div className="w-full p-3 mt-7 rounded-lg bg-primary-orange relative ">
+          <div className="w-full p-3 mt-7 rounded-lg bg-primary-orange relative  ">
             <img
               src={eclipse1}
               alt=""
