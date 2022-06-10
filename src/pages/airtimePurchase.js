@@ -259,322 +259,331 @@ function AirtimePurchase() {
   };
 
   return (
-    <div className="flex flex-col items-center  max-w-md mx-auto ">
-      {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
-      {formData.ConfirmationModal ? (
-        <div
-        // className={`
-        //   transform transition-all duration-500 ease-in-out
-        //      ${
-        //        formData.ConfirmationModal
-        //          ? "  -translate-x-[1000px]"
-        //          : "translate-x-0 "
-        //      }`}
-        >
-          <ConfirmationModel onConfirmationClicked={handleSubmit} />
-        </div>
-      ) : (
-        ""
-      )}
-      <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12">
-        <div className="px-4 py-8">
-          <div className="flex justify-between items-center">
-            <div className="flex justify-between item-center">
-              <button
-                onClick={() => {
-                  next("/home");
-                }}
-              >
-                <img src={LeftAngle} alt="leftAngle" />
-              </button>
-              <h2 className="ml-8 font-medium text-sm">Airtime Purchase</h2>
-            </div>
-            <img src={bell} alt="bell" />
+    <div className="flex">
+      <div>
+        <Nav />
+      </div>
+      <div className="flex flex-col items-center  max-w-md mx-auto ">
+        {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
+        {formData.ConfirmationModal ? (
+          <div
+          // className={`
+          //   transform transition-all duration-500 ease-in-out
+          //      ${
+          //        formData.ConfirmationModal
+          //          ? "  -translate-x-[1000px]"
+          //          : "translate-x-0 "
+          //      }`}
+          >
+            <ConfirmationModel onConfirmationClicked={handleSubmit} />
           </div>
-          <div className="">
-            <h2 className="font-medium text-sm mt-9">Select Network</h2>
-            <div className="flex gap-4 mt-6">
-              <button
-                onClick={() => {
-                  onPlanSelect(
-                    "MTN",
-                    appData.airtime_plans.MTN.atm_price,
-                    appData.airtime_plans.MTN.wallet_price,
-                  );
-                  console.log(formData.network);
-                }}
-              >
-                <div className="flex  flex-col justify-center items-center focus:border-red-500 focus:ring-1 focus:ring-red-500">
+        ) : (
+          ""
+        )}
+
+        <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12">
+          <div className="px-4 py-8">
+            <div className="flex justify-between items-center">
+              <div className="flex justify-between item-center">
+                <button
+                  onClick={() => {
+                    next("/home");
+                  }}
+                >
+                  <img src={LeftAngle} alt="leftAngle" />
+                </button>
+                <h2 className="ml-8 font-medium text-sm">Airtime Purchase</h2>
+              </div>
+              <img src={bell} alt="bell" />
+            </div>
+            <div className="">
+              <h2 className="font-medium text-sm mt-9">Select Network</h2>
+              <div className="flex gap-4 mt-6">
+                <button
+                  onClick={() => {
+                    onPlanSelect(
+                      "MTN",
+                      appData.airtime_plans.MTN.atm_price,
+                      appData.airtime_plans.MTN.wallet_price,
+                    );
+                    console.log(formData.network);
+                  }}
+                >
+                  <div className="flex  flex-col justify-center items-center focus:border-red-500 focus:ring-1 focus:ring-red-500">
+                    <div
+                      className={
+                        formData.network === "MTN"
+                          ? "ring-primary-black ring-4 rounded-lg"
+                          : ""
+                      }
+                    >
+                      <img src={mtn} alt="mtn" className="" />
+                    </div>
+                    <div className="text-primary-orange font-extrabold text-xs mt-2.5">
+                      MTN
+                    </div>
+                    <div className="flex flex-col justify-center items-center text-primary-gray text-xx  mt-2.5">
+                      <span>
+                        {" "}
+                        {appData.airtime_plans.MTN.wallet_price < 100 && (
+                          <p>{100 - appData.airtime_plans.MTN.wallet_price}%</p>
+                        )}
+                      </span>
+                      <span>Discount</span>
+                    </div>
+                  </div>
+                </button>
+                <div
+                  className="flex  flex-col justify-center items-center"
+                  onClick={() => {
+                    onPlanSelect(
+                      "GLO",
+                      appData.airtime_plans.GLO.atm_price,
+                      appData.airtime_plans.GLO.wallet_price,
+                    );
+                    console.log(formData.network);
+                  }}
+                >
+                  {" "}
                   <div
                     className={
-                      formData.network === "MTN"
+                      formData.network === "GLO"
                         ? "ring-primary-black ring-4 rounded-lg"
                         : ""
                     }
                   >
-                    <img src={mtn} alt="mtn" className="" />
+                    <img src={glo} alt="glo" />
                   </div>
-                  <div className="text-primary-orange font-extrabold text-xs mt-2.5">
-                    MTN
-                  </div>
+                  <div className=" font-extrabold text-xs mt-2.5">GLO</div>
                   <div className="flex flex-col justify-center items-center text-primary-gray text-xx  mt-2.5">
                     <span>
                       {" "}
-                      {appData.airtime_plans.MTN.wallet_price < 100 && (
-                        <p>{100 - appData.airtime_plans.MTN.wallet_price}%</p>
+                      {appData.airtime_plans.GLO.wallet_price < 100 && (
+                        <p className="">
+                          {100 - appData.airtime_plans.GLO.wallet_price}%
+                        </p>
                       )}
                     </span>
                     <span>Discount</span>
                   </div>
                 </div>
-              </button>
-              <div
-                className="flex  flex-col justify-center items-center"
-                onClick={() => {
-                  onPlanSelect(
-                    "GLO",
-                    appData.airtime_plans.GLO.atm_price,
-                    appData.airtime_plans.GLO.wallet_price,
-                  );
-                  console.log(formData.network);
-                }}
-              >
-                {" "}
                 <div
-                  className={
-                    formData.network === "GLO"
-                      ? "ring-primary-black ring-4 rounded-lg"
-                      : ""
-                  }
+                  className="flex  flex-col justify-center items-center"
+                  onClick={() => {
+                    onPlanSelect(
+                      "AIRTEL",
+                      appData.airtime_plans.AIRTEL.atm_price,
+                      appData.airtime_plans.AIRTEL.wallet_price,
+                    );
+                    console.log(formData.network);
+                  }}
                 >
-                  <img src={glo} alt="glo" />
-                </div>
-                <div className=" font-extrabold text-xs mt-2.5">GLO</div>
-                <div className="flex flex-col justify-center items-center text-primary-gray text-xx  mt-2.5">
-                  <span>
-                    {" "}
-                    {appData.airtime_plans.GLO.wallet_price < 100 && (
-                      <p className="">
-                        {100 - appData.airtime_plans.GLO.wallet_price}%
-                      </p>
-                    )}
-                  </span>
-                  <span>Discount</span>
-                </div>
-              </div>
-              <div
-                className="flex  flex-col justify-center items-center"
-                onClick={() => {
-                  onPlanSelect(
-                    "AIRTEL",
-                    appData.airtime_plans.AIRTEL.atm_price,
-                    appData.airtime_plans.AIRTEL.wallet_price,
-                  );
-                  console.log(formData.network);
-                }}
-              >
-                <div
-                  className={
-                    formData.network === "AIRTEL"
-                      ? "ring-primary-black ring-4 rounded-lg"
-                      : ""
-                  }
-                >
-                  <img src={airtel} alt="airtel" />
-                </div>
-                <div className=" font-extrabold text-xs mt-2.5">Airtel</div>
-                <div className="flex flex-col justify-center items-center text-primary-gray text-xx mt-2.5">
-                  <span>
-                    {" "}
-                    {appData.airtime_plans.AIRTEL.wallet_price < 100 && (
-                      <p>{100 - appData.airtime_plans.AIRTEL.wallet_price}%</p>
-                    )}
-                  </span>
-                  <span>Discount</span>
-                </div>
-              </div>
-              <div
-                className="flex  flex-col justify-center items-center"
-                onClick={() => {
-                  onPlanSelect(
-                    "ETISALAT",
-                    appData.airtime_plans.ETISALAT.atm_price,
-                    appData.airtime_plans.ETISALAT.wallet_price,
-                  );
-                  console.log(formData.network);
-                }}
-              >
-                {" "}
-                <div
-                  className={
-                    formData.network === "ETISALAT"
-                      ? "ring-primary-black ring-4 rounded-lg"
-                      : ""
-                  }
-                >
-                  <img src={etisalat} alt="etisalat" />
-                </div>
-                <div className=" font-extrabold text-xs mt-2.5">9mobile</div>
-                <div className="flex flex-col justify-center items-center text-primary-gray text-xx  mt-2.5">
-                  <span>
-                    {" "}
-                    {appData.airtime_plans.ETISALAT.wallet_price < 100 && (
-                      <p>
-                        {100 - appData.airtime_plans.ETISALAT.wallet_price}%
-                      </p>
-                    )}
-                  </span>
-                  <span>Discount</span>
-                </div>
-              </div>
-            </div>
-          </div>{" "}
-          <form onSubmit={onValidSubmit}>
-            <div className="">
-              <div className="mt-12">
-                <div className="w-full space-y-6">
-                  <div className="w-full">
-                    <div className=" relative ">
-                      <label>
-                        <div className="flex justify-between">
-                          <div className="font-medium text-primary-black text-sm">
-                            {" "}
-                            Phone Number
-                          </div>
-                          <div className="font-medium text-primary-gray text-sm">
-                            Balance: {`₦ ${user.data.wallet_balance}`}
-                          </div>
-                        </div>
-
-                        <input
-                          type="tel"
-                          className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
-                          placeholder="08X XXX XXXX"
-                          name="phone_number"
-                          autoComplete="off"
-                          value={formData.phone_number}
-                          inputmode="numeric"
-                          focused={focused.toString()}
-                          pattern="^[0-9]{11,11}$"
-                          required
-                          onBlur={handleFocus}
-                          onChange={(e) => {
-                            formOnChange(e);
-                          }}
-                        />
-
-                        <span>Please enter a valid receiver phone number</span>
-                      </label>
-                    </div>
+                  <div
+                    className={
+                      formData.network === "AIRTEL"
+                        ? "ring-primary-black ring-4 rounded-lg"
+                        : ""
+                    }
+                  >
+                    <img src={airtel} alt="airtel" />
                   </div>
-                  <div className="w-full">
-                    <div className=" relative ">
-                      <label>
-                        <p className="mt-4 font-medium text-primary-black text-sm">
-                          Amount to Recharge
+                  <div className=" font-extrabold text-xs mt-2.5">Airtel</div>
+                  <div className="flex flex-col justify-center items-center text-primary-gray text-xx mt-2.5">
+                    <span>
+                      {" "}
+                      {appData.airtime_plans.AIRTEL.wallet_price < 100 && (
+                        <p>
+                          {100 - appData.airtime_plans.AIRTEL.wallet_price}%
                         </p>
-                        <input
-                          type="text"
-                          inputmode="numeric"
-                          focused={focused.toString()}
-                          required
-                          autoComplete="off"
-                          pattern="^[0-9]{2,6}$"
-                          className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:   mt-3"
-                          placeholder="Min ₦50, Max ₦10,000"
-                          name="amount"
-                          onBlur={handleFocus}
-                          onChange={(e) => {
-                            formOnChange(e);
-                          }}
-                          value={formData.amount}
-                        />
-
-                        <span>Please Enter valid amount</span>
-                      </label>
-                    </div>
-                  </div>
-                  <div className="text-red-500 flex flex-col font-medium text-xs">
-                    {formData.walletPrice < 100 && (
-                      <p className="">
-                        Wallet Discount: {100 - formData.walletPrice}%
-                      </p>
-                    )}
-                    {formData.atmPrice < 100 && (
-                      <p className="mt-2">
-                        ATM Discount: {100 - formData.atmPrice}%
-                      </p>
-                    )}
-                  </div>
-
-                  <PaymentType />
-
-                  <p className="mt-4 font-medium text-primary-black text-sm">
-                    Total Price:&nbsp;
-                    <div className=" text-purple-800 inline">
-                      ₦
-                      {CurrencyFormat(
-                        formData.atmPayment
-                          ? (formData.atmPrice * formData.amount) / 100
-                          : (formData.walletPrice * formData.amount) / 100,
                       )}
-                    </div>
-                  </p>
-
-                  <div className="w-full">
-                    {formData.atmPayment ? (
-                      ""
-                    ) : (
+                    </span>
+                    <span>Discount</span>
+                  </div>
+                </div>
+                <div
+                  className="flex  flex-col justify-center items-center"
+                  onClick={() => {
+                    onPlanSelect(
+                      "ETISALAT",
+                      appData.airtime_plans.ETISALAT.atm_price,
+                      appData.airtime_plans.ETISALAT.wallet_price,
+                    );
+                    console.log(formData.network);
+                  }}
+                >
+                  {" "}
+                  <div
+                    className={
+                      formData.network === "ETISALAT"
+                        ? "ring-primary-black ring-4 rounded-lg"
+                        : ""
+                    }
+                  >
+                    <img src={etisalat} alt="etisalat" />
+                  </div>
+                  <div className=" font-extrabold text-xs mt-2.5">9mobile</div>
+                  <div className="flex flex-col justify-center items-center text-primary-gray text-xx  mt-2.5">
+                    <span>
+                      {" "}
+                      {appData.airtime_plans.ETISALAT.wallet_price < 100 && (
+                        <p>
+                          {100 - appData.airtime_plans.ETISALAT.wallet_price}%
+                        </p>
+                      )}
+                    </span>
+                    <span>Discount</span>
+                  </div>
+                </div>
+              </div>
+            </div>{" "}
+            <form onSubmit={onValidSubmit}>
+              <div className="">
+                <div className="mt-12">
+                  <div className="w-full space-y-6">
+                    <div className="w-full">
                       <div className=" relative ">
                         <label>
-                          <p className="mt-4 font-medium text-primary-black text-sm">
-                            Password
-                          </p>
+                          <div className="flex justify-between">
+                            <div className="font-medium text-primary-black text-sm">
+                              {" "}
+                              Phone Number
+                            </div>
+                            <div className="font-medium text-primary-gray text-sm">
+                              Balance: {`₦ ${user.data.wallet_balance}`}
+                            </div>
+                          </div>
+
                           <input
-                            type="password"
+                            type="tel"
                             className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
-                            placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                            placeholder="08X XXX XXXX"
+                            name="phone_number"
+                            autoComplete="off"
+                            value={formData.phone_number}
+                            inputmode="numeric"
                             focused={focused.toString()}
+                            pattern="^[0-9]{11,11}$"
                             required
-                            name="password"
+                            onBlur={handleFocus}
                             onChange={(e) => {
                               formOnChange(e);
                             }}
-                            value={formData.password}
                           />
-                          <span>Please enter your password </span>
+
+                          <span>
+                            Please enter a valid receiver phone number
+                          </span>
                         </label>
                       </div>
-                    )}
-                  </div>
-                  <div>
-                    <span className="block w-full rounded-md shadow-sm">
-                      <button
-                        className="py-2 px-4 bg-primary-orange hover:bg-primary-orange focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
-                        type="submit"
-                        disabled={sending}
-                      >
-                        {sending ? (
-                          <div className="flex items-center justify-center">
-                            <img
-                              src={loadingSmall}
-                              alt="loading ..."
-                              className="w-7 h-7 "
-                            />
-                          </div>
-                        ) : (
-                          `Pay`
+                    </div>
+                    <div className="w-full">
+                      <div className=" relative ">
+                        <label>
+                          <p className="mt-4 font-medium text-primary-black text-sm">
+                            Amount to Recharge
+                          </p>
+                          <input
+                            type="text"
+                            inputmode="numeric"
+                            focused={focused.toString()}
+                            required
+                            autoComplete="off"
+                            pattern="^[0-9]{2,6}$"
+                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:   mt-3"
+                            placeholder="Min ₦50, Max ₦10,000"
+                            name="amount"
+                            onBlur={handleFocus}
+                            onChange={(e) => {
+                              formOnChange(e);
+                            }}
+                            value={formData.amount}
+                          />
+
+                          <span>Please Enter valid amount</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div className="text-red-500 flex flex-col font-medium text-xs">
+                      {formData.walletPrice < 100 && (
+                        <p className="">
+                          Wallet Discount: {100 - formData.walletPrice}%
+                        </p>
+                      )}
+                      {formData.atmPrice < 100 && (
+                        <p className="mt-2">
+                          ATM Discount: {100 - formData.atmPrice}%
+                        </p>
+                      )}
+                    </div>
+
+                    <PaymentType />
+
+                    <p className="mt-4 font-medium text-primary-black text-sm">
+                      Total Price:&nbsp;
+                      <div className=" text-purple-800 inline">
+                        ₦
+                        {CurrencyFormat(
+                          formData.atmPayment
+                            ? (formData.atmPrice * formData.amount) / 100
+                            : (formData.walletPrice * formData.amount) / 100,
                         )}
-                      </button>
-                    </span>
+                      </div>
+                    </p>
+
+                    <div className="w-full">
+                      {formData.atmPayment ? (
+                        ""
+                      ) : (
+                        <div className=" relative ">
+                          <label>
+                            <p className="mt-4 font-medium text-primary-black text-sm">
+                              Password
+                            </p>
+                            <input
+                              type="password"
+                              className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                              placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                              focused={focused.toString()}
+                              required
+                              name="password"
+                              onChange={(e) => {
+                                formOnChange(e);
+                              }}
+                              value={formData.password}
+                            />
+                            <span>Please enter your password </span>
+                          </label>
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <span className="block w-full rounded-md shadow-sm">
+                        <button
+                          className="py-2 px-4 bg-primary-orange hover:bg-primary-orange focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                          type="submit"
+                          disabled={sending}
+                        >
+                          {sending ? (
+                            <div className="flex items-center justify-center">
+                              <img
+                                src={loadingSmall}
+                                alt="loading ..."
+                                className="w-7 h-7 "
+                              />
+                            </div>
+                          ) : (
+                            `Pay`
+                          )}
+                        </button>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-      <Nav />
     </div>
   );
 }

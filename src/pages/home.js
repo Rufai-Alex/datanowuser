@@ -102,7 +102,7 @@ function Home() {
   }, []);
 
   return (
-    <div className=" flex  ">
+    <div className="flex">
       <div>
         <Nav />
       </div>
@@ -119,186 +119,57 @@ function Home() {
             <img src={bell} alt="bell" className="h-5 pr-2" />
           </div>
           {/* Balance card */}
-          <div className="w-full p-3 mt-7 rounded-lg bg-primary-orange relative  ">
-            <img
-              src={eclipse1}
-              alt=""
-              className="absolute top-0 right-0 z-10"
-            />
-            <img
-              src={eclipse2}
-              alt=""
-              className="absolute bottom-0 left-0 z-10"
-            />
-            <div className="flex justify-between items-center">
-              <h3 className="font-medium text-sm">Wallet balance</h3>
-              <div>
-                <img
-                  src={appData.business.website + "/logo.png"}
-                  alt="logo"
-                  className="-mb-4"
-                  style={{ height: 40 }}
-                />
+          <div className="w-full p-3 mt-7 rounded-lg bg-primary-orange relative md:flex md:justify-between md:items-center md:px-7   md:p-10">
+            {/*  */}
+            <div className="w-full md:w-1/2 px-2 ">
+              <img
+                src={eclipse1}
+                alt=""
+                className="absolute top-0 right-0 z-10 md:w-1/4"
+              />
+              <img
+                src={eclipse2}
+                alt=""
+                className="absolute bottom-0 left-0 z-10  md:w-1/4"
+              />
+              <div className="flex justify-between items-center">
+                <h3 className="font-medium text-sm md:text-base">
+                  Wallet balance
+                </h3>
+                <div className="md:hidden">
+                  <img
+                    src={appData.business.website + "/logo.png"}
+                    alt="logo"
+                    className="-mb-4"
+                    style={{ height: 40 }}
+                  />
+                </div>
+              </div>
+              <div className="flex items-center mt-1">
+                <p className="text-xl font-bold md:text-4xl">{`₦ ${user.data.wallet_balance}`}</p>
+                <span className="ml-3">
+                  <img src={refresh} alt="refresh" className="" />
+                </span>
               </div>
             </div>
-            <div className="flex items-center mt-1">
-              <p className="text-xl font-bold">{`₦ ${user.data.wallet_balance}`}</p>
-              <span className="ml-3">
-                <img src={refresh} alt="refresh" className="" />
-              </span>
-            </div>
-            <div className="flex justify-between mt-6 gap-x-3">
+            <div className="flex justify-between mt-6 md:mt-0 gap-x-3 md:space-x-6 md:w-1/2 ">
               <button
                 className="bg-primary-black flex  rounded-lg   justify-between items-center w-full py-2 px-4 z-50"
                 onClick={() => setShowModal(true)}
               >
                 <span className=" inline-flex  items-center p-0.5 border bg-white  border-white rounded-md">
-                  <img src={add} alt="add" className="h-5 w-5 bg-white" />
+                  <img
+                    src={add}
+                    alt="add"
+                    className="h-5 w-5 md:h-10 md:w-10 bg-white"
+                  />
                 </span>
 
-                <h4 className="font-medium text-sm leading-3  text-white flex flex-col justify-start items-start mr-4">
-                  {/* //// */}
+                <h4 className="font-medium text-sm md:text-base leading-3  text-white flex flex-col justify-start items-start mr-4">
                   <button>
-                    <p>Fund</p>
-                    <p className="mt-1">Wallet</p>{" "}
+                    <p className="md:inline">Fund</p>
+                    <p className="mt-1 md:inline"> Wallet</p>{" "}
                   </button>
-
-                  {showModal ? (
-                    <>
-                      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                        <div className="absolute w-full  mx-auto max-w-sm bottom-0">
-                          {}
-                          {/*content*/}
-                          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                            {/*header*/}
-                            <div className="flex py-4 rounded-t-lg">
-                              <button
-                                className=" bg-transparent border-0 text-right  outline-none focus:outline-none ml-8 h-6 w-5"
-                                onClick={() => setShowModal(false)}
-                              >
-                                <img src={close} alt="close" />
-                              </button>
-
-                              {/* ///////// */}
-                              <h3 className="text-lg font-extrabold text-black text-center mx-auto">
-                                Fund Wallet Via
-                              </h3>
-                            </div>
-                            {/*body*/}
-                            <div className="relative flex flex-col text-black  mb-5">
-                              <table className="table p-4 bg-white shadow rounded-lg ">
-                                <tbody className="bg-secondary-blue">
-                                  <tr className="text-secondary-black  border-b-8 border-white">
-                                    <td className=" font-medium text-sm">
-                                      <Link to="/outoAgent">Auto Agent</Link>
-                                    </td>
-                                    <td className=" p-4 ">
-                                      <div className=" font-medium text-xx text-primary-gray">
-                                        <Link to="/outoAgent">Delivery</Link>
-                                      </div>
-                                      <div className="mt-1">
-                                        <Link to="/outoAgent"> 1-30Mins</Link>
-                                      </div>
-                                    </td>
-                                    <td className=" p-4 ">
-                                      <Link to="/outoAgent">
-                                        <div className="text-xx text-primary-gray">
-                                          Status
-                                        </div>
-
-                                        {appData.master_settings
-                                          .fund_status_auto *
-                                          1 ===
-                                        0 ? (
-                                          <div className="mt-1 text-green-500 ">
-                                            Active
-                                          </div>
-                                        ) : (
-                                          <div className="mt-1 text-red-500 ">
-                                            Down
-                                          </div>
-                                        )}
-                                      </Link>
-                                    </td>
-                                  </tr>{" "}
-                                  <tr className="text-secondary-black border-b-8 border-white">
-                                    <td className=" font-medium text-sm">
-                                      <Link to="/monify"> Monnify</Link>
-                                    </td>
-                                    <td className="border-b-2 p-4 ">
-                                      <div className=" font-medium text-xx text-primary-gray">
-                                        <Link to="/monify"> Delivery</Link>
-                                      </div>
-                                      <div className="mt-1">
-                                        {" "}
-                                        <Link to="/monify"> 1-10Mins</Link>
-                                      </div>
-                                    </td>
-                                    <td className="border-b-2 p-4 ">
-                                      {" "}
-                                      <Link to="/monify">
-                                        <div className="text-xx text-primary-gray">
-                                          Status
-                                        </div>
-                                        {appData.master_settings
-                                          .fund_status_bank *
-                                          1 ===
-                                        0 ? (
-                                          <div className="mt-1 text-green-500">
-                                            Active
-                                          </div>
-                                        ) : (
-                                          <div className="mt-1 text-red-500">
-                                            Down
-                                          </div>
-                                        )}
-                                      </Link>
-                                    </td>
-                                  </tr>
-                                  <tr className="text-secondary-black ">
-                                    <td className=" font-medium text-sm">
-                                      <Link to="/atm">ATM</Link>
-                                    </td>
-                                    <td className="border-b-2 p-4 ">
-                                      <div className=" font-medium text-xx text-primary-gray">
-                                        <Link to="/atm"> Delivery</Link>
-                                      </div>
-                                      <div className="mt-1">
-                                        <Link to="/atm">1-3Mins</Link>
-                                      </div>
-                                    </td>
-                                    <td className="border-b-2 p-4 ">
-                                      <div className="text-xx text-primary-gray">
-                                        Status
-                                      </div>
-
-                                      <Link to="/atm">
-                                        {appData.master_settings
-                                          .fund_status_atm *
-                                          1 ===
-                                        0 ? (
-                                          <div className="mt-1 text-green-500">
-                                            Active{" "}
-                                          </div>
-                                        ) : (
-                                          <div className="mt-1 text-red-500">
-                                            Down
-                                          </div>
-                                        )}
-                                      </Link>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                            {/*footer*/}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                    </>
-                  ) : null}
-                  {/* ///// */}
                 </h4>
               </button>
               <button
@@ -309,89 +180,93 @@ function Home() {
                   <img
                     src={arrow}
                     alt="Arrow"
-                    className="h-5 w-5 bg-primary-black"
+                    className="h-5 w-5 md:h-10 md:w-10 bg-primary-black"
                   />
                 </span>
                 <Link to="transferToUser">
-                  <h4 className="font-medium text-sm leading-3 ml-3 text-black flex flex-col justify-start items-start ">
-                    <p> Transfer</p>
-                    <p className="mt-1"> to User</p>
+                  <h4 className="font-medium text-sm leading-3 ml-3 text-black flex flex-col md:flex-row items-start md:items-center md:justify-center w-full">
+                    <p className="md:inline">Transfer </p>
+                    <p className="mt-1 md:inline"> to User</p>
                   </h4>
                 </Link>
               </button>
             </div>
           </div>
-          <div className="mt-5 ">
-            <h2 className="font-bold">Services</h2>
-            <div className="flexs grid grid-cols-2 gap-3  gap-y-3s gap-x-3.5s flex-wraps mt-4 i  ">
+          <div className="mt-5  ">
+            <h2 className="font-bold md:text-2xl md:mt-10">Services</h2>
+            <div className=" grid grid-cols-2 md:grid-cols-5 gap-3  md:gap-5   mt-4  md:mt-14 ">
               <Link to="data">
-                <button className="bg-primary-black w-full flex  rounded-lg   justify-start items-center  py-2 px-4  ">
+                <button className="bg-primary-black w-full flex  rounded-lg   justify-start items-center  py-2 px-4  md:flex-col md:items-start md:basis-1/3 ">
                   <span className="inline-flex  items-center p-1 border bg-primary-orange  border-primary-orange rounded-md ">
-                    <img src={wifi} alt="wifi" className=" bg-primary-orange" />
+                    <img
+                      src={wifi}
+                      alt="wifi"
+                      className=" bg-primary-orange md:h-11 md:w-11 "
+                    />
                   </span>
-                  <h4 className="min-w-max font-medium text-sm leading-3 ml-3 text-white flex flex-col justify-start items-start">
+                  <h4 className="min-w-max font-medium text-sm md:text-lg leading-3 ml-3 md:ml-0 text-white flex flex-col justify-start items-start md:mt-14 md:py-4">
                     <p>Data </p>
-                    <p className="mt-1">Purchase</p>
+                    <p className="mt-1 md:mt-0">Purchase</p>
                   </h4>
                 </button>
               </Link>
               <Link to="airtime">
-                <button className="bg-primary-black flex w-full  rounded-lg   justify-start items-center  py-2 px-4 ">
+                <button className="bg-primary-black w-full flex  rounded-lg   justify-start items-center  py-2 px-4  md:flex-col md:items-start md:basis-1/3 ">
                   <span className="inline-flex  items-center p-1 border bg-primary-orange  border-primary-orange rounded-md">
                     <img
                       src={phone}
                       alt="phone"
-                      className=" bg-primary-orange"
+                      className=" bg-primary-orange md:h-11 md:w-11 "
                     />
                   </span>
 
-                  <h4 className="font-medium text-sm leading-3 ml-3 text-white flex flex-col justify-start items-start">
+                  <h4 className="min-w-max font-medium text-sm md:text-lg leading-3 ml-3 md:ml-0 text-white flex flex-col justify-start items-start md:mt-14 md:py-4">
                     <p>Airtime</p>
                     <p className="mt-1"> Purchase</p>
                   </h4>
                 </button>
               </Link>
               <Link to="cable">
-                <button className="bg-primary-black flex  w-full rounded-lg   justify-start items-center  py-2 px-4  ">
+                <button className="bg-primary-black w-full flex  rounded-lg   justify-start items-center  py-2 px-4  md:flex-col md:items-start md:basis-1/3 ">
                   <span className="inline-flex  items-center p-1 border bg-primary-orange  border-primary-orange rounded-md">
                     <img
                       src={devices}
                       alt="devices"
-                      className=" bg-primary-orange"
+                      className=" bg-primary-orange md:h-11 md:w-11 "
                     />
                   </span>
 
-                  <h4 className="font-medium text-sm leading-3 ml-3 text-white flex flex-col justify-start items-start">
+                  <h4 className="min-w-max font-medium text-sm md:text-lg leading-3 ml-3 md:ml-0 text-white flex flex-col justify-start items-start md:mt-14 md:py-4">
                     <p> Cable</p> <p className="mt-1"> Payment</p>
                   </h4>
                 </button>
               </Link>
               <Link to="electricity">
-                <button className="bg-primary-black flex w-full rounded-lg   justify-start items-center  py-2 pl-4 pr-3.5   ">
+                <button className="bg-primary-black w-full flex  rounded-lg   justify-start items-center  py-2 px-4  md:flex-col md:items-start md:basis-1/3 ">
                   <span className="inline-flex  items-center p-1 border bg-primary-orange  border-primary-orange rounded-md ">
                     <img
                       src={flash}
                       alt="flash"
-                      className=" bg-primary-orange"
+                      className=" bg-primary-orange md:h-11 md:w-11 "
                     />
                   </span>
 
-                  <h4 className="font-medium text-sm leading-3 ml-3 text-white flex flex-col justify-start items-start">
+                  <h4 className="min-w-max font-medium text-sm md:text-lg leading-3 ml-3 md:ml-0 text-white flex flex-col justify-start items-start md:mt-14 md:py-4">
                     <p> Electricity</p> <p className="mt-1"> Payment</p>
                   </h4>
                 </button>
               </Link>
               <Link to="code">
-                <button className="bg-primary-black flex w-full  rounded-lg   justify-start items-center  py-2 pl-4 pr-6  ">
+                <button className="bg-primary-black w-full flex  rounded-lg   justify-start items-center  py-2 px-4  md:flex-col md:items-start md:basis-1/3 ">
                   <span className="inline-flex  items-center p-1 border bg-primary-orange  border-primary-orange rounded-md ">
                     <img
                       src={mobile}
                       alt="Mobil"
-                      className=" bg-primary-orange"
+                      className=" bg-primary-orange md:h-11 md:w-11 "
                     />
                   </span>
 
-                  <h4 className="font-medium text-sm leading-3 ml-3 text-white flex flex-col justify-start items-start">
+                  <h4 className="min-w-max font-medium text-sm md:text-lg leading-3 ml-3 md:ml-0 text-white flex flex-col justify-start items-start md:mt-14 md:py-4">
                     <p>Balance</p>
                     <p className="mt-1">Codes</p>
                   </h4>
@@ -418,6 +293,125 @@ function Home() {
           </div>
         </div>
       </div>
+      {/* Fund wallet modal */}
+      {showModal ? (
+        <>
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="absolute w-full  mx-auto max-w-sm bottom-0">
+              {}
+              {/*content*/}
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                {/*header*/}
+                <div className="flex py-4 rounded-t-lg">
+                  <button
+                    className=" bg-transparent border-0 text-right  outline-none focus:outline-none ml-8 h-6 w-5"
+                    onClick={() => setShowModal(false)}
+                  >
+                    <img src={close} alt="close" />
+                  </button>
+
+                  {/* ///////// */}
+                  <h3 className="text-lg font-extrabold text-black text-center mx-auto">
+                    Fund Wallet Via
+                  </h3>
+                </div>
+                {/*body*/}
+                <div className="relative flex flex-col text-black  mb-5">
+                  <table className="table p-4 bg-white shadow rounded-lg ">
+                    <tbody className="bg-secondary-blue">
+                      <tr className="text-secondary-black  border-b-8 border-white">
+                        <td className=" font-medium text-sm">
+                          <Link to="/outoAgent">Auto Agent</Link>
+                        </td>
+                        <td className=" p-4 ">
+                          <div className=" font-medium text-xx text-primary-gray">
+                            <Link to="/outoAgent">Delivery</Link>
+                          </div>
+                          <div className="mt-1">
+                            <Link to="/outoAgent"> 1-30Mins</Link>
+                          </div>
+                        </td>
+                        <td className=" p-4 ">
+                          <Link to="/outoAgent">
+                            <div className="text-xx text-primary-gray">
+                              Status
+                            </div>
+
+                            {appData.master_settings.fund_status_auto * 1 ===
+                            0 ? (
+                              <div className="mt-1 text-green-500 ">Active</div>
+                            ) : (
+                              <div className="mt-1 text-red-500 ">Down</div>
+                            )}
+                          </Link>
+                        </td>
+                      </tr>{" "}
+                      <tr className="text-secondary-black border-b-8 border-white">
+                        <td className=" font-medium text-sm">
+                          <Link to="/monify"> Monnify</Link>
+                        </td>
+                        <td className="border-b-2 p-4 ">
+                          <div className=" font-medium text-xx text-primary-gray">
+                            <Link to="/monify"> Delivery</Link>
+                          </div>
+                          <div className="mt-1">
+                            {" "}
+                            <Link to="/monify"> 1-10Mins</Link>
+                          </div>
+                        </td>
+                        <td className="border-b-2 p-4 ">
+                          {" "}
+                          <Link to="/monify">
+                            <div className="text-xx text-primary-gray">
+                              Status
+                            </div>
+                            {appData.master_settings.fund_status_bank * 1 ===
+                            0 ? (
+                              <div className="mt-1 text-green-500">Active</div>
+                            ) : (
+                              <div className="mt-1 text-red-500">Down</div>
+                            )}
+                          </Link>
+                        </td>
+                      </tr>
+                      <tr className="text-secondary-black ">
+                        <td className=" font-medium text-sm">
+                          <Link to="/atm">ATM</Link>
+                        </td>
+                        <td className="border-b-2 p-4 ">
+                          <div className=" font-medium text-xx text-primary-gray">
+                            <Link to="/atm"> Delivery</Link>
+                          </div>
+                          <div className="mt-1">
+                            <Link to="/atm">1-3Mins</Link>
+                          </div>
+                        </td>
+                        <td className="border-b-2 p-4 ">
+                          <div className="text-xx text-primary-gray">
+                            Status
+                          </div>
+
+                          <Link to="/atm">
+                            {appData.master_settings.fund_status_atm * 1 ===
+                            0 ? (
+                              <div className="mt-1 text-green-500">Active </div>
+                            ) : (
+                              <div className="mt-1 text-red-500">Down</div>
+                            )}
+                          </Link>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                {/*footer*/}
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
+      {/* ///// */}
     </div>
   );
 }

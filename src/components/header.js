@@ -28,11 +28,11 @@ function Header() {
           <img src={Bell} alt="notification" />
         </div>
         <div className="avatar py-2.5 px-5 rounded-lg  md:flex justify-between items-center ml-10 hidden ">
-          <div className="profile text-white  ml-3.5">
-            <span className="block text-base font-medium text-primary-blue">
+          <div className="profile   ml-3.5">
+            <p className=" text-xl font-medium text-primary-blue ">
               {user.data &&
                 `${user.data.firstname} ${user.data.othername} ${user.data.lastname}`}
-            </span>
+            </p>
           </div>
         </div>
       </div>
