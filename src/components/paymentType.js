@@ -30,14 +30,14 @@ function PaymentType() {
 
   return (
     <>
-      <h3 className="mt-4 font-medium text-primary-black text-sm mb-3">
+      <h3 className="mt-4 font-medium text-primary-black text-sm md:text-base mb-3">
         Payment Method
       </h3>
       <div className="flex gap-4 item-center">
         <button
           type="button"
           className={
-            "py-2 px-4 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-slate-300 text-center text-base font-medium shadow-md   rounded-lg " +
+            "py-2 px-4 md:py-4 md:px-8 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-slate-300 text-center text-base md:text-lg font-medium shadow-md   rounded-lg " +
             (formData.walletPayment
               ? "bg-primary-black text-white"
               : "bg-white text-primary-black")
@@ -49,7 +49,7 @@ function PaymentType() {
         <button
           type="button"
           className={
-            "py-2 px-4 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-slate-300 text-center text-base font-medium shadow-md   rounded-lg " +
+            "py-2 px-4 md:py-4 md:px-8 flex justify-center items-center  hover:text-primary-gray focus:ring-primary-orange  w-full transition ease-in duration-200 border border-slate-300 text-center text-base md:text-lg font-medium shadow-md   rounded-lg " +
             (formData.atmPayment
               ? "bg-primary-black text-white"
               : "bg-white text-primary-black")

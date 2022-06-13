@@ -333,256 +333,263 @@ function CablePurchase() {
   console.log(formData);
   console.log("====================================");
   return (
-    <div className="flex flex-col items-center  max-w-sm mx-auto ">
-      {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
-      {formData.ConfirmationModal ? (
-        <div
-        // className={`
-        //   transform transition-all duration-500 ease-in-out
-        //      ${
-        //        formData.ConfirmationModal
-        //          ? "  -translate-x-[1000px]"
-        //          : "translate-x-0 "
-        //      }`}
-        >
-          <ConfirmationModel onConfirmationClicked={handleSubmit} />
-        </div>
-      ) : (
-        ""
-      )}
-      <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12">
-        <div className="px-4 py-8">
-          <div className="flex justify-between items-center">
-            <div className="flex justify-between item-center">
-              <button onClick={back}>
-                <img src={LeftAngle} alt="leftAngle" />
-              </button>
+    <div className="flex">
+      <div className="">
+        <Nav />
+      </div>
 
-              <h2 className="ml-8 font-medium text-sm">Cable Payments</h2>
-            </div>
-            <img src={bell} alt="bell" />
+      <div className="flex-1 flex flex-col items-center mx-auto md:mt-12 ">
+        {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
+        {formData.ConfirmationModal ? (
+          <div
+          // className={`
+          //   transform transition-all duration-500 ease-in-out
+          //      ${
+          //        formData.ConfirmationModal
+          //          ? "  -translate-x-[1000px]"
+          //          : "translate-x-0 "
+          //      }`}
+          >
+            <ConfirmationModel onConfirmationClicked={handleSubmit} />
           </div>
-          <div className="">
-            <h2 className="font-medium text-sm mt-9">Select Cable Provider</h2>
-            <div className="flex gap-4 mt-6 flex-wrap">
-              <button
-                className="flex  flex-col justify-center items-center "
-                onClick={() => {
-                  onPlanSelect("DSTV");
-                  console.log(formData.network);
-                }}
-              >
-                <div className="flex  flex-col justify-center items-center focus:border-red-500 focus:ring-1 focus:ring-red-500">
-                  <div
-                    className={
-                      formData.network === "DSTV"
-                        ? "ring-primary-black ring-4 rounded-lg"
-                        : ""
-                    }
-                  >
-                    <img src={dstv} alt="dstv" />
-                  </div>
-                </div>
-                <div className="text-primary-orange font-extrabold text-xs mt-2.5">
-                  DStv
-                </div>
-              </button>
-              <button
-                className="flex  flex-col justify-center items-center"
-                onClick={() => {
-                  onPlanSelect("STARTIMES", console.log(formData.network));
-                }}
-              >
-                {" "}
-                <div className="flex  flex-col justify-center items-center focus:border-red-500 focus:ring-1 focus:ring-red-500">
-                  <div
-                    className={
-                      formData.network === "STARTIMES"
-                        ? "ring-primary-black ring-4 rounded-lg"
-                        : ""
-                    }
-                  >
-                    <img src={startimes} alt="startimes" />
-                  </div>
-                </div>
-                <div className=" font-extrabold text-xs mt-2.5 text-primary-black">
-                  Startimes
-                </div>
-              </button>
-              <button
-                className="flex  flex-col justify-center items-center"
-                onClick={() => {
-                  onPlanSelect("GOTV");
-                  console.log(formData.network);
-                }}
-              >
-                <div
-                  className={
-                    formData.network === "GOTV"
-                      ? "ring-primary-black ring-4 rounded-lg"
-                      : ""
-                  }
+        ) : (
+          ""
+        )}
+        <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12">
+          <div className="px-4 py-8">
+            <div className="flex justify-between items-center">
+              <div className="flex justify-between item-center">
+                <button onClick={back}>
+                  <img src={LeftAngle} alt="leftAngle" />
+                </button>
+
+                <h2 className="ml-8 font-medium text-sm">Cable Payments</h2>
+              </div>
+              <img src={bell} alt="bell" />
+            </div>
+            <div className="">
+              <h2 className="font-medium text-sm mt-9">
+                Select Cable Provider
+              </h2>
+              <div className="flex gap-4 mt-6 flex-wrap">
+                <button
+                  className="flex  flex-col justify-center items-center "
+                  onClick={() => {
+                    onPlanSelect("DSTV");
+                    console.log(formData.network);
+                  }}
                 >
-                  <img src={gotv} alt="gotv" />
-                </div>
-                <div className=" font-extrabold text-xs mt-2.5 text-primary-black">
-                  Gotv
-                </div>
-              </button>
+                  <div className="flex  flex-col justify-center items-center focus:border-red-500 focus:ring-1 focus:ring-red-500">
+                    <div
+                      className={
+                        formData.network === "DSTV"
+                          ? "ring-primary-black ring-4 rounded-lg"
+                          : ""
+                      }
+                    >
+                      <img src={dstv} alt="dstv" />
+                    </div>
+                  </div>
+                  <div className="text-primary-orange font-extrabold text-xs mt-2.5">
+                    DStv
+                  </div>
+                </button>
+                <button
+                  className="flex  flex-col justify-center items-center"
+                  onClick={() => {
+                    onPlanSelect("STARTIMES", console.log(formData.network));
+                  }}
+                >
+                  {" "}
+                  <div className="flex  flex-col justify-center items-center focus:border-red-500 focus:ring-1 focus:ring-red-500">
+                    <div
+                      className={
+                        formData.network === "STARTIMES"
+                          ? "ring-primary-black ring-4 rounded-lg"
+                          : ""
+                      }
+                    >
+                      <img src={startimes} alt="startimes" />
+                    </div>
+                  </div>
+                  <div className=" font-extrabold text-xs mt-2.5 text-primary-black">
+                    Startimes
+                  </div>
+                </button>
+                <button
+                  className="flex  flex-col justify-center items-center"
+                  onClick={() => {
+                    onPlanSelect("GOTV");
+                    console.log(formData.network);
+                  }}
+                >
+                  <div
+                    className={
+                      formData.network === "GOTV"
+                        ? "ring-primary-black ring-4 rounded-lg"
+                        : ""
+                    }
+                  >
+                    <img src={gotv} alt="gotv" />
+                  </div>
+                  <div className=" font-extrabold text-xs mt-2.5 text-primary-black">
+                    Gotv
+                  </div>
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="">
-            <div className="mt-12">
-              <div className="w-full space-y-6">
-                <form onSubmit={verifyReceiver}>
-                  <div className="w-full">
-                    <div className=" relative ">
-                      <label>
-                        <p className="mt-4 font-medium text-primary-black text-sm">
-                          Provider Plans
-                        </p>
-                        <input
-                          type="text"
-                          autocomplete="off"
-                          className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:   mt-3 "
-                          placeholder="Select plan"
-                          required
-                          readOnly
-                          disabled={!formData.network}
-                          value={formData.plans_name}
-                          onFocus={() => {
-                            setShowModal(!showModal);
-
-                            console.log(showModal);
-
-                            console.log("I am here");
-                          }}
-                        />
-                      </label>
-                      {showModal ? <CablePlansModal /> : null}
-                      {console.log(showModal)}
-                    </div>
-                  </div>
-                  <div className="w-full mt-4">
-                    <div className=" relative ">
-                      <label>
-                        <div className="w-full">
-                          <div className=" relative ">
-                            <label>
-                              <div className="flex justify-between">
-                                <div className="font-medium text-primary-black text-sm">
-                                  Smart Card Number
-                                </div>
-                                <div className="font-medium text-primary-gray text-sm">
-                                  Balance: {`₦ ${user.data.wallet_balance}`}
-                                </div>
-                              </div>
-                              <div className="flex relative mt-2.5">
-                                <input
-                                  type="text"
-                                  name="smartcard_number"
-                                  autocomplete="off"
-                                  className=" rounded-l-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   "
-                                  placeholder="0000 0000 0000"
-                                  value={formData.smartcard_number}
-                                  inputmode="numeric"
-                                  focused={focused.toString()}
-                                  pattern="^[0-9]{10,20}$"
-                                  required
-                                  onBlur={handleFocus}
-                                  onChange={(e) => {
-                                    formOnChange(e);
-                                  }}
-                                />
-                                <div className="rounded-r-md inline-flex bg-primary-orange items-center px-3 border-t text-white border-r border-b  border-slate-300 shadow-sm text-sm">
-                                  <button className="" type="submit">
-                                    {sending ? (
-                                      <div className="flex items-center justify-center">
-                                        <img
-                                          src={loadingSmall}
-                                          alt="loading ..."
-                                          className="w-7 h-7 "
-                                        />
-                                      </div>
-                                    ) : formData.receiverName ? (
-                                      `Verified`
-                                    ) : (
-                                      `Verify`
-                                    )}
-                                  </button>
-                                </div>
-                              </div>
-                              <p className="text-xs text-right">
-                                {formData.receiverName}
-                              </p>
-                            </label>
-                          </div>
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-
-                  <PaymentType />
-                  <p className="mt-4 font-medium text-primary-black text-sm">
-                    Total Price: ₦
-                    {formData.paymentMethod === "atm"
-                      ? formData.atmPrice
-                      : formData.walletPrice}
-                  </p>
-                  <div className="w-full">
-                    {formData.atmPayment ? (
-                      ""
-                    ) : (
+            <div className="">
+              <div className="mt-12">
+                <div className="w-full space-y-6">
+                  <form onSubmit={verifyReceiver}>
+                    <div className="w-full">
                       <div className=" relative ">
                         <label>
                           <p className="mt-4 font-medium text-primary-black text-sm">
-                            Password
+                            Provider Plans
                           </p>
                           <input
-                            type="password"
+                            type="text"
                             autocomplete="off"
-                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
-                            placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-                            name="password"
+                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:   mt-3 "
+                            placeholder="Select plan"
                             required
-                            onChange={(e) => {
-                              formOnChange(e);
+                            readOnly
+                            disabled={!formData.network}
+                            value={formData.plans_name}
+                            onFocus={() => {
+                              setShowModal(!showModal);
+
+                              console.log(showModal);
+
+                              console.log("I am here");
                             }}
-                            value={formData.password}
                           />
                         </label>
+                        {showModal ? <CablePlansModal /> : null}
+                        {console.log(showModal)}
                       </div>
-                    )}
-                  </div>
-                  <div>
-                    <span className="block w-full rounded-md shadow-sm">
-                      <button
-                        type="button"
-                        className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
-                        onClick={onValidSubmit}
-                        disabled={loading}
-                      >
-                        {loading ? (
-                          <div className="flex items-center justify-center">
-                            <img
-                              src={loadingSmall}
-                              alt="loading ..."
-                              className="w-7 h-7 "
-                            />
+                    </div>
+                    <div className="w-full mt-4">
+                      <div className=" relative ">
+                        <label>
+                          <div className="w-full">
+                            <div className=" relative ">
+                              <label>
+                                <div className="flex justify-between">
+                                  <div className="font-medium text-primary-black text-sm">
+                                    Smart Card Number
+                                  </div>
+                                  <div className="font-medium text-primary-gray text-sm">
+                                    Balance: {`₦ ${user.data.wallet_balance}`}
+                                  </div>
+                                </div>
+                                <div className="flex relative mt-2.5">
+                                  <input
+                                    type="text"
+                                    name="smartcard_number"
+                                    autocomplete="off"
+                                    className=" rounded-l-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   "
+                                    placeholder="0000 0000 0000"
+                                    value={formData.smartcard_number}
+                                    inputmode="numeric"
+                                    focused={focused.toString()}
+                                    pattern="^[0-9]{10,20}$"
+                                    required
+                                    onBlur={handleFocus}
+                                    onChange={(e) => {
+                                      formOnChange(e);
+                                    }}
+                                  />
+                                  <div className="rounded-r-md inline-flex bg-primary-orange items-center px-3 border-t text-white border-r border-b  border-slate-300 shadow-sm text-sm">
+                                    <button className="" type="submit">
+                                      {sending ? (
+                                        <div className="flex items-center justify-center">
+                                          <img
+                                            src={loadingSmall}
+                                            alt="loading ..."
+                                            className="w-7 h-7 "
+                                          />
+                                        </div>
+                                      ) : formData.receiverName ? (
+                                        `Verified`
+                                      ) : (
+                                        `Verify`
+                                      )}
+                                    </button>
+                                  </div>
+                                </div>
+                                <p className="text-xs text-right">
+                                  {formData.receiverName}
+                                </p>
+                              </label>
+                            </div>
                           </div>
-                        ) : (
-                          `Pay`
-                        )}
-                      </button>
-                    </span>
-                  </div>
-                </form>
+                        </label>
+                      </div>
+                    </div>
+
+                    <PaymentType />
+                    <p className="mt-4 font-medium text-primary-black text-sm">
+                      Total Price: ₦
+                      {formData.paymentMethod === "atm"
+                        ? formData.atmPrice
+                        : formData.walletPrice}
+                    </p>
+                    <div className="w-full">
+                      {formData.atmPayment ? (
+                        ""
+                      ) : (
+                        <div className=" relative ">
+                          <label>
+                            <p className="mt-4 font-medium text-primary-black text-sm">
+                              Password
+                            </p>
+                            <input
+                              type="password"
+                              autocomplete="off"
+                              className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                              placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                              name="password"
+                              required
+                              onChange={(e) => {
+                                formOnChange(e);
+                              }}
+                              value={formData.password}
+                            />
+                          </label>
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <span className="block w-full rounded-md shadow-sm">
+                        <button
+                          type="button"
+                          className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                          onClick={onValidSubmit}
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <div className="flex items-center justify-center">
+                              <img
+                                src={loadingSmall}
+                                alt="loading ..."
+                                className="w-7 h-7 "
+                              />
+                            </div>
+                          ) : (
+                            `Pay`
+                          )}
+                        </button>
+                      </span>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Nav />
     </div>
   );
 }

@@ -263,7 +263,7 @@ function AirtimePurchase() {
       <div>
         <Nav />
       </div>
-      <div className="flex flex-col items-center  max-w-md mx-auto ">
+      <div className="flex-1 flex flex-col items-center mx-auto md:mt-12 ">
         {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
         {formData.ConfirmationModal ? (
           <div
@@ -281,7 +281,7 @@ function AirtimePurchase() {
           ""
         )}
 
-        <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12">
+        <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12 md:mb-0">
           <div className="px-4 py-8">
             <div className="flex justify-between items-center">
               <div className="flex justify-between item-center">
@@ -292,13 +292,17 @@ function AirtimePurchase() {
                 >
                   <img src={LeftAngle} alt="leftAngle" />
                 </button>
-                <h2 className="ml-8 font-medium text-sm">Airtime Purchase</h2>
+                <h2 className="ml-8 font-medium text-sm md:text-xl">
+                  Airtime Purchase
+                </h2>
               </div>
-              <img src={bell} alt="bell" />
+              <img src={bell} alt="bell" className="md:hidden" />
             </div>
             <div className="">
-              <h2 className="font-medium text-sm mt-9">Select Network</h2>
-              <div className="flex gap-4 mt-6">
+              <h2 className="font-medium text-sm mt-9 md:text-lg">
+                Select Network
+              </h2>
+              <div className="flex gap-4 mt-6 ">
                 <button
                   onClick={() => {
                     onPlanSelect(
@@ -309,7 +313,7 @@ function AirtimePurchase() {
                     console.log(formData.network);
                   }}
                 >
-                  <div className="flex  flex-col justify-center items-center focus:border-red-500 focus:ring-1 focus:ring-red-500">
+                  <div className="flex flex-col justify-center items-center focus:border-red-500 focus:ring-1 focus:ring-red-500">
                     <div
                       className={
                         formData.network === "MTN"
@@ -317,9 +321,9 @@ function AirtimePurchase() {
                           : ""
                       }
                     >
-                      <img src={mtn} alt="mtn" className="" />
+                      <img src={mtn} alt="mtn" className="md:h-28" />
                     </div>
-                    <div className="text-primary-orange font-extrabold text-xs mt-2.5">
+                    <div className=" font-extrabold text-xs md:text-base mt-2.5">
                       MTN
                     </div>
                     <div className="flex flex-col justify-center items-center text-primary-gray text-xx  mt-2.5">
@@ -352,10 +356,12 @@ function AirtimePurchase() {
                         : ""
                     }
                   >
-                    <img src={glo} alt="glo" />
+                    <img src={glo} alt="glo" className="md:h-28" />
                   </div>
-                  <div className=" font-extrabold text-xs mt-2.5">GLO</div>
-                  <div className="flex flex-col justify-center items-center text-primary-gray text-xx  mt-2.5">
+                  <div className=" font-extrabold text-xs mt-2.5 md:text-base">
+                    GLO
+                  </div>
+                  <div className="flex flex-col justify-center items-center text-primary-gray text-xx md:text-sm  mt-2.5">
                     <span>
                       {" "}
                       {appData.airtime_plans.GLO.wallet_price < 100 && (
@@ -385,9 +391,11 @@ function AirtimePurchase() {
                         : ""
                     }
                   >
-                    <img src={airtel} alt="airtel" />
+                    <img src={airtel} alt="airtel" className="md:h-28" />
                   </div>
-                  <div className=" font-extrabold text-xs mt-2.5">Airtel</div>
+                  <div className=" font-extrabold text-xs mt-2.5 md:text-base">
+                    Airtel
+                  </div>
                   <div className="flex flex-col justify-center items-center text-primary-gray text-xx mt-2.5">
                     <span>
                       {" "}
@@ -415,13 +423,15 @@ function AirtimePurchase() {
                   <div
                     className={
                       formData.network === "ETISALAT"
-                        ? "ring-primary-black ring-4 rounded-lg"
+                        ? "ring-primary-black ring-4 rounded-lg "
                         : ""
                     }
                   >
-                    <img src={etisalat} alt="etisalat" />
+                    <img src={etisalat} alt="etisalat" className="md:h-28" />
                   </div>
-                  <div className=" font-extrabold text-xs mt-2.5">9mobile</div>
+                  <div className=" font-extrabold text-xs mt-2.5 md:text-base">
+                    9mobile
+                  </div>
                   <div className="flex flex-col justify-center items-center text-primary-gray text-xx  mt-2.5">
                     <span>
                       {" "}
@@ -444,18 +454,18 @@ function AirtimePurchase() {
                       <div className=" relative ">
                         <label>
                           <div className="flex justify-between">
-                            <div className="font-medium text-primary-black text-sm">
+                            <div className="font-medium text-primary-black text-sm md:text-base">
                               {" "}
                               Phone Number
                             </div>
-                            <div className="font-medium text-primary-gray text-sm">
+                            <div className="font-medium text-primary-gray text-sm md:text-base">
                               Balance: {`₦ ${user.data.wallet_balance}`}
                             </div>
                           </div>
 
                           <input
                             type="tel"
-                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base md:text-lg focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
                             placeholder="08X XXX XXXX"
                             name="phone_number"
                             autoComplete="off"
@@ -479,7 +489,7 @@ function AirtimePurchase() {
                     <div className="w-full">
                       <div className=" relative ">
                         <label>
-                          <p className="mt-4 font-medium text-primary-black text-sm">
+                          <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
                             Amount to Recharge
                           </p>
                           <input
@@ -489,7 +499,7 @@ function AirtimePurchase() {
                             required
                             autoComplete="off"
                             pattern="^[0-9]{2,6}$"
-                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:   mt-3"
+                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:   mt-3"
                             placeholder="Min ₦50, Max ₦10,000"
                             name="amount"
                             onBlur={handleFocus}
@@ -503,7 +513,7 @@ function AirtimePurchase() {
                         </label>
                       </div>
                     </div>
-                    <div className="text-red-500 flex flex-col font-medium text-xs">
+                    <div className="text-red-500 flex flex-col font-medium text-xs md:text-sm">
                       {formData.walletPrice < 100 && (
                         <p className="">
                           Wallet Discount: {100 - formData.walletPrice}%
@@ -518,7 +528,7 @@ function AirtimePurchase() {
 
                     <PaymentType />
 
-                    <p className="mt-4 font-medium text-primary-black text-sm">
+                    <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
                       Total Price:&nbsp;
                       <div className=" text-purple-800 inline">
                         ₦
@@ -536,12 +546,12 @@ function AirtimePurchase() {
                       ) : (
                         <div className=" relative ">
                           <label>
-                            <p className="mt-4 font-medium text-primary-black text-sm">
+                            <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
                               Password
                             </p>
                             <input
                               type="password"
-                              className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                              className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 md:py-3.5 md:px-4  bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
                               placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                               focused={focused.toString()}
                               required
@@ -559,7 +569,7 @@ function AirtimePurchase() {
                     <div>
                       <span className="block w-full rounded-md shadow-sm">
                         <button
-                          className="py-2 px-4 bg-primary-orange hover:bg-primary-orange focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                          className="py-2 px-4 md:py-4 md:px-8 bg-primary-orange hover:bg-primary-orange focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base  md:text-lg font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
                           type="submit"
                           disabled={sending}
                         >
