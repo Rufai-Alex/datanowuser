@@ -361,242 +361,301 @@ function ElectricityPayments() {
   console.log(formData);
   console.log("====================================");
   return (
-    <div className="flex flex-col items-center  max-w-sm mx-auto">
-      {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
-      {formData.ConfirmationModal ? (
-        <div
-        // className={`
-        //   transform transition-all duration-500 ease-in-out
-        //      ${
-        //        formData.ConfirmationModal
-        //          ? "  -translate-x-[1000px]"
-        //          : "translate-x-0 "
-        //      }`}
-        >
-          <ConfirmationModel onConfirmationClicked={handleSubmit} />
-        </div>
-      ) : (
-        ""
-      )}
-      <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12">
-        <div className="px-4 py-8">
-          <div className="flex justify-between items-center">
-            <div className="flex justify-between item-center">
-              <button onClick={back}>
-                <img src={LeftAngle} alt="leftAngle" />
-              </button>
-
-              <h2 className="ml-8 font-medium text-sm">Electricity Payments</h2>
-            </div>
-            <img src={bell} alt="bell" />
+    <div className="flex">
+      <div className="">
+        <Nav />
+      </div>
+      <div className="flex-1 flex flex-col items-center mx-auto md:mt-12 ">
+        {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
+        {formData.ConfirmationModal ? (
+          <div
+          // className={`
+          //   transform transition-all duration-500 ease-in-out
+          //      ${
+          //        formData.ConfirmationModal
+          //          ? "  -translate-x-[1000px]"
+          //          : "translate-x-0 "
+          //      }`}
+          >
+            <ConfirmationModel onConfirmationClicked={handleSubmit} />
           </div>
-          <div className="">
-            <h2 className="font-medium text-sm mt-9">Select Distributor</h2>
-            <div className="flex gap-4 mt-6 flex-wrap">
-              <button
-                className="flex  flex-col justify-center items-center "
-                onClick={() => {
-                  onPlanSelect("IKEDC", console.log(formData.network));
-                }}
-              >
-                <div
-                  className={
-                    formData.network === "IKEDC"
-                      ? "ring-primary-black ring-4 rounded-lg"
-                      : ""
-                  }
-                >
-                  <img src={ikajeElectic} alt="ikajeElectic" />
-                </div>
-                <div className="text-primary-orange font-extrabold text-xs mt-2.5">
-                  IKEDC
-                </div>
-              </button>
-              <button
-                className="flex  flex-col justify-center items-center"
-                onClick={() => {
-                  onPlanSelect("KAEDCO", console.log(formData.network));
-                }}
-              >
-                {" "}
-                <div
-                  className={
-                    formData.network === "KAEDCO"
-                      ? "ring-primary-black ring-4 rounded-lg"
-                      : ""
-                  }
-                >
-                  <img src={kedo} alt="KAEDCO" />
-                </div>
-                <div className=" font-extrabold text-xs mt-2.5  text-primary-black">
-                  KAEDCO
-                </div>
-              </button>
-              <button
-                className="flex  flex-col justify-center items-center"
-                onClick={() => {
-                  onPlanSelect("AEDC", console.log(formData.network));
-                }}
-              >
-                <div
-                  className={
-                    formData.network === "AEDC"
-                      ? "ring-primary-black ring-4 rounded-lg"
-                      : ""
-                  }
-                >
-                  <img src={aedc} alt="aedc" />
-                </div>
-                <div className=" font-extrabold text-xs mt-2.5  text-primary-black">
-                  AEDC
-                </div>
-              </button>
-              <button
-                className="flex  flex-col justify-center items-center"
-                onClick={() => {
-                  onPlanSelect("PHED", console.log(formData.network));
-                }}
-              >
-                <div
-                  className={
-                    formData.network === "PHED"
-                      ? "ring-primary-black ring-4 rounded-lg"
-                      : ""
-                  }
-                >
-                  <img src={phdc} alt="PHED" />
-                </div>
-                <div className=" font-extrabold text-xs mt-2.5  text-primary-black">
-                  PHED
-                </div>
-              </button>
-              <button
-                className="flex  flex-col justify-center items-center"
-                onClick={() => {
-                  onPlanSelect("JED", console.log(formData.network));
-                }}
-              >
-                <div
-                  className={
-                    formData.network === "JED"
-                      ? "ring-primary-black ring-4 rounded-lg"
-                      : ""
-                  }
-                >
-                  <img src={jedc} alt="JED" />
-                </div>
-                <div className=" font-extrabold text-xs mt-2.5  text-primary-black">
-                  JED
-                </div>
-              </button>
-              <button
-                className="flex  flex-col justify-center items-center"
-                onClick={() => {
-                  onPlanSelect("IBEDC", console.log(formData.network));
-                }}
-              >
-                <div
-                  className={
-                    formData.network === "IBEDC"
-                      ? "ring-primary-black ring-4 rounded-lg"
-                      : ""
-                  }
-                >
-                  <img src={ibedc} alt="IBEDC" />
-                </div>
-                <div className=" font-extrabold text-xs mt-2.5  text-primary-black">
-                  IBEDC
-                </div>
-              </button>
-              <button
-                className="flex  flex-col justify-center items-center"
-                onClick={() => {
-                  onPlanSelect("EKEDC", console.log(formData.network));
-                }}
-              >
-                <div
-                  className={
-                    formData.network === "EKEDC"
-                      ? "ring-primary-black ring-4 rounded-lg"
-                      : ""
-                  }
-                >
-                  <img src={ekedc} alt="ekedc" />
-                </div>
-                <div className=" font-extrabold text-xs mt-2.5 text-primary-black">
-                  EKEDC
-                </div>
-              </button>
-              <button
-                className="flex  flex-col justify-center items-center"
-                onClick={() => {
-                  onPlanSelect("KEDCO", console.log(formData.network));
-                }}
-              >
-                <div
-                  className={
-                    formData.network === "KEDCO"
-                      ? "ring-primary-black ring-4 rounded-lg"
-                      : ""
-                  }
-                >
-                  <img src={kedc} alt="KEDCO" />
-                </div>
-                <div className=" font-extrabold text-xs mt-2.5  text-primary-black">
-                  KEDCO
-                </div>
-              </button>
+        ) : (
+          ""
+        )}
+        <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12 md:mb-0">
+          <div className="px-4 py-8">
+            <div className="flex justify-between items-center">
+              <div className="flex justify-between item-center">
+                <button onClick={back}>
+                  <img src={LeftAngle} alt="leftAngle" />
+                </button>
+
+                <h2 className="ml-8 font-medium text-sm md:text-xl">
+                  Electricity Payments
+                </h2>
+              </div>
+              <img src={bell} alt="bell" className="md:hidden" />
             </div>
-          </div>
-          <div className="">
-            <div className="mt-12">
-              <div className="w-full space-y-6">
-                <form onsubmit={verifyReceiver}>
-                  <div className="w-full">
-                    <div className=" relative ">
-                      <label>
-                        <div className="flex justify-between">
-                          <span className="font-medium text-primary-black text-sm">
-                            Meter Type
-                          </span>
-                          <span className="font-medium text-primary-gray text-sm">
-                            Balance:{`₦ ${user.data.wallet_balance}`}
-                          </span>
-                        </div>
-
-                        <input
-                          type="phone"
-                          className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
-                          placeholder="Select meter type"
-                          value={formData.plans_name}
-                          readOnly
-                          disabled={!formData.network}
-                          onFocus={() => {
-                            setShowModal(!showModal);
-
-                            console.log(showModal);
-
-                            console.log("I am here");
-                          }}
-                        ></input>
-                        {showModal ? <ElecricityPlansModal /> : null}
-                        {console.log(showModal)}
-                      </label>
-                    </div>
+            <div className="">
+              <h2 className="font-medium text-sm mt-9 md:text-lg">
+                Select Distributor
+              </h2>
+              <div className="flex gap-4 mt-6 flex-wrap">
+                <button
+                  className="flex  flex-col justify-center items-center "
+                  onClick={() => {
+                    onPlanSelect("IKEDC", console.log(formData.network));
+                  }}
+                >
+                  <div
+                    className={
+                      formData.network === "IKEDC"
+                        ? "ring-primary-black ring-4 rounded-lg"
+                        : ""
+                    }
+                  >
+                    <img
+                      src={ikajeElectic}
+                      alt="ikajeElectic"
+                      className="md:h-28"
+                    />
                   </div>
-                  <div className="w-full">
-                    <div className=" relative ">
-                      <label>
-                        <p className="mt-4 font-medium text-primary-black text-sm">
-                          Meter Number
-                        </p>
-                        <div className="flex relative mt-2.5">
+                  <div className=" font-extrabold text-xs mt-2.5 md:text-sm">
+                    IKEDC
+                  </div>
+                </button>
+                <button
+                  className="flex  flex-col justify-center items-center"
+                  onClick={() => {
+                    onPlanSelect("KAEDCO", console.log(formData.network));
+                  }}
+                >
+                  {" "}
+                  <div
+                    className={
+                      formData.network === "KAEDCO"
+                        ? "ring-primary-black ring-4 rounded-lg"
+                        : ""
+                    }
+                  >
+                    <img src={kedo} alt="KAEDCO" className="md:h-28" />
+                  </div>
+                  <div className=" font-extrabold text-xs mt-2.5 md:text-sm">
+                    KAEDCO
+                  </div>
+                </button>
+                <button
+                  className="flex  flex-col justify-center items-center"
+                  onClick={() => {
+                    onPlanSelect("AEDC", console.log(formData.network));
+                  }}
+                >
+                  <div
+                    className={
+                      formData.network === "AEDC"
+                        ? "ring-primary-black ring-4 rounded-lg"
+                        : ""
+                    }
+                  >
+                    <img src={aedc} alt="aedc" className="md:h-28" />
+                  </div>
+                  <div className=" font-extrabold text-xs mt-2.5 md:text-sm">
+                    AEDC
+                  </div>
+                </button>
+                <button
+                  className="flex  flex-col justify-center items-center"
+                  onClick={() => {
+                    onPlanSelect("PHED", console.log(formData.network));
+                  }}
+                >
+                  <div
+                    className={
+                      formData.network === "PHED"
+                        ? "ring-primary-black ring-4 rounded-lg"
+                        : ""
+                    }
+                  >
+                    <img src={phdc} alt="PHED" className="md:h-28" />
+                  </div>
+                  <div className=" font-extrabold text-xs mt-2.5 md:text-sm">
+                    PHED
+                  </div>
+                </button>
+                <button
+                  className="flex  flex-col justify-center items-center"
+                  onClick={() => {
+                    onPlanSelect("JED", console.log(formData.network));
+                  }}
+                >
+                  <div
+                    className={
+                      formData.network === "JED"
+                        ? "ring-primary-black ring-4 rounded-lg"
+                        : ""
+                    }
+                  >
+                    <img src={jedc} alt="JED" className="md:h-28" />
+                  </div>
+                  <div className=" font-extrabold text-xs mt-2.5 md:text-sm">
+                    JED
+                  </div>
+                </button>
+                <button
+                  className="flex  flex-col justify-center items-center"
+                  onClick={() => {
+                    onPlanSelect("IBEDC", console.log(formData.network));
+                  }}
+                >
+                  <div
+                    className={
+                      formData.network === "IBEDC"
+                        ? "ring-primary-black ring-4 rounded-lg"
+                        : ""
+                    }
+                  >
+                    <img src={ibedc} alt="IBEDC" className="md:h-28" />
+                  </div>
+                  <div className=" font-extrabold text-xs mt-2.5 md:text-sm">
+                    IBEDC
+                  </div>
+                </button>
+                <button
+                  className="flex  flex-col justify-center items-center"
+                  onClick={() => {
+                    onPlanSelect("EKEDC", console.log(formData.network));
+                  }}
+                >
+                  <div
+                    className={
+                      formData.network === "EKEDC"
+                        ? "ring-primary-black ring-4 rounded-lg"
+                        : ""
+                    }
+                  >
+                    <img src={ekedc} alt="ekedc" className="md:h-28" />
+                  </div>
+                  <div className=" font-extrabold text-xs mt-2.5 md:text-sm">
+                    EKEDC
+                  </div>
+                </button>
+                <button
+                  className="flex  flex-col justify-center items-center"
+                  onClick={() => {
+                    onPlanSelect("KEDCO", console.log(formData.network));
+                  }}
+                >
+                  <div
+                    className={
+                      formData.network === "KEDCO"
+                        ? "ring-primary-black ring-4 rounded-lg"
+                        : ""
+                    }
+                  >
+                    <img src={kedc} alt="KEDCO" className="md:h-28" />
+                  </div>
+                  <div className=" font-extrabold text-xs mt-2.5 md:text-sm">
+                    KEDCO
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div className="">
+              <div className="mt-12">
+                <div className="w-full space-y-6">
+                  <form onsubmit={verifyReceiver}>
+                    <div className="w-full">
+                      <div className=" relative ">
+                        <label>
+                          <div className="flex justify-between">
+                            <div className="font-medium text-primary-black text-sm md:text-base">
+                              Meter Type
+                            </div>
+                            <div className="font-medium text-primary-gray text-sm md:text-base">
+                              Balance:{`₦ ${user.data.wallet_balance}`}
+                            </div>
+                          </div>
+
+                          <input
+                            type="phone"
+                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                            placeholder="Select meter type"
+                            value={formData.plans_name}
+                            readOnly
+                            disabled={!formData.network}
+                            onFocus={() => {
+                              setShowModal(!showModal);
+
+                              console.log(showModal);
+
+                              console.log("I am here");
+                            }}
+                          ></input>
+                          {showModal ? <ElecricityPlansModal /> : null}
+                          {console.log(showModal)}
+                        </label>
+                      </div>
+                    </div>
+                    <div className="w-full">
+                      <div className=" relative ">
+                        <label>
+                          <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
+                            Meter Number
+                          </p>
+                          <div className="flex relative mt-2.5">
+                            <input
+                              type="text"
+                              name="meter_number"
+                              className=" rounded-l-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   "
+                              placeholder="0000 0000 0000"
+                              value={formData.meter_number}
+                              required
+                              inputMode="numeric"
+                              focused={focused.toString()}
+                              pattern="^[0-9]{11,11}$"
+                              onBlur={handleFocus}
+                              onChange={(e) => {
+                                formOnChange(e);
+                              }}
+                            />
+                            <span className="rounded-r-md inline-flex bg-primary-orange items-center px-3 border-t text-white border-r border-b  border-slate-300 shadow-sm text-sm md:text-base">
+                              <button className="">
+                                {sending ? (
+                                  <div className="flex items-center justify-center">
+                                    <img
+                                      src={loadingSmall}
+                                      alt="loading ..."
+                                      className="w-7 h-7 "
+                                    />
+                                  </div>
+                                ) : formData.receiverName ? (
+                                  `Verified`
+                                ) : (
+                                  `Verify`
+                                )}
+                              </button>
+                            </span>
+                          </div>
+                          <p className="text-xs text-right">
+                            {formData.receiverName}
+                          </p>
+                        </label>
+                      </div>
+                    </div>
+                  </form>
+                  <form onSubmit={onValidSubmit}>
+                    <div className="w-full">
+                      <div className=" relative ">
+                        <label>
+                          <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
+                            Phone Number
+                          </p>
                           <input
                             type="text"
-                            name="meter_number"
-                            className=" rounded-l-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   "
-                            placeholder="0000 0000 0000"
-                            value={formData.meter_number}
+                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:   mt-3"
+                            placeholder="000 0000 0000"
+                            name="phone_number"
+                            value={formData.phone_number}
                             required
                             inputMode="numeric"
                             focused={focused.toString()}
@@ -606,152 +665,105 @@ function ElectricityPayments() {
                               formOnChange(e);
                             }}
                           />
-                          <span className="rounded-r-md inline-flex bg-primary-orange items-center px-3 border-t text-white border-r border-b  border-slate-300 shadow-sm text-sm">
-                            <button className="">
-                              {sending ? (
-                                <div className="flex items-center justify-center">
-                                  <img
-                                    src={loadingSmall}
-                                    alt="loading ..."
-                                    className="w-7 h-7 "
-                                  />
-                                </div>
-                              ) : formData.receiverName ? (
-                                `Verified`
-                              ) : (
-                                `Verify`
-                              )}
-                            </button>
-                          </span>
-                        </div>
-                        <p className="text-xs text-right">
-                          {formData.receiverName}
-                        </p>
-                      </label>
+                          <span>Please enter a valid phone number</span>
+                        </label>
+                      </div>
                     </div>
-                  </div>
-                </form>
-                <form onSubmit={onValidSubmit}>
-                  <div className="w-full">
-                    <div className=" relative ">
-                      <label>
-                        <p className="mt-4 font-medium text-primary-black text-sm">
-                          Phone Number
-                        </p>
-                        <input
-                          type="text"
-                          className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:   mt-3"
-                          placeholder="000 0000 0000"
-                          name="phone_number"
-                          value={formData.phone_number}
-                          required
-                          inputMode="numeric"
-                          focused={focused.toString()}
-                          pattern="^[0-9]{11,11}$"
-                          onBlur={handleFocus}
-                          onChange={(e) => {
-                            formOnChange(e);
-                          }}
-                        />
-                        <span>Please enter a valid phone number</span>
-                      </label>
-                    </div>
-                  </div>
-                  <div className="w-full">
-                    <div className=" relative ">
-                      <label>
-                        <p className="mt-4 font-medium text-primary-black text-sm">
-                          <div className="w-full">
-                            <div className=" relative ">
-                              <label>
-                                <p className="mt-4 font-medium text-primary-black text-sm">
-                                  Amount to Recharge
-                                </p>
-                                <input
-                                  type="text"
-                                  className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:   mt-3"
-                                  placeholder="Min ₦50, Max ₦100,000"
-                                  name="amount"
-                                  value={formData.amount}
-                                  inputMode="numeric"
-                                  focused={focused.toString()}
-                                  pattern="^[0-9]{2,6}$"
-                                  onBlur={handleFocus}
-                                  onChange={(e) => {
-                                    formOnChange(e);
-                                  }}
-                                />
-                                <span>Please enter only valid amount</span>
-                              </label>
-                            </div>
-                          </div>
-                        </p>
-                      </label>
-                    </div>
-                  </div>
-                  <PaymentType />
-                  <p className="mt-4 font-medium text-primary-black text-sm">
-                    Total Price:
-                    {CurrencyFormat(
-                      formData.amount
-                        ? formData.atmPayment
-                          ? formData.calcAmount
-                          : formData.amount -
-                            (formData.amount * formData.commission) / 100
-                        : 0,
-                    )}
-                  </p>
-                  <div className="w-full">
-                    {formData.atmPayment ? (
-                      ""
-                    ) : (
+                    <div className="w-full">
                       <div className=" relative ">
                         <label>
                           <p className="mt-4 font-medium text-primary-black text-sm">
-                            Password
+                            <div className="w-full">
+                              <div className=" relative ">
+                                <label>
+                                  <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
+                                    Amount to Recharge
+                                  </p>
+                                  <input
+                                    type="text"
+                                    className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange   focus:   mt-3"
+                                    placeholder="Min ₦50, Max ₦100,000"
+                                    name="amount"
+                                    value={formData.amount}
+                                    inputMode="numeric"
+                                    focused={focused.toString()}
+                                    pattern="^[0-9]{2,6}$"
+                                    onBlur={handleFocus}
+                                    onChange={(e) => {
+                                      formOnChange(e);
+                                    }}
+                                  />
+                                  <span>Please enter only valid amount</span>
+                                </label>
+                              </div>
+                            </div>
                           </p>
-                          <input
-                            type="password"
-                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
-                            placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-                            name="password"
-                            onChange={(e) => {
-                              formOnChange(e);
-                            }}
-                            value={formData.password}
-                          />
                         </label>
                       </div>
-                    )}
-                  </div>
-                  <div>
-                    <span className="block w-full rounded-md shadow-sm">
-                      <button
-                        type="submit"
-                        className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
-                        disabled={loading}
-                      >
-                        {loading ? (
-                          <div className="flex items-center justify-center">
-                            <img
-                              src={loadingSmall}
-                              alt="loading ..."
-                              className="w-7 h-7 "
+                    </div>
+                    <PaymentType />
+                    <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
+                      Total Price: ₦
+                      {CurrencyFormat(
+                        formData.amount
+                          ? formData.atmPayment
+                            ? formData.calcAmount
+                            : formData.amount -
+                              (formData.amount * formData.commission) / 100
+                          : 0,
+                      )}
+                    </p>
+                    <div className="w-full">
+                      {formData.atmPayment ? (
+                        ""
+                      ) : (
+                        <div className=" relative ">
+                          <label>
+                            <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
+                              Password
+                            </p>
+                            <input
+                              type="password"
+                              className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                              placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                              name="password"
+                              onChange={(e) => {
+                                formOnChange(e);
+                              }}
+                              value={formData.password}
                             />
-                          </div>
-                        ) : (
-                          `Pay`
-                        )}
-                      </button>
-                    </span>
-                  </div>
-                </form>
+                          </label>
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <span className="block w-full rounded-md shadow-sm">
+                        <button
+                          type="submit"
+                          className="py-2 px-4 md:py-4 md:px-8 bg-primary-orange  focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base  md:text-lg font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <div className="flex items-center justify-center">
+                              <img
+                                src={loadingSmall}
+                                alt="loading ..."
+                                className="w-7 h-7 "
+                              />
+                            </div>
+                          ) : (
+                            `Pay`
+                          )}
+                        </button>
+                      </span>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Nav />
     </div>
   );
 }

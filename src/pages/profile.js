@@ -200,291 +200,298 @@ function Profile() {
   };
   console.log(formData);
   return (
-    <div className="flex flex-col items-center  max-w-md ">
-      {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
+    <div className="flex">
+      <div className="">
+        {" "}
+        <Nav />
+      </div>
+      <div className="flex-1 flex flex-col items-center mx-auto md:mt-12  ">
+        {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
 
-      <div className="flex  flex-col h-h90 w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
-        <div className="px-4 py-8">
-          <div className="flex justify-between items-center">
-            <div className="flex justify-between item-center">
-              <img src={LeftAngle} alt="leftAngle" onClick={back} />
-              <h2 className="ml-8 font-medium text-sm">Profile</h2>
+        <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12 md:mb-0">
+          <div className="px-4 py-8">
+            <div className="flex justify-between items-center">
+              <div className="flex justify-between item-center">
+                <img src={LeftAngle} alt="leftAngle" onClick={back} />
+                <h2 className="ml-8 font-medium text-sm">Profile</h2>
+              </div>
+              <img src={bell} alt="bell" className="md:hidden" />
             </div>
-            <img src={bell} alt="bell" />
-          </div>
-          <div className="flex flex-col mt-8 space-y-3.5">
-            <div className="flex justify-between ">
-              {" "}
-              <p className="font-medium text-sm text-primary-gray">
-                Firstname :
-              </p>
-              <p className="font-semibold text-sm text-primary-black ">
-                {user.data.firstname}
-              </p>
+            <div className="flex flex-col mt-8 space-y-3.5">
+              <div className="flex justify-between ">
+                {" "}
+                <p className="font-medium text-sm md:text-lg text-primary-gray">
+                  Firstname :
+                </p>
+                <p className="font-semibold text-sm md:text-lg text-primary-black ">
+                  {user.data.firstname}
+                </p>
+              </div>
+              <div className="flex justify-between ">
+                {" "}
+                <p className="font-medium text-sm md:text-lg text-primary-gray">
+                  Lastname :
+                </p>
+                <p className="font-semibold text-sm md:text-lg text-primary-black ">
+                  {user.data.lastname}
+                </p>
+              </div>
+              <div className="flex justify-between ">
+                {" "}
+                <p className="font-medium text-sm md:text-lg text-primary-gray">
+                  Othername :
+                </p>
+                <p className="font-semibold text-sm md:text-lg text-primary-black ">
+                  {user.data.othername}
+                </p>
+              </div>
+              <div className="flex justify-between ">
+                {" "}
+                <p className="font-medium text-sm md:text-lg text-primary-gray">
+                  Email address :
+                </p>
+                <p className="font-semibold text-sm md:text-lg text-primary-black ">
+                  {user.data.email}
+                </p>
+              </div>
+              <div className="flex justify-between ">
+                <p className="font-medium text-sm md:text-lg text-primary-gray">
+                  Phone Number :
+                </p>
+                <p className="font-semibold text-sm md:text-lg text-primary-black ">
+                  {user.data.phone_number}
+                </p>
+              </div>
             </div>
-            <div className="flex justify-between ">
-              {" "}
-              <p className="font-medium text-sm text-primary-gray">
-                Lastname :
-              </p>
-              <p className="font-semibold text-sm text-primary-black ">
-                {user.data.lastname}
-              </p>
-            </div>
-            <div className="flex justify-between ">
-              {" "}
-              <p className="font-medium text-sm text-primary-gray">
-                Othername :
-              </p>
-              <p className="font-semibold text-sm text-primary-black ">
-                {user.data.othername}
-              </p>
-            </div>
-            <div className="flex justify-between ">
-              {" "}
-              <p className="font-medium text-sm text-primary-gray">
-                Email address :
-              </p>
-              <p className="font-semibold text-sm text-primary-black ">
-                {user.data.email}
-              </p>
-            </div>
-            <div className="flex justify-between ">
-              <p className="font-medium text-sm text-primary-gray">
-                Phone Number :
-              </p>
-              <p className="font-semibold text-sm text-primary-black ">
-                {user.data.phone_number}
-              </p>
-            </div>
-          </div>
-          <div className="flex w-full mt-20">
-            <button
-              className="py-2 px-4   focus:ring-primary-orange  w-full transition ease-in duration-200 text-center text-base font-bold border-2 focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-              onClick={() => setEditOpen(true)}
-            >
-              Edit
-            </button>
-          </div>{" "}
-          <Link to="signout">
-            <div className="flex w-full mt-6">
-              {" "}
+            <div className="flex w-full mt-20">
               <button
-                type="submit"
-                className="py-2 px-4 bg-red-600 hover:bg-red-200 focus:ring-primary-orange focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                className="py-2 px-4   md:py-4 md:px-8  focus:ring-primary-orange  w-full transition ease-in duration-200 text-center text-base font-bold border-2 focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                onClick={() => setEditOpen(true)}
               >
-                Sign Out
+                Edit
               </button>
             </div>{" "}
-          </Link>
-          <div>
-            {" "}
-            {editOpen && (
-              <div>
-                <div
-                  className={
-                    "justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none w-full  "
-                  }
+            <Link to="signout">
+              <div className="flex w-full mt-6">
+                {" "}
+                <button
+                  type="submit"
+                  className="py-2 px-4 md:py-4 md:px-8 bg-red-600 hover:bg-red-200 focus:ring-primary-orange focus:ring-offset-purple-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
                 >
+                  Sign Out
+                </button>
+              </div>{" "}
+            </Link>
+            <div>
+              {" "}
+              {editOpen && (
+                <div>
                   <div
-                    className={"relative w-full my-6 mx-auto max-w-sm  px-4"}
+                    className={
+                      "justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none w-full  "
+                    }
                   >
-                    {/*content*/}
-                    <div className="h-screen w-full flex flex-col items-center">
-                      {formData.Alert ? (
-                        <Alert message={formData.Alert.message} />
-                      ) : (
-                        ""
-                      )}
+                    <div
+                      className={
+                        "relative w-full my-6 mx-auto max-w-sm md:max-w-lg px-4"
+                      }
+                    >
+                      {/*content*/}
+                      <div className="h-screen w-full flex flex-col items-center">
+                        {formData.Alert ? (
+                          <Alert message={formData.Alert.message} />
+                        ) : (
+                          ""
+                        )}
 
-                      <div className="flex flex-col max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
-                        <div className="flex item-center">
-                          <img
-                            src={LeftAngle}
-                            alt="leftAngle"
-                            onClick={() => setEditOpen(false)}
-                          />
-                          <h2 className="ml-8 font-medium text-sm">
-                            Edit Profile
-                          </h2>
-                        </div>
-                        <p className="text-xs text-primary-gray font-medium mt-3.5"></p>
-                        <form onSubmit={handleSubmit}>
-                          <div className="relative w-full mt-12">
-                            <label className="block  text-gray-700 text-sm font-medium mb-2">
-                              Firstname
-                              <input
-                                type="text"
-                                name="firstname"
-                                required
-                                focused={focused.toString()}
-                                onBlur={handleFocus}
-                                value={formData.firstname}
-                                onChange={(e) => {
-                                  formOnChange(e);
-                                }}
-                                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
-              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                                style={{ transition: "all .15s ease" }}
-                              />
-                              <span className="text-xs text-red-500 ml-1 mt-1"></span>
-                            </label>
-                            <label className="block  text-gray-700 text-sm font-medium mb-2">
-                              Othername
-                              <input
-                                type="text"
-                                name="othername"
-                                required
-                                focused={focused.toString()}
-                                onBlur={handleFocus}
-                                value={formData.othername}
-                                onChange={(e) => {
-                                  formOnChange(e);
-                                }}
-                                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
-              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                                style={{ transition: "all .15s ease" }}
-                              />
-                              <span className="text-xs text-red-500 ml-1 mt-1"></span>
-                            </label>
-                            <label className="block  text-gray-700 text-sm font-medium mb-2">
-                              Lastname
-                              <input
-                                type="text"
-                                name="lastname"
-                                required
-                                focused={focused.toString()}
-                                onBlur={handleFocus}
-                                value={formData.lastname}
-                                onChange={(e) => {
-                                  formOnChange(e);
-                                }}
-                                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
-              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                                style={{ transition: "all .15s ease" }}
-                              />
-                              <span className="text-xs text-red-500 ml-1 mt-1"></span>
-                            </label>
-                            <label className="block  text-gray-700 text-sm font-medium mb-2 ">
-                              Email address
-                              <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={(e) => {
-                                  formOnChange(e);
-                                }}
-                                required
-                                focused={focused.toString()}
-                                onBlur={handleFocus}
-                                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
-              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                                style={{ transition: "all .15s ease" }}
-                              />{" "}
-                              <span className="text-xs text-red-500 ml-1 mt-1">
-                                Enter a valid Email
-                              </span>
-                            </label>
-                            <label className="block  text-gray-700 text-sm font-medium  mb-2">
-                              Phone number
-                              <input
-                                type="tel"
-                                name="phone_number"
-                                value={formData.phone_number}
-                                inputmode="numeric"
-                                focused={focused.toString()}
-                                pattern="^[0-9]{11,11}$"
-                                required
-                                onBlur={handleFocus}
-                                onChange={(e) => {
-                                  formOnChange(e);
-                                }}
-                                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                                style={{ transition: "all .15s ease" }}
-                              />
-                              <span className="text-xs text-red-500 ml-1 mt-1">
-                                Enter valid phone number
-                              </span>
-                            </label>
-
-                            <label className="block  text-gray-700 text-sm font-medium mb-2">
-                              Current Password
-                              <input
-                                type="password"
-                                name="cpassword"
-                                value={formData.cpassword}
-                                required
-                                focused={focused.toString()}
-                                onBlur={handleFocus}
-                                onChange={(e) => {
-                                  formOnChange(e);
-                                }}
-                                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
-              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                                style={{ transition: "all .15s ease" }}
-                              />{" "}
-                              <span className="text-xs text-red-500 mt-1 ml-1"></span>
-                            </label>
-                            <label className="block  text-gray-700 text-sm font-medium mb-2">
-                              New Password
-                              <input
-                                type="password"
-                                name="password"
-                                value={formData.password}
-                                required
-                                focused={focused.toString()}
-                                onBlur={handleFocus}
-                                onChange={(e) => {
-                                  formOnChange(e);
-                                }}
-                                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
-              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                                style={{ transition: "all .15s ease" }}
-                              />{" "}
-                              <span className="text-xs text-red-500 mt-1 ml-1"></span>
-                            </label>
-                            <label className="block  text-gray-700 text-sm font-medium mt-2">
-                              Confirm Password
-                              <input
-                                type="password"
-                                onChange={(e) => {
-                                  formOnChange(e);
-                                }}
-                                className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                                style={{ transition: "all .15s ease" }}
-                              />{" "}
-                              <span className="text-xs text-red-500 ml-1 mt-1"></span>
-                            </label>
+                        <div className="flex flex-col max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
+                          <div className="flex item-center">
+                            <img
+                              src={LeftAngle}
+                              alt="leftAngle"
+                              onClick={() => setEditOpen(false)}
+                            />
+                            <h2 className="ml-8 font-medium text-sm">
+                              Edit Profile
+                            </h2>
                           </div>
-                          <button
-                            type="submit"
-                            className="py-2 px-4 bg-primary-orange   focus:ring-primary-orange text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 mt-10 rounded-lg "
-                            disabled={sending}
-                          >
-                            {sending ? (
-                              <div className="flex items-center justify-center">
-                                <img
-                                  src={loadingSmall}
-                                  alt="loading ..."
-                                  className="w-7 h-7 "
+                          <p className="text-xs text-primary-gray font-medium mt-3.5"></p>
+                          <form onSubmit={handleSubmit}>
+                            <div className="relative w-full mt-12">
+                              <label className="block  text-gray-700 text-sm font-medium mb-2">
+                                Firstname
+                                <input
+                                  type="text"
+                                  name="firstname"
+                                  required
+                                  focused={focused.toString()}
+                                  onBlur={handleFocus}
+                                  value={formData.firstname}
+                                  onChange={(e) => {
+                                    formOnChange(e);
+                                  }}
+                                  className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
+              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+                                  style={{ transition: "all .15s ease" }}
                                 />
-                              </div>
-                            ) : (
-                              `Save Changes`
-                            )}
-                          </button>
-                        </form>
+                                <span className="text-xs text-red-500 ml-1 mt-1"></span>
+                              </label>
+                              <label className="block  text-gray-700 text-sm font-medium mb-2">
+                                Othername
+                                <input
+                                  type="text"
+                                  name="othername"
+                                  required
+                                  focused={focused.toString()}
+                                  onBlur={handleFocus}
+                                  value={formData.othername}
+                                  onChange={(e) => {
+                                    formOnChange(e);
+                                  }}
+                                  className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
+              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+                                  style={{ transition: "all .15s ease" }}
+                                />
+                                <span className="text-xs text-red-500 ml-1 mt-1"></span>
+                              </label>
+                              <label className="block  text-gray-700 text-sm font-medium mb-2">
+                                Lastname
+                                <input
+                                  type="text"
+                                  name="lastname"
+                                  required
+                                  focused={focused.toString()}
+                                  onBlur={handleFocus}
+                                  value={formData.lastname}
+                                  onChange={(e) => {
+                                    formOnChange(e);
+                                  }}
+                                  className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
+              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+                                  style={{ transition: "all .15s ease" }}
+                                />
+                                <span className="text-xs text-red-500 ml-1 mt-1"></span>
+                              </label>
+                              <label className="block  text-gray-700 text-sm font-medium mb-2 ">
+                                Email address
+                                <input
+                                  type="email"
+                                  name="email"
+                                  value={formData.email}
+                                  onChange={(e) => {
+                                    formOnChange(e);
+                                  }}
+                                  required
+                                  focused={focused.toString()}
+                                  onBlur={handleFocus}
+                                  className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
+              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+                                  style={{ transition: "all .15s ease" }}
+                                />{" "}
+                                <span className="text-xs text-red-500 ml-1 mt-1">
+                                  Enter a valid Email
+                                </span>
+                              </label>
+                              <label className="block  text-gray-700 text-sm font-medium  mb-2">
+                                Phone number
+                                <input
+                                  type="tel"
+                                  name="phone_number"
+                                  value={formData.phone_number}
+                                  inputmode="numeric"
+                                  focused={focused.toString()}
+                                  pattern="^[0-9]{11,11}$"
+                                  required
+                                  onBlur={handleFocus}
+                                  onChange={(e) => {
+                                    formOnChange(e);
+                                  }}
+                                  className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+                                  style={{ transition: "all .15s ease" }}
+                                />
+                                <span className="text-xs text-red-500 ml-1 mt-1">
+                                  Enter valid phone number
+                                </span>
+                              </label>
+
+                              <label className="block  text-gray-700 text-sm font-medium mb-2">
+                                Current Password
+                                <input
+                                  type="password"
+                                  name="cpassword"
+                                  value={formData.cpassword}
+                                  required
+                                  focused={focused.toString()}
+                                  onBlur={handleFocus}
+                                  onChange={(e) => {
+                                    formOnChange(e);
+                                  }}
+                                  className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
+              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+                                  style={{ transition: "all .15s ease" }}
+                                />{" "}
+                                <span className="text-xs text-red-500 mt-1 ml-1"></span>
+                              </label>
+                              <label className="block  text-gray-700 text-sm font-medium mb-2">
+                                New Password
+                                <input
+                                  type="password"
+                                  name="password"
+                                  value={formData.password}
+                                  required
+                                  focused={focused.toString()}
+                                  onBlur={handleFocus}
+                                  onChange={(e) => {
+                                    formOnChange(e);
+                                  }}
+                                  className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 
+              shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+                                  style={{ transition: "all .15s ease" }}
+                                />{" "}
+                                <span className="text-xs text-red-500 mt-1 ml-1"></span>
+                              </label>
+                              <label className="block  text-gray-700 text-sm font-medium mt-2">
+                                Confirm Password
+                                <input
+                                  type="password"
+                                  onChange={(e) => {
+                                    formOnChange(e);
+                                  }}
+                                  className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full mt-3.5 py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+                                  style={{ transition: "all .15s ease" }}
+                                />{" "}
+                                <span className="text-xs text-red-500 ml-1 mt-1"></span>
+                              </label>
+                            </div>
+                            <button
+                              type="submit"
+                              className="py-2 px-4 bg-primary-orange   focus:ring-primary-orange text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 mt-10 rounded-lg "
+                              disabled={sending}
+                            >
+                              {sending ? (
+                                <div className="flex items-center justify-center">
+                                  <img
+                                    src={loadingSmall}
+                                    alt="loading ..."
+                                    className="w-7 h-7 "
+                                  />
+                                </div>
+                              ) : (
+                                `Save Changes`
+                              )}
+                            </button>
+                          </form>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
                 </div>
-                <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
-      <Nav />
     </div>
   );
 }

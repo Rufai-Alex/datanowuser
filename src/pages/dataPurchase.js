@@ -589,7 +589,7 @@ function DataPurchase() {
                           </p>
                           <input
                             type="password"
-                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4      bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
                             placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                             focused={focused.toString()}
                             required
@@ -607,7 +607,7 @@ function DataPurchase() {
                   <div>
                     <span className="block w-full rounded-md shadow-sm">
                       <button
-                        className="py-2 px-4 md:py-4 md:px-8 bg-primary-orange hover:bg-primary-orange focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base  md:text-lg  font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                        className="py-2 px-4 md:py-4 md:px-8 bg-primary-orange hover:bg-primary-orange focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base  md:text-lg font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
                         type="submit"
                       >
                         {sending ? (

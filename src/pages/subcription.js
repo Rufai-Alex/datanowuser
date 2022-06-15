@@ -479,130 +479,137 @@ function Subcription(props) {
     );
   };
   return (
-    <div className="flex flex-col max-w-sm h-full  relative">
-      <div className=" px-4  bg-white rounded-lg ">
-        <div className="flex justify-between items-center">
-          <h2 className="font-medium text-lg">Subscriptions</h2>
-          <img src={bell} alt="bell" className="h-5 pr-2" />
-        </div>
-        <form onSubmit={handleSubmit} className="w-full max-w-sm">
-          <h3 className="font-medium text-sm mt-4">Search </h3>
-          <div className="flex flex-col mb-2 mt-3">
-            <div className="flex relative ">
+    <div className="flex">
+      <div className="">
+        <Nav />
+      </div>
+      <div className="flex-1 flex flex-col items-center mx-auto md:mt-24">
+        <div className=" px-4  bg-white rounded-lg ">
+          <div className="flex justify-between items-center">
+            <h2 className="font-medium text-lg">Subscriptions</h2>
+            <img src={bell} alt="bell" className="h-5 pr-2" />
+          </div>
+          <form onSubmit={handleSubmit} className="w-full">
+            <h3 className="font-medium text-sm mt-4">Search </h3>
+            <div className="flex flex-col mb-2 mt-3">
+              <div className="flex relative ">
+                <input
+                  className=" rounded-l-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+                  placeholder="Search Subscriptions"
+                  name="search"
+                  value={formData.search}
+                  onChange={formOnChange}
+                />
+
+                <span className="rounded-r-md inline-flex  items-center px-3 border-t bg-white border-r border-b  border-slate-300 text-gray-500 shadow-sm text-sm">
+                  <img src={sort} alt="sort" />
+                </span>
+              </div>
+            </div>
+            <div className="flex gap-4 mb-2 mt-2.5">
+              <div className=" relative ">
+                <select
+                  value={formData.transactionType}
+                  name="transactionType"
+                  onChange={formOnChange}
+                  className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out  m-0
+      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  aria-label="Default select example"
+                >
+                  <option value="">All Transactions</option>
+                  {transactionTypes.map((transaction, index) => {
+                    return <option value={index}>{transaction}</option>;
+                  })}
+                </select>
+              </div>
+              <div className=" relative ">
+                <select
+                  name="pageSize"
+                  value={formData.pageSize}
+                  onChange={formOnChange}
+                  className="form-select appearance-none block w-full px-3 py-1.5 text-base  font-normal text-gray-700bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                  aria-label="Default select example"
+                >
+                  <option value="">15 per page</option>
+                  <option value="30">30 per page</option>
+                  <option value="50">50 per page</option>
+                </select>
+              </div>
+            </div>
+            <div className="flex gap-4 mb-2 max-w-sm">
               <input
-                className=" rounded-l-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-                placeholder="Search Subscriptions"
-                name="search"
-                value={formData.search}
+                className=" rounded-lg  flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+                type="date"
+                name="dateFrom"
+                value={formData.dateFrom}
                 onChange={formOnChange}
               />
 
-              <span className="rounded-r-md inline-flex  items-center px-3 border-t bg-white border-r border-b  border-slate-300 text-gray-500 shadow-sm text-sm">
-                <img src={sort} alt="sort" />
-              </span>
-            </div>
-          </div>
-          <div className="flex gap-4 mb-2 mt-2.5">
-            <div className=" relative ">
-              <select
-                value={formData.transactionType}
-                name="transactionType"
+              <input
+                className=" rounded-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
+                type="date"
+                name="dateTo"
+                value={formData.dateTo}
                 onChange={formOnChange}
-                className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out  m-0
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                aria-label="Default select example"
+              />
+            </div>
+            <div className="flex w-full my-2">
+              <button
+                type="submit"
+                className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange  text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
               >
-                <option value="">All Transactions</option>
-                {transactionTypes.map((transaction, index) => {
-                  return <option value={index}>{transaction}</option>;
+                {Loading ? (
+                  <div className="flex items-center justify-center">
+                    <img
+                      src={loadingSmall}
+                      alt="loading ..."
+                      className="w-7 h-7 "
+                    />
+                  </div>
+                ) : (
+                  `Apply`
+                )}
+              </button>
+            </div>
+          </form>
+          {formData.transactions && (
+            <div className="">
+              <p className="font-medium text-sm">
+                Showing (
+                {formData.per_page * formData.current_page -
+                  formData.per_page +
+                  1}{" "}
+                to{" "}
+                {formData.current_page * formData.per_page -
+                  formData.per_page +
+                  formData.transactions.length}{" "}
+                ) of {formData.total} Transactions
+              </p>
+              <div className="h-64 overflow-y-scroll">
+                {formData.transactions.map((transaction) => {
+                  return (
+                    <Transaction
+                      key={transaction.id}
+                      transaction={transaction}
+                    />
+                  );
                 })}
-              </select>
+              </div>
             </div>
-            <div className=" relative ">
-              <select
-                name="pageSize"
-                value={formData.pageSize}
-                onChange={formOnChange}
-                className="form-select appearance-none block w-full px-3 py-1.5 text-base  font-normal text-gray-700bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                aria-label="Default select example"
-              >
-                <option value="">15 per page</option>
-                <option value="30">30 per page</option>
-                <option value="50">50 per page</option>
-              </select>
-            </div>
-          </div>
-          <div className="flex gap-4 mb-2 max-w-sm">
-            <input
-              className=" rounded-lg  flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-              type="date"
-              name="dateFrom"
-              value={formData.dateFrom}
-              onChange={formOnChange}
-            />
-
-            <input
-              className=" rounded-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
-              type="date"
-              name="dateTo"
-              value={formData.dateTo}
-              onChange={formOnChange}
-            />
-          </div>
-          <div className="flex w-full my-2">
-            <button
-              type="submit"
-              className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange  text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-            >
-              {Loading ? (
-                <div className="flex items-center justify-center">
-                  <img
-                    src={loadingSmall}
-                    alt="loading ..."
-                    className="w-7 h-7 "
-                  />
-                </div>
-              ) : (
-                `Apply`
-              )}
-            </button>
-          </div>
-        </form>
-        {formData.transactions && (
-          <div className="">
-            <p className="font-medium text-sm">
-              Showing (
-              {formData.per_page * formData.current_page -
-                formData.per_page +
-                1}{" "}
-              to{" "}
-              {formData.current_page * formData.per_page -
-                formData.per_page +
-                formData.transactions.length}{" "}
-              ) of {formData.total} Transactions
-            </p>
-            <div className="h-64 overflow-y-scroll">
-              {formData.transactions.map((transaction) => {
-                return (
-                  <Transaction key={transaction.id} transaction={transaction} />
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </div>
-      <div className="flex items-center justify-between  mb-12 mx-4">
-        <div className="flex items-center  justify-center h-11 w-11  rounded-md bg-primary-black text-white">
-          <img src={leftsAngle} alt="arrow" />
+          )}
         </div>
-        <div className="font-medium text-xx ">
-          Page {formData.current_page} of {formData.last_page}
+        <div className="flex items-center justify-between  mb-12 mx-4">
+          <div className="flex items-center  justify-center h-11 w-11  rounded-md bg-primary-black text-white">
+            <img src={leftsAngle} alt="arrow" />
+          </div>
+          <div className="font-medium text-xx ">
+            Page {formData.current_page} of {formData.last_page}
+          </div>
+          <button className="flex items-center justify-center h-11 w-11   rounded-md bg-primary-black text-white">
+            <img src={rightAngle} alt="whatsapp" />
+          </button>
         </div>
-        <button className="flex items-center justify-center h-11 w-11   rounded-md bg-primary-black text-white">
-          <img src={rightAngle} alt="whatsapp" />
-        </button>
       </div>
-      <Nav />
     </div>
   );
 }

@@ -85,49 +85,53 @@ function Faq() {
   }, []);
   console.log(formData);
   return (
-    <div className="flex flex-col items-center h-full  max-w-md mx-auto ">
-      <div className="flex  flex-col  minScreen  w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12">
-        <div className="px-4 py-8">
-          <div className="flex justify-between items-center">
-            <div className="flex justify-between item-center">
-              <button onClick={back}>
-                <img src={LeftAngle} alt="leftAngle" />
-              </button>
-              <h2 className="ml-8 font-medium text-sm">FAQs</h2>
+    <div className="flex">
+      <div className="">
+        <Nav />
+      </div>
+      <div className="flex-1 flex flex-col items-center mx-auto md:mt-12 ">
+        <div className="flex  flex-col  minScreen  w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12 md:mb-0">
+          <div className="px-4 py-8">
+            <div className="flex justify-between items-center">
+              <div className="flex justify-between item-center">
+                <button onClick={back}>
+                  <img src={LeftAngle} alt="leftAngle" />
+                </button>
+                <h2 className="ml-8 font-medium text-sm md:hidden">FAQs</h2>
+              </div>
+              <img src={bell} alt="bell" className="md:hidden" />
             </div>
-            <img src={bell} alt="bell" />
-          </div>
-          <div>
-            <section className="text-gray-700">
-              <div className="container px-5 mx-auto">
-                <div className="text-center mb-20">
-                  <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
-                    Frequently Asked Questions
-                  </h1>
-                </div>
-                <div className="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
-                  <div className="w-full  px-4 py-2">
-                    {formData.faqs && (
-                      <>
-                        {formData.faqs.map((faq) => (
-                          <details className="mb-4">
-                            <summary className="font-semibold  bg-gray-200 rounded-md py-2 px-4">
-                              {faq.question}
-                            </summary>
+            <div>
+              <section className="text-gray-700">
+                <div className="container px-5 mx-auto">
+                  <div className="text-center mb-20">
+                    <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">
+                      Frequently Asked Questions
+                    </h1>
+                  </div>
+                  <div className="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
+                    <div className="w-full  px-4 py-2">
+                      {formData.faqs && (
+                        <>
+                          {formData.faqs.map((faq) => (
+                            <details className="mb-4">
+                              <summary className="font-semibold  bg-gray-200 rounded-md py-2 px-4">
+                                {faq.question}
+                              </summary>
 
-                            <div>{faq.answer}</div>
-                          </details>
-                        ))}
-                      </>
-                    )}
+                              <div>{faq.answer}</div>
+                            </details>
+                          ))}
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
+            </div>
           </div>
         </div>
       </div>
-      <Nav />
     </div>
   );
 }

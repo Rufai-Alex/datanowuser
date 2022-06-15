@@ -355,7 +355,7 @@ function CablePurchase() {
         ) : (
           ""
         )}
-        <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12">
+        <div className="flex  flex-col h-full w-full bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative mb-12 md:mb-0">
           <div className="px-4 py-8">
             <div className="flex justify-between items-center">
               <div className="flex justify-between item-center">
@@ -363,12 +363,14 @@ function CablePurchase() {
                   <img src={LeftAngle} alt="leftAngle" />
                 </button>
 
-                <h2 className="ml-8 font-medium text-sm">Cable Payments</h2>
+                <h2 className="ml-8 font-medium text-sm md:text-xl">
+                  Cable Payments
+                </h2>
               </div>
-              <img src={bell} alt="bell" />
+              <img src={bell} alt="bell" className="md:hidden" />
             </div>
             <div className="">
-              <h2 className="font-medium text-sm mt-9">
+              <h2 className="font-medium text-sm mt-9 md:text-lg">
                 Select Cable Provider
               </h2>
               <div className="flex gap-4 mt-6 flex-wrap">
@@ -387,10 +389,10 @@ function CablePurchase() {
                           : ""
                       }
                     >
-                      <img src={dstv} alt="dstv" />
+                      <img src={dstv} alt="dstv" className="md:h-28" />
                     </div>
                   </div>
-                  <div className="text-primary-orange font-extrabold text-xs mt-2.5">
+                  <div className=" font-extrabold text-xs md:text-base mt-2.5">
                     DStv
                   </div>
                 </button>
@@ -409,10 +411,14 @@ function CablePurchase() {
                           : ""
                       }
                     >
-                      <img src={startimes} alt="startimes" />
+                      <img
+                        src={startimes}
+                        alt="startimes"
+                        className="md:h-28"
+                      />
                     </div>
                   </div>
-                  <div className=" font-extrabold text-xs mt-2.5 text-primary-black">
+                  <div className=" font-extrabold text-xs md:text-base mt-2.5">
                     Startimes
                   </div>
                 </button>
@@ -430,9 +436,9 @@ function CablePurchase() {
                         : ""
                     }
                   >
-                    <img src={gotv} alt="gotv" />
+                    <img src={gotv} alt="gotv" className="md:h-28" />
                   </div>
-                  <div className=" font-extrabold text-xs mt-2.5 text-primary-black">
+                  <div className=" font-extrabold text-xs md:text-base mt-2.5">
                     Gotv
                   </div>
                 </button>
@@ -445,13 +451,13 @@ function CablePurchase() {
                     <div className="w-full">
                       <div className=" relative ">
                         <label>
-                          <p className="mt-4 font-medium text-primary-black text-sm">
+                          <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
                             Provider Plans
                           </p>
                           <input
                             type="text"
                             autocomplete="off"
-                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:   mt-3 "
+                            className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:   mt-3 "
                             placeholder="Select plan"
                             required
                             readOnly
@@ -459,10 +465,6 @@ function CablePurchase() {
                             value={formData.plans_name}
                             onFocus={() => {
                               setShowModal(!showModal);
-
-                              console.log(showModal);
-
-                              console.log("I am here");
                             }}
                           />
                         </label>
@@ -477,7 +479,7 @@ function CablePurchase() {
                             <div className=" relative ">
                               <label>
                                 <div className="flex justify-between">
-                                  <div className="font-medium text-primary-black text-sm">
+                                  <div className="font-medium text-primary-black text-sm md:text-base">
                                     Smart Card Number
                                   </div>
                                   <div className="font-medium text-primary-gray text-sm">
@@ -489,7 +491,7 @@ function CablePurchase() {
                                     type="text"
                                     name="smartcard_number"
                                     autocomplete="off"
-                                    className=" rounded-l-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   "
+                                    className=" rounded-l-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   "
                                     placeholder="0000 0000 0000"
                                     value={formData.smartcard_number}
                                     inputmode="numeric"
@@ -501,7 +503,7 @@ function CablePurchase() {
                                       formOnChange(e);
                                     }}
                                   />
-                                  <div className="rounded-r-md inline-flex bg-primary-orange items-center px-3 border-t text-white border-r border-b  border-slate-300 shadow-sm text-sm">
+                                  <div className="rounded-r-md inline-flex bg-primary-orange items-center px-3 border-t text-white border-r border-b  border-slate-300 shadow-sm text-sm md:text-base">
                                     <button className="" type="submit">
                                       {sending ? (
                                         <div className="flex items-center justify-center">
@@ -530,7 +532,7 @@ function CablePurchase() {
                     </div>
 
                     <PaymentType />
-                    <p className="mt-4 font-medium text-primary-black text-sm">
+                    <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
                       Total Price: ₦
                       {formData.paymentMethod === "atm"
                         ? formData.atmPrice
@@ -542,13 +544,13 @@ function CablePurchase() {
                       ) : (
                         <div className=" relative ">
                           <label>
-                            <p className="mt-4 font-medium text-primary-black text-sm">
+                            <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
                               Password
                             </p>
                             <input
                               type="password"
                               autocomplete="off"
-                              className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                              className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
                               placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
                               name="password"
                               required
@@ -565,7 +567,7 @@ function CablePurchase() {
                       <span className="block w-full rounded-md shadow-sm">
                         <button
                           type="button"
-                          className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                          className="py-2 px-4 md:py-4 md:px-8 bg-primary-orange  focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base md:text-lg font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
                           onClick={onValidSubmit}
                           disabled={loading}
                         >
