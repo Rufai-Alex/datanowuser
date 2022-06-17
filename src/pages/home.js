@@ -98,11 +98,69 @@ function Home() {
     refreshUser();
     console.log("====================================");
     console.log(" me refreshUser");
+    console.log(user.notification);
     console.log("====================================");
   }, []);
 
   return (
     <div className="flex">
+      {/*Notification modal  */}
+      {appData.settings &&
+      appData.settings.notification &&
+      appData.settings.notification !== user.notification ? (
+        <>
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="absolute w-full  mx-auto max-w-sm md:max-w-3xl bottom-auto">
+              {}
+              {/*content*/}
+              <div className="flex p-4 mb-4 bg-primary-orange rounded-lg ">
+                <svg
+                  className="flex-shrink-0 w-8 h-8 text-white "
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                <div className="ml-3 text-sm font-medium text-white ">
+                  {appData.settings.notification}
+                </div>
+                <button
+                  type="button"
+                  className="ml-auto -mx-1.5 -my-1.5 mr-2  bg-white text-primary-black rounded-lg focus:ring-2  p-1.5  inline-flex h-8 w-8 "
+                  data-dismiss-target="#alert-1"
+                  aria-label="Close"
+                  onClick={() => {
+                    userDispatch({
+                      type: "UPDATE_USER_NOTIFICATION",
+                      action: appData.settings.notification,
+                    });
+                  }}
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
+      {/* end notifiction */}
       <div>
         <Nav />
       </div>
@@ -120,7 +178,6 @@ function Home() {
           </div>
           {/* Balance card */}
           <div className="w-full p-3 mt-7 rounded-lg bg-primary-orange relative md:flex md:justify-between md:items-center md:px-7   md:p-10">
-            {/*  */}
             <div className="w-full md:w-1/2 px-2 ">
               <img
                 src={eclipse1}
@@ -297,7 +354,7 @@ function Home() {
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="absolute w-full  mx-auto max-w-sm bottom-0">
+            <div className="absolute w-full  mx-auto max-w-sm md:max-w-3xl bottom-0">
               {}
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">

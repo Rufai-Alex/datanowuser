@@ -482,7 +482,7 @@ function CablePurchase() {
                                   <div className="font-medium text-primary-black text-sm md:text-base">
                                     Smart Card Number
                                   </div>
-                                  <div className="font-medium text-primary-gray text-sm">
+                                  <div className="font-medium text-primary-gray text-sm md:text-base">
                                     Balance: {`₦ ${user.data.wallet_balance}`}
                                   </div>
                                 </div>

@@ -20,7 +20,7 @@ function Nav() {
     <div className="">
       <Header />
       {/* <nav className=" bg-primary-black  w-full  inset-x-0 bottom-0  md:inset-y-0 md:left-0  md:w-72 md:pl-10 md:pt-20"> */}
-      <nav className=" bg-primary-black   fixed max-w-md  md:static inset-x-0 bottom-0 md:w-72 md:pl-10 md:pt-20 md:h-screen">
+      <nav className=" bg-primary-black   fixed   md:static inset-x-0 bottom-0 md:w-72 md:pl-10 md:pt-20 md:h-screen">
         <ul className="flex  md:flex-col justify-between gap-4 p-2 ">
           <li>
             <NavLink

@@ -298,11 +298,7 @@ export default function SignUp() {
             <div className="flex w-full "></div>
             <div className="justify-center text-sm text-center text-gray-500 flex-items-center dark:text-gray-400 mt-12">
               Have an account?
-              <Link
-                to="/"
-                target="blank"
-                className="text-sm  text-primary-orange "
-              >
+              <Link to="/" className="text-sm  text-primary-orange ">
                 Sign in
               </Link>
             </div>

@@ -24,10 +24,14 @@ function Header() {
         </div>
       </Link>
       <div className="flex items-center space-x-4">
-        <div className="">
+        <div className="relative  ">
+          <p class="absolute bg-red-600 justify-center rounded-full px-1 mr-4 text-white text-xs">
+            5
+          </p>
           <img src={Bell} alt="notification" />
         </div>
-        <div className="avatar py-2.5 px-5 rounded-lg  md:flex justify-between items-center ml-10 hidden ">
+
+        <div className="py-2.5 px-5 rounded-lg  md:flex justify-between items-center ml-10 hidden ">
           <div className="profile   ml-3.5">
             <p className=" text-xl font-medium text-primary-blue ">
               {user.data &&

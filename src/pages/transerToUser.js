@@ -224,162 +224,172 @@ function TranserToUser() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center  max-w-md h-full m-auto">
-      {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
+    <div className="flex">
+      <div className="">
+        <Nav />
+      </div>
+      <div className="flex-1 flex flex-col items-center mx-auto md:mt-12 ">
+        {formData.Alert ? <Alert message={formData.Alert.message} /> : ""}
 
-      <div className="flex bg-white  h-h90 flex-col w-full  rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
-        <div className="px-4 py-8">
-          <div className="flex justify-between items-center">
-            <div className="flex justify-between item-center">
-              <button onClick={back}>
-                <img src={LeftAngle} alt="leftAngle" />
-              </button>
+        <div className="flex bg-white  h-h90 flex-col w-full  rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10 relative">
+          <div className="px-4 py-8">
+            <div className="flex justify-between items-center">
+              <div className="flex justify-between item-center">
+                <button onClick={back}>
+                  <img src={LeftAngle} alt="leftAngle" />
+                </button>
 
-              <h2 className="ml-8 font-medium text-sm">Transfer to User</h2>
+                <h2 className="ml-8 font-medium text-sm md:text-xl">
+                  Transfer to User
+                </h2>
+              </div>
+              <img src={bell} alt="bell" className="md:hidden" />
             </div>
-            <img src={bell} alt="bell" />
-          </div>
 
-          <div className="flex flex-col mt-7">
-            <form onSubmit={verifyReceiver}>
-              <div className="w-full">
-                <div className=" relative ">
-                  <label>
-                    <div className="flex justify-between items-center">
-                      <div className="mt-4 font-medium text-primary-black text-sm">
-                        Recivers Phone Number
+            <div className="flex flex-col mt-7">
+              <form onSubmit={verifyReceiver}>
+                <div className="w-full">
+                  <div className=" relative ">
+                    <label>
+                      <div className="flex justify-between items-center">
+                        <div className="mt-4 font-medium text-primary-black text-sm md:text-base">
+                          Recivers Phone Number
+                        </div>
+                        <div className="mt-4 font-medium text-primary-gray text-xs md:text-base">
+                          Balance:{`₦ ${user.data.wallet_balance}`}
+                        </div>
                       </div>
-                      <div className="mt-4 font-medium text-primary-gray text-xs">
-                        Balance:{`₦ ${user.data.wallet_balance}`}
-                      </div>
-                    </div>
 
-                    <div className="flex relative mt-2.5">
+                      <div className="flex relative mt-2.5">
+                        <input
+                          type="text"
+                          name="receiver"
+                          className=" rounded-l-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4  md:py-3.5 md:px-4  bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   "
+                          placeholder="0000 0000 0000"
+                          value={formData.receiver}
+                          inputMode="numeric"
+                          pattern="^[0-9]{11,11}$"
+                          autocomplete="off"
+                          required
+                          onChange={(e) => {
+                            formOnChange(e);
+                          }}
+                        />
+                        <span className="rounded-r-md inline-flex bg-primary-orange items-center px-3 border-t text-white border-r border-b  border-slate-300 shadow-sm text-sm">
+                          <button className="">
+                            {sending ? (
+                              <div className="flex items-center justify-center">
+                                <img
+                                  src={loadingSmall}
+                                  alt="loading ..."
+                                  className="w-7 h-7 "
+                                />
+                              </div>
+                            ) : formData.receiverName ? (
+                              `Verified`
+                            ) : (
+                              `Verify`
+                            )}
+                          </button>
+                        </span>
+                      </div>
+                      <p className="text-xs text-right">
+                        {formData.receiverName}
+                      </p>
+                    </label>
+                  </div>
+                </div>
+              </form>
+              <form onSubmit={handleSubmit}>
+                <div className="w-full">
+                  <div className=" relative ">
+                    <label>
+                      <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
+                        Amount to Transfer
+                      </p>
                       <input
                         type="text"
-                        name="receiver"
-                        className=" rounded-l-lg flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   "
-                        placeholder="0000 0000 0000"
-                        value={formData.receiver}
+                        className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4  md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                        placeholder="Amount min ₦50"
+                        name="amount"
                         inputMode="numeric"
-                        pattern="^[0-9]{11,11}$"
+                        autocomplete="off"
+                        pattern="[5-9]\d{1,}"
+                        required
+                        value={formData.amount}
+                        onChange={(e) => {
+                          formOnChange(e);
+                        }}
+                      />
+                    </label>
+                  </div>
+                </div>
+                <div className="w-full">
+                  <div className=" relative ">
+                    <label>
+                      <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
+                        Description
+                      </p>
+                      <input
+                        type="text"
+                        className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4  md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                        name="description"
+                        autocomplete="off"
+                        value={formData.description}
+                        onChange={(e) => {
+                          formOnChange(e);
+                        }}
+                        placeholder="Max 50 characters"
+                      />
+                    </label>
+                  </div>
+                </div>
+                <div className="w-full">
+                  <div className=" relative ">
+                    <label>
+                      <p className="mt-4 font-medium text-primary-black text-sm md:text-base">
+                        Password
+                      </p>
+                      <input
+                        type="password"
+                        className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4  md:py-3.5 md:px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
+                        placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                        autoComplete="off"
+                        name="password"
+                        value={formData.password}
                         required
                         onChange={(e) => {
                           formOnChange(e);
                         }}
                       />
-                      <span className="rounded-r-md inline-flex bg-primary-orange items-center px-3 border-t text-white border-r border-b  border-slate-300 shadow-sm text-sm">
-                        <button className="">
-                          {sending ? (
-                            <div className="flex items-center justify-center">
-                              <img
-                                src={loadingSmall}
-                                alt="loading ..."
-                                className="w-7 h-7 "
-                              />
-                            </div>
-                          ) : formData.receiverName ? (
-                            `Verified`
-                          ) : (
-                            `Verify`
-                          )}
-                        </button>
-                      </span>
-                    </div>
-                    <p className="text-xs text-right">
-                      {formData.receiverName}
-                    </p>
-                  </label>
+                    </label>
+                  </div>
                 </div>
-              </div>
-            </form>
-            <form onSubmit={handleSubmit}>
-              <div className="w-full">
-                <div className=" relative ">
-                  <label>
-                    <p className="mt-4 font-medium text-primary-black text-sm">
-                      Amount to Transfer
-                    </p>
-                    <input
-                      type="text"
-                      className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
-                      placeholder="Amount min ₦50"
-                      name="amount"
-                      inputMode="numeric"
-                      pattern="[5-9]\d{1,}"
-                      required
-                      value={formData.amount}
-                      onChange={(e) => {
-                        formOnChange(e);
-                      }}
-                    />
-                  </label>
+                <div>
+                  <span className="block w-full rounded-md shadow-sm">
+                    <button
+                      type="submit"
+                      className="py-2 px-4 md:py-4 md:px-8 bg-primary-orange  focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
+                    >
+                      {processing ? (
+                        <div className="flex items-center justify-center">
+                          <img
+                            src={loadingSmall}
+                            alt="loading ..."
+                            className="w-7 h-7 "
+                          />
+                        </div>
+                      ) : (
+                        ` Transfer`
+                      )}
+                    </button>
+                  </span>
                 </div>
-              </div>
-              <div className="w-full">
-                <div className=" relative ">
-                  <label>
-                    <p className="mt-4 font-medium text-primary-black text-sm">
-                      Description
-                    </p>
-                    <input
-                      type="text"
-                      className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
-                      name="description"
-                      value={formData.description}
-                      onChange={(e) => {
-                        formOnChange(e);
-                      }}
-                      placeholder="Max 50 characters"
-                    />
-                  </label>
-                </div>
-              </div>
-              <div className="w-full">
-                <div className=" relative ">
-                  <label>
-                    <p className="mt-4 font-medium text-primary-black text-sm">
-                      Password
-                    </p>
-                    <input
-                      type="password"
-                      className=" rounded-lg    flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:   mt-3.5"
-                      placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-                      name="password"
-                      value={formData.password}
-                      required
-                      onChange={(e) => {
-                        formOnChange(e);
-                      }}
-                    />
-                  </label>
-                </div>
-              </div>
-              <div>
-                <span className="block w-full rounded-md shadow-sm">
-                  <button
-                    type="submit"
-                    className="py-2 px-4 bg-primary-orange  focus:ring-primary-orange focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg mt-6"
-                  >
-                    {processing ? (
-                      <div className="flex items-center justify-center">
-                        <img
-                          src={loadingSmall}
-                          alt="loading ..."
-                          className="w-7 h-7 "
-                        />
-                      </div>
-                    ) : (
-                      ` Transfer`
-                    )}
-                  </button>
-                </span>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-      <Nav />
     </div>
   );
 }

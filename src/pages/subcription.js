@@ -483,11 +483,11 @@ function Subcription(props) {
       <div className="">
         <Nav />
       </div>
-      <div className="flex-1 flex flex-col items-center mx-auto md:mt-24">
+      <div className="flex-1 flex flex-col items-center mx-auto md:mt-20">
         <div className=" px-4  bg-white rounded-lg ">
           <div className="flex justify-between items-center">
-            <h2 className="font-medium text-lg">Subscriptions</h2>
-            <img src={bell} alt="bell" className="h-5 pr-2" />
+            <h2 className="font-medium text-lg md:text-2xl">Transactions</h2>
+            <img src={bell} alt="bell" className="h-5 pr-2 md:hidden" />
           </div>
           <form onSubmit={handleSubmit} className="w-full">
             <h3 className="font-medium text-sm mt-4">Search </h3>
@@ -501,7 +501,7 @@ function Subcription(props) {
                   onChange={formOnChange}
                 />
 
-                <span className="rounded-r-md inline-flex  items-center px-3 border-t bg-white border-r border-b  border-slate-300 text-gray-500 shadow-sm text-sm">
+                <span className="rounded-r-md inline-flex items-center px-3 border-t bg-white border-r border-b  border-slate-300 text-gray-500 shadow-sm text-sm">
                   <img src={sort} alt="sort" />
                 </span>
               </div>
@@ -536,7 +536,7 @@ function Subcription(props) {
                 </select>
               </div>
             </div>
-            <div className="flex gap-4 mb-2 max-w-sm">
+            <div className="flex gap-4 mb-2 ">
               <input
                 className=" rounded-lg  flex-1 appearance-none border border-slate-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary-orange focus:  "
                 type="date"
